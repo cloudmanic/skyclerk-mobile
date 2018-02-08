@@ -1,0 +1,67 @@
+<ion-content padding bgdarkgray>
+
+  <div class="form-content">
+    <h3 text-center>Edit Ledger</h3>
+    <ion-list no-lines login-form-list mode="ios">
+      <div class="dropdown">
+        <ion-item>
+          <ion-label stacked>Add New Tag</ion-label>
+          <ion-input type="text"></ion-input>
+        </ion-item>
+        <button drop-down graygradiantbtn mode="ios" ion-button>
+          <img src="assets/imgs/down-arrow-gray.svg" alt="">
+        </button>
+      </div>
+
+      <ion-item>
+          <ion-label>Software</ion-label>
+          <ion-checkbox mode="ios" item-right checked="true"></ion-checkbox> 
+        </ion-item>
+        
+        <ion-item>
+          <ion-label>Client Purchase</ion-label>
+          <ion-checkbox mode="ios" item-right></ion-checkbox>
+        </ion-item>
+      <ion-item>
+          <ion-label>Office Supply</ion-label>
+          <ion-checkbox mode="ios" item-right  checked="true"></ion-checkbox>
+        </ion-item>
+        
+        <ion-item>
+          <ion-label>Travel</ion-label>
+          <ion-checkbox mode="ios" item-right></ion-checkbox>
+        </ion-item>
+      <ion-item>
+          <ion-label>Luxury</ion-label>
+          <ion-checkbox mode="ios" item-right  checked="true"></ion-checkbox>
+        </ion-item>
+        
+        <ion-item>
+          <ion-label>Food</ion-label>
+          <ion-checkbox mode="ios" item-right></ion-checkbox>
+        </ion-item>
+
+    </ion-list>
+
+
+    <div class="button-container">
+      <button ion-button lightgray button-custom no-outer-shadow text-uppercase> 
+        <img src="assets/imgs/btn-tags.svg" img-left alt=""> Save Tags</button>
+    </div>
+
+  </div>
+
+
+</ion-content>
+<ion-footer no-border mode="md">
+  <ion-toolbar color="darkgray" mode="md">
+    <ion-buttons start>
+      <button ion-button clear mode="ios" text-uppercase color="light" (click)="openAddIncomePage()">« Cancel and go Back</button>
+    </ion-buttons>
+    <ion-buttons end>
+      <div class="bar-logo">
+        <img src="assets/imgs/logo-small.svg" alt="">
+      </div>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

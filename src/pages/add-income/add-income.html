@@ -1,0 +1,79 @@
+<ion-content padding bgdarkgray>
+
+    <div class="form-content">
+      <h3 text-center>
+          <img src="assets/imgs/add-income-icon.svg" alt=""> Add Expense</h3>
+      <ion-list no-lines login-form-list mode="ios">
+        <ion-row>
+          <ion-col col-12>
+            <div class="dropdown">
+              <ion-item>
+                <ion-label stacked>Vendor Name</ion-label>
+                <ion-input type="text"></ion-input>
+              </ion-item>
+              <button drop-down graygradiantbtn mode="ios" ion-button>
+                <img src="assets/imgs/down-arrow-gray.svg" alt="">
+              </button>
+            </div>
+          </ion-col>
+  
+          <ion-col col-6>
+            <ion-item>
+              <ion-label stacked>Date</ion-label>
+              <ion-input type="text"></ion-input>
+            </ion-item>
+          </ion-col>
+  
+          <ion-col col-6>
+            <ion-item class="amount">
+              <ion-label stacked>Amount</ion-label>
+              <ion-input type="text"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row buttons>
+          <ion-col col-4 text-left>
+            <button graybtn mode="ios" ion-button>
+              <img src="assets/imgs/note.svg" alt="">
+            </button>
+            <p>Add Note</p>
+          </ion-col>
+          <ion-col col-4 text-center>
+            <button graybtn mode="ios" ion-button (click)="openEditLedgerPage()">
+              <img src="assets/imgs/tags.svg" alt="">
+            </button>
+            <p>Add Tags</p>
+          </ion-col>
+          <ion-col col-4 text-right>
+            <button graybtn mode="ios" ion-button>
+              <img src="assets/imgs/attach.svg" alt="">
+            </button>
+            <p>Attach File</p>
+          </ion-col>
+        </ion-row>
+  
+      </ion-list>
+  
+  
+      <div class="button-container">
+          <button ion-button button-success button-custom no-outer-shadow text-uppercase>
+              <img src="assets/imgs/add-income-icon.svg" alt=""> Add Income</button>
+        </div>
+  
+    </div>
+   
+  
+  </ion-content>
+  <ion-footer no-border mode="md">
+    <ion-toolbar color="darkgray" mode="md">
+      <ion-buttons start>
+        <button ion-button clear mode="ios" text-uppercase color="light" (click)="openOverviewPage()">« Cancel and go Back</button>
+      </ion-buttons>
+      <ion-buttons end>
+        <div class="bar-logo">
+          <img src="assets/imgs/logo-small.svg" alt="">
+        </div>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-footer>
+  

@@ -1,0 +1,53 @@
+<ion-content>
+  <div class="header"> 
+    <ion-row>
+      <ion-col col-12>
+        <button ion-button button-success button-custom block no-outer-shadow text-uppercase >
+          <img src="assets/imgs/upload.svg" alt=""> UPLOAD YOUR FIRST RECEIPT</button>
+      </ion-col>
+    </ion-row>
+  </div>
+  <ion-scroll scrollX="true" scrolltabs>
+    <ion-segment [(ngModel)]="tabs" mode="ios">
+      <ion-segment-button value="ledgers">
+        Ledgers
+      </ion-segment-button>
+      <ion-segment-button value="snapcheck">
+        Snap!Clerk
+      </ion-segment-button>
+      <ion-segment-button value="search">
+        Search
+      </ion-segment-button>
+      <ion-segment-button value="accounts">
+        Accounts
+      </ion-segment-button>
+
+    </ion-segment>
+  </ion-scroll>
+  <div [ngSwitch]="tabs">
+    <div *ngSwitchCase="'ledgers'">
+      <h1>Ledgers</h1>
+    </div>
+
+    <div *ngSwitchCase="'snapcheck'">
+    <div class="snapcheck-content">
+      <div class="image-onboard">
+        <img src="assets/imgs/onboarding.png" alt="">
+      </div>
+      <div class="booton-container">
+        <button ion-button mode="ios" (click)="openIntroPage()">GET STARTED now!</button>
+      </div>
+    </div>
+    </div>
+
+    <div *ngSwitchCase="'search'">
+    <h1>Search</h1>
+    </div>
+
+    <div *ngSwitchCase="'accounts'">
+      <h1>Accounts</h1>
+    </div>
+
+  </div>
+</ion-content>
+

@@ -1,0 +1,44 @@
+<ion-content padding bgdarkgray>
+
+  <div class="form-content">
+    <h3 text-center>
+      Add Your Account</h3>
+    <ion-list no-lines login-form-list mode="ios">
+
+
+      <ion-item>
+        <ion-label stacked>Email Address *</ion-label>
+        <ion-input type="email"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label stacked>Password *</ion-label>
+        <ion-input type="password"></ion-input>
+      </ion-item>
+
+    </ion-list>
+    <button ion-button button-light button-custom block large mode="ios" (click)="openSelectAnAccountPage()">
+      <img img-left src="assets/imgs/plus.svg" alt=""> Add Your Skyclerk Account</button>
+
+    <div class="create-account" text-center>
+      <div class="text">
+        <p>Don’t have an account?</p>
+        <button ion-button block clear small mode="ios" color="link" (click)="openCreateAccountPage()">Register for a SkyLedger account now!</button>
+
+      </div>
+    </div>
+  </div>
+
+</ion-content>
+<ion-footer no-border mode="md">
+  <ion-toolbar color="darkgray" mode="md">
+    <ion-buttons start>
+      <button ion-button clear mode="ios" text-uppercase color="light" (click)="openIntroPage()">« Cancel and go Back</button>
+    </ion-buttons>
+    <ion-buttons end>
+      <div class="bar-logo">
+        <img src="assets/imgs/logo-small.svg" alt="">
+      </div>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

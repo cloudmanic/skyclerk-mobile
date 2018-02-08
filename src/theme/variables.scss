@@ -34,12 +34,65 @@ $app-direction: ltr;
 // The "primary" color is the only required color in the map.
 
 $colors: (
-  primary:    #488aff,
+  primary:    #065182,
   secondary:  #32db64,
   danger:     #f53d3d,
   light:      #f4f4f4,
-  dark:       #222
+  dark:       #141414,
+  darkgray:(
+    base:#2c2c2c,
+    contrast: #ffffff
+  ),
+  link:(
+    base:#b2d6ec,
+    contrast: #065182
+  )
 );
+
+// Colors
+$primary:#065182;
+$lblue:#1181c3;
+$dark:#141414;
+$darkgray:#242424;
+$bgdarkgray:#404040;
+$darkgray_border:#393939;
+$text_gray:#bcbcbc;
+$text_lgray:#b7b7b7;
+$focus:#d8e9f0;
+$white:#fff;
+$link_color:#b2d6ec;
+$border:#cbcbcb;
+$item_bg:#f5f5f5;
+$alt_item_bg:#eaeaea;
+$segment_bg:#272727;
+$segment_border:#343434;
+$segment_color:#808080;
+$segment_active_color:#cccccc; 
+$segment_active_bg_color:#4a4a4a;
+$t_head:#cdcdcd;
+$t_odd:#f7f7f7;
+// Gradiant
+$light_gradiant:linear-gradient( 0deg, rgb(150,154,157) 0%, rgb(226,228,230) 100%);
+$success_gradiant:linear-gradient( 0deg, rgb(92,136,44) 0%, rgb(117,160,74) 100%);
+$danger_gradiant:linear-gradient( 0deg, rgb(123,38,36) 0%, rgb(150,49,45) 100%);
+$danger_light:linear-gradient( 0deg, rgb(167,54,50) 0%, rgb(189,71,67) 100%);
+$gray_light:linear-gradient( 0deg, rgb(75,75,75) 0%, rgb(96,100,104) 100%);
+$success_light:linear-gradient( 0deg, rgb(103,130,80) 0%, rgb(119,150,92) 100%);
+$dark_light:linear-gradient( 0deg, rgb(0,0,0) 0%, rgb(38,38,38) 100%);
+$light_gradiant:linear-gradient( 0deg, rgb(147,147,147) 0%, rgb(195,195,195) 100%);
+$primary_gradiant:linear-gradient( 0deg, rgb(46,117,158) 0%, rgb(63,151,203) 100%);
+
+// Shadows
+$t_shadow:0px 1px 0px rgba(0, 0, 0, 0.45);
+$t_shadow_white: 0px 1px 0px rgba(255, 255, 255, 0.4);
+$form_shadow:0px 0px 16px 0px rgba(0, 0, 0, 0.75),inset 0px 30000px 5px 0px rgba(255, 255, 255, 0.03);
+$input_shdow:0px 2px 0px 0px rgba(255, 255, 255, 0.004),inset 0px 2px 3px 0px rgba(0, 0, 0, 0.33);
+$boxshadow: 0px 2px 0px 0px rgba(146, 41, 38, 0.004);
+
+// Pettern
+$bg_pattern:url(../assets/imgs/bg-pettern.jpg);
+
+
 
 
 // App iOS Variables

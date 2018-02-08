@@ -1,0 +1,21 @@
+<ion-content bgdark>
+
+  <div class="logo-content">
+    <div class="content">
+      <div class="logo">
+          <img src="assets/imgs/logo.svg" alt="">
+      </div>
+      <button ion-button button-light button-custom block large mode="ios"  (click)="openSelectAnAccountPage()"><img img-left src="assets/imgs/plus.svg" alt=""> Add Your Skyclerk Account</button>
+    </div>
+  </div>
+  <div class="create-account">
+    <div class="content" text-center>
+       <p> Don’t have an account?</p>
+       <button ion-button block clear small mode="ios" color="link" (click)="openCreateAccountPage()">Register for a <strong>FREE</strong></button>
+       <button ion-button block clear small mode="ios" color="link" (click)="openLoginPage()">SkyClerk account now!</button>
+        <!-- <p><a   (click)="openCreateAccountPage()">Register for a <strong>FREE</strong></a></p>
+        <p><a (click)="openLoginPage()"></a>SkyClerk account now!</p> -->
+    </div>
+  </div>
+
+</ion-content>

@@ -1,0 +1,45 @@
+<ion-content padding bgdarkgray>
+
+  <div class="form-content">
+    <h3 text-center>
+      Create your
+      <span>FREE</span>
+      <br> SkyClerk Account</h3>
+    <ion-list no-lines login-form-list mode="ios">
+
+      <ion-item>
+        <ion-label stacked>Name *</ion-label>
+        <ion-input type="text"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label stacked>Email Address *</ion-label>
+        <ion-input type="email"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label stacked>Password *</ion-label>
+        <ion-input type="password"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked>Confirm Password *</ion-label>
+        <ion-input type="password"></ion-input>
+      </ion-item>
+
+    </ion-list>
+    <button ion-button button-success button-custom block mode="ios" (click)="openSelectAnAccountPage()" text-large>Create Account <img src="assets/imgs/d-arrow.svg" img-right alt=""></button>
+  </div>
+
+</ion-content>
+<ion-footer no-border mode="md">
+  <ion-toolbar color="darkgray" mode="md">
+    <ion-buttons start>
+      <button ion-button clear mode="ios" text-uppercase color="light" (click)="openIntroPage()">« Cancel and go Back</button>
+    </ion-buttons>
+    <ion-buttons end>
+      <div class="bar-logo">
+        <img src="assets/imgs/logo-small.svg" alt="">
+      </div>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

@@ -1,0 +1,84 @@
+page-edit-ledger {
+  .button-container {
+    min-height: 4vh;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    button {
+      &.button {
+        min-width: 70%;
+        min-height: 54px;
+      }
+    }
+  }
+  .form-content {
+    background: $dark;
+    padding: 16px;
+    -webkit-box-shadow: $form_shadow;
+    box-shadow: $form_shadow;
+    border-radius: 10px;
+    min-height: 76vh;
+    h3 {
+      color: #8dc0d8;
+      font-size: 3.5rem;
+      padding: 1rem 0 .5rem;
+      font-weight: 700;
+      margin: 0;
+    }
+    ion-list {
+      .dropdown {
+        margin-bottom: 2rem;
+      }
+      >ion-item {
+        &.item {
+          background: #2a2a2a;
+          margin: 5px 0;
+          border-radius: 5px;
+          min-height: 3.4rem;
+          padding-left: 16px;
+          ion-label {
+            text-shadow: $t_shadow;
+            margin: 8px 8px 8px 0;
+          }
+          ion-checkbox {
+            position: static;
+            .checkbox-icon {
+              background: none;
+              border: none;
+              .checkbox-inner {
+                display: none;
+              }
+              &:before {
+                position: absolute;
+                height: 24px;
+                width: 24px;
+                right: 10px;
+                content: '';
+                background: url(../assets/imgs/check-dark.svg) no-repeat center center;
+                background-size: 100% auto;
+              }
+            }
+          }
+          &.item-checkbox-checked {
+            background: #474747;
+            ion-checkbox {
+              .checkbox-icon {
+                &:before {
+                  background-image: url(../assets/imgs/check-light.svg);
+                  background-size: 100% auto;
+                  top: -1px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

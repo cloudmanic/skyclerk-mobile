@@ -1,0 +1,37 @@
+page-select-an-account {
+  .header {
+    background: $bg_pattern;
+    text-align: center;
+    font-size: 3.2rem;
+    text-shadow: $t_shadow;
+    color: $text_lgray;
+    font-weight: 700;
+    padding: 4rem 0;
+  }
+  ion-list {
+    ion-item {
+      &.item {
+        
+        border-bottom: 1px solid $border !important;
+        background: $item_bg !important;
+        &:nth-child(even) {
+          background: $alt_item_bg !important;
+        }
+        h2 {
+          font-weight: 500;
+          font-size: 2rem;
+          color: $lblue;
+          text-shadow:$t_shadow_white;
+        }
+        p{
+          text-shadow:$t_shadow_white;
+        }
+        img {
+          &[item-right] {
+            height: 12px;
+          }
+        }
+      }
+    }
+  }
+}

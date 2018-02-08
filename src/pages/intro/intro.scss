@@ -1,0 +1,77 @@
+page-intro {
+  .logo-content {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    height: 70vh;
+    .content {
+      max-width: 86%;
+      .logo {
+        padding: 4rem 2rem;
+      }
+    }
+  }
+  .create-account {
+    height: 30vh;
+    background: $darkgray;
+    border-top: 1px solid $darkgray_border;
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    &:before {
+      position: absolute;
+      height: 30px;
+      width: 30px;
+      background: $darkgray;
+      border: 1px solid transparent;
+      border-top-color: $darkgray_border;
+      border-left-color: $darkgray_border;
+      content: '';
+      left: 50%;
+      top: -15px;
+      margin-left: -15px;
+      transform: rotate(45deg);
+    }
+    p  {
+        color: $white;
+        text-shadow: $t_shadow;
+        font-size: 1.6rem;
+        margin: 0;
+        
+    }
+    button{
+      font-size: 1.6rem;
+      max-height: 20px;
+    }
+  }
+}
+
+.Don’t_have_an_account__Register_for_a_FREE_SkyC {
+    font-size: 10px;
+    font-family: "Helvetica";
+    color: rgb(198, 198, 198);
+    line-height: 1.2;
+    text-align: center;
+    text-shadow: 0px 2px 0px rgba(0, 0, 0, 0.45);
+    -moz-transform: matrix( 2.60937798213375,0,0,2.60937798213375,0,0);
+    -webkit-transform: matrix( 2.60937798213375,0,0,2.60937798213375,0,0);
+    -ms-transform: matrix( 2.60937798213375,0,0,2.60937798213375,0,0);
+    position: absolute;
+    left: 270.051px;
+    top: 812.545px;
+    z-index: 4;
+  }
+  
