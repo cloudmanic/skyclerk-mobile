@@ -1,0 +1,75 @@
+<ion-content padding havePopup income>
+
+  <div class="form-content">
+    <h3 text-center>
+      <img src="assets/imgs/add-income-icon.svg" alt=""> Add Expense</h3>
+    <ion-list lines="none" login-form-list mode="ios">
+      <ion-row lrm>
+        <ion-col size="12">
+          <div class="dropdown">
+            <ion-item>
+              <ion-label position="stacked">Vendor Name</ion-label>
+              <ion-input type="text"></ion-input>
+            </ion-item>
+            <ion-button drop-down graygradiantbtn mode="ios">
+              <img src="assets/imgs/down-arrow-gray.svg" alt="">
+            </ion-button>
+          </div>
+        </ion-col>
+
+        <ion-col size="6">
+          <ion-item>
+            <ion-label position="stacked">Date</ion-label>
+            <ion-input type="text"></ion-input>
+          </ion-item>
+        </ion-col>
+
+        <ion-col size="6">
+          <ion-item class="amount">
+            <ion-label position="stacked">Amount</ion-label>
+            <ion-input type="text"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row buttons>
+        <ion-col size="4" text-left>
+          <ion-button graybtn mode="ios">
+            <img src="assets/imgs/note.svg" alt="">
+          </ion-button>
+          <p>Add Note</p>
+        </ion-col>
+        <ion-col size="4" text-center>
+          <ion-button graybtn mode="ios" routerLink="/edit-ledger">
+            <img src="assets/imgs/tags.svg" alt="">
+          </ion-button>
+          <p>Add Tags</p>
+        </ion-col>
+        <ion-col size="4" text-right>
+          <ion-button graybtn mode="ios">
+            <img src="assets/imgs/attach.svg" alt="">
+          </ion-button>
+          <p>Attach File</p>
+        </ion-col>
+      </ion-row>
+
+    </ion-list>
+
+    <div class="button-container">
+      <ion-button button-success button-custom no-outer-shadow text-uppercase>
+        <img src="assets/imgs/add-income-icon.svg" alt=""> Add Income</ion-button>
+    </div>
+  </div>
+</ion-content>
+<ion-footer no-border mode="md">
+  <ion-toolbar color="dark" mode="md">
+    <ion-buttons slot="start">
+      <ion-button fill="clear" mode="ios" text-uppercase color="light" routerLink="/overview">« Cancel and go Back
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <div class="bar-logo">
+        <img src="assets/imgs/logo-small.svg" alt="">
+      </div>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>
