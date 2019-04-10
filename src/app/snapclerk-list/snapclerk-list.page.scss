@@ -1,0 +1,44 @@
+ion-header {
+    ion-toolbar {
+        &:first-child {
+            padding: 12px 40px;
+        }
+    }
+}
+
+ion-list {
+    margin: 0;
+    ion-item {
+        --padding-top: 6px;
+        --padding-bottom: 6px;
+
+        &:nth-child(even) {
+            --background: #f7f7f7;
+        }
+
+        ion-label {
+            &.hydrated {
+                &.date {
+                    min-width: 50px;
+                    flex: 0 0 auto;
+                    font-size: 14px;
+                }
+                h2{
+                    font-weight: 600;
+                }
+            }
+        }
+    }
+    ion-item-divider {
+        --background: #cfcfcf;
+        ion-label{
+            &.hydrated{
+                min-width: 100%;
+                font-size: 14px;
+                margin-top: 2px;
+                margin-bottom: 2px;
+            }
+
+        }
+    }
+}

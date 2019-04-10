@@ -1,0 +1,64 @@
+<ion-content bggraypettern padding income>
+  <h3 text-center>
+    <img src="assets/imgs/receipt-gray.png" alt=""> Upload Receipt</h3>
+  <ion-list lines="none" login-form-list mode="ios">
+
+    <ion-row llrm>
+      <ion-col size="5">
+        <ion-button lightgray mode="ios" expand="block" add-receipt text-wrap button-custom no-outer-shadow>
+          <span class="content"><img src="assets/imgs/camera-graphic.svg" alt=""><br> Add Receipt</span></ion-button>
+      </ion-col>
+      <ion-col size="7" align-self-center>
+        <p class="note">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's. </p>
+      </ion-col>
+      <ion-col size="12">
+        <div class="dropdown">
+          <ion-item>
+            <ion-label position="stacked">Vendor Name</ion-label>
+            <ion-input type="text"></ion-input>
+          </ion-item>
+          <ion-button drop-down graygradiantbtn mode="ios">
+            <img src="assets/imgs/down-arrow-gray.svg" alt="">
+          </ion-button>
+        </div>
+      </ion-col>
+
+      <ion-col size="12">
+        <ion-item>
+          <ion-label position="stacked">Note</ion-label>
+          <ion-textarea></ion-textarea>
+        </ion-item>
+      </ion-col>
+
+      <ion-col size="3">
+          <ion-button button-dark expand="block" button-custom no-outer-shadow text-uppercase>
+              <img src="assets/imgs/tags.svg" alt=""></ion-button>
+              <p class="add-labels">Add Labels</p>
+
+      </ion-col>
+      <ion-col size="9">
+          <ion-item>
+              <ion-textarea placeholder="label 01, label 02, label 03..."></ion-textarea>
+            </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-list>
+
+  <div class="button-container">
+    <ion-button button-success button-custom expand="block" no-outer-shadow text-uppercase routerLink="/upload-receipt">
+      <img src="assets/imgs/upload.svg" alt=""> Submit RECEIPT</ion-button>
+  </div>
+</ion-content>
+<ion-footer no-border mode="md">
+  <ion-toolbar color="dark" mode="md">
+    <ion-buttons slot="start">
+      <ion-button fill="clear" mode="ios" text-uppercase color="light" routerLink="/snapclerk-list">« Cancel and go Back
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <div class="bar-logo">
+        <img src="assets/imgs/logo-small.svg" alt="">
+      </div>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

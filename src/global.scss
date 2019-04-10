@@ -36,6 +36,8 @@ $t_head:#cdcdcd;
 $t_odd:#f7f7f7;
 
 
+
+
 // Shadows
 $t_shadow:0px 1px 0px rgba(0, 0, 0, 0.45);
 $t_shadow_white: 0px 1px 0px rgba(255, 255, 255, 0.4);
@@ -48,6 +50,21 @@ $boxshadow: 0px 2px 0px 0px rgba(146, 41, 38, 0.004);
 
 // Pettern
 $bg_pattern:url(assets/imgs/bg-pettern.jpg);
+
+
+ion-row{
+    &[lrm]{
+        margin-right: -5px;
+        margin-left: -5px;
+    }
+    &[llrm]{
+        margin-right: -10px;
+        margin-left: -10px;
+        >ion-col{
+            padding: 10px;
+        }
+    }
+}
 
 
 .bar-logo {
@@ -115,6 +132,9 @@ ion-content {
     &[bgdark] {
         --background: #141414;
     }
+    &[bggraypettern] {
+        --background: url(assets/imgs/gray-pettern.png) repeat top left #51585d /80px;
+    }
 }
 
 
@@ -147,7 +167,7 @@ ion-button {
         &[button-light] {
             --background: linear-gradient(0deg, #939393 0%, #c3c3c3 100%);
             --background-activated: linear-gradient(0deg, #7c7c7c 0%, #a7a7a7 100%);
-            box-shadow: inset 0px 1px 0px 0px rgba(229, 255, 204, 0.2), 0px 0px 16px 0px rgba(255, 255, 255, 0.28);
+            --box-shadow: inset 0px 2px 0px 0px rgba(255, 255, 255, 0.32), 0px 0px 16px 0px rgba(255, 255, 255, 0.28);
             color: #fff;
 
         }
@@ -155,36 +175,43 @@ ion-button {
         &[button-success] {
             --background: linear-gradient(0deg, #5c882c 0%, #75a04a 100%);
             --background-activated: linear-gradient(0deg, #486b23 0%, #60853b 100%);
-            box-shadow: inset 0px 1px 0px 0px rgba(229, 255, 204, 0.2), 0px 0px 16px 0px rgba(255, 255, 255, 0.28);
+            --box-shadow: inset 0px 2px 0px 0px rgba(255, 255, 255, 0.32), 0px 0px 16px 0px rgba(255, 255, 255, 0.28);
             color: #fff;
         }
 
         &[button-danger] {
             --background: linear-gradient(0deg, #7b2624 0%, #96312d 100%);
             --background-activated: linear-gradient(0deg, #5a1817 0%, #79211e 100%);
-            box-shadow: inset 0px 1px 0px 0px rgba(229, 255, 204, 0.2), 0px 0px 16px 0px rgba(255, 255, 255, 0.28);
+            --box-shadow: inset 0px 2px 0px 0px rgba(255, 255, 255, 0.32), 0px 0px 16px 0px rgba(255, 255, 255, 0.28);
             color: #fff;
         }
 
         &[lightgray] {
             --background: linear-gradient(0deg, rgb(150, 154, 157) 0%, rgb(226, 228, 230) 100%);
-            box-shadow: inset 0px 2px 0px 0px rgba(255, 255, 255, 0.32);
+            --background-activated: linear-gradient(0deg, rgb(117, 121, 124) 0%, rgb(193, 195, 197) 100%);
+            --box-shadow: inset 0px 2px 0px 0px rgba(255, 255, 255, 0.32), 0px 0px 16px 0px rgba(255, 255, 255, 0.28);
+            color: #fff;
+        }
+
+        &[button-dark] {
+            --background: linear-gradient( 0deg, rgb(57,57,57) 0%, rgb(84,84,84) 100%);
+            --box-shadow: inset 0px 2px 0px 0px rgba(255, 255, 255, 0.32), 0px 0px 16px 0px rgba(255, 255, 255, 0.28);
             color: #fff;
         }
 
         &[button-primary] {
             --background: linear-gradient(0deg, rgb(46, 117, 158) 0%, rgb(63, 151, 203) 100%);
-            box-shadow: 0px 4px 0px 0px rgba(22, 88, 126, 0.004), inset 0px 2px 0px 0px rgba(255, 255, 255, 0.32);
+            --box-shadow: inset 0px 2px 0px 0px rgba(255, 255, 255, 0.32), 0px 0px 16px 0px rgba(255, 255, 255, 0.28);
             --border-color: rgb(45, 109, 146);
             color: #fff;
         }
 
         &[no-shadow] {
-            box-shadow: none;
+            --box-shadow: none;
         }
 
         &[no-outer-shadow] {
-            box-shadow: inset 0px 1px 0px 0px rgba(229, 255, 204, 0.2);
+            --box-shadow: inset 0px 2px 0px 0px rgba(255, 255, 255, 0.32), 0px 0px 0 0px rgba(255, 255, 255, 0);
         }
 
         &[text-large] {
@@ -195,8 +222,7 @@ ion-button {
     &[graygradiantbtn] {
         --background: linear-gradient(0deg, #5b5b5b 0%, #8f8f8f 100%);
         --background-activated: linear-gradient(0deg, #353535 0%, #575757 100%);
-        -webkit-box-shadow: 0px 2px 0px 0px rgba(255, 255, 255, 0.45), inset 0px 2px 3px 0px rgba(0, 0, 0, 0.33);
-        box-shadow: 0px 2px 0px 0px rgba(255, 255, 255, 0.45), inset 0px 2px 3px 0px rgba(0, 0, 0, 0.33);
+        --box-shadow: inset 0px 2px 0px 0px rgba(255, 255, 255, 0.32), 0px 0px 16px 0px rgba(255, 255, 255, 0.28);
         --border-radius: 5px;
         border-radius: 5px;
 
@@ -890,54 +916,53 @@ app-login {
     }
 }
 
-app-snapclerk {
-    ion-content {
+ion-content {
+    &[snapclerk] {
         --background: url(assets/imgs/snapclerk-bg.jpg) repeat left top;
-    }
+        .snapcheck-content {
 
-    .snapcheck-content {
+            .image-onboard {
+                padding: 40px 20px;
+                height: calc(80vh - 118px);
+                display: flex;
+                align-items: center;
+                justify-content: center;
 
-        .image-onboard {
-            padding: 40px 20px;
-            height: calc(80vh - 118px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            img {
-                width: 100%
+                img {
+                    width: 100%
+                }
             }
-        }
 
-        .booton-container {
-            text-align: center;
-            display: -webkit-box;
-            display: -ms-flexbox;
-            display: flex;
-            -webkit-box-align: center;
-            -ms-flex-align: center;
-            align-items: center;
-            -webkit-box-pack: center;
-            -ms-flex-pack: center;
-            justify-content: center;
-            height: 20vh;
+            .booton-container {
+                text-align: center;
+                display: -webkit-box;
+                display: -ms-flexbox;
+                display: flex;
+                -webkit-box-align: center;
+                -ms-flex-align: center;
+                align-items: center;
+                -webkit-box-pack: center;
+                -ms-flex-pack: center;
+                justify-content: center;
+                height: 20vh;
 
-            ion-button {
-                &.button {
-                    text-transform: uppercase;
-                    --background: linear-gradient(0deg, #ffd92a 0%, #fdf9be 100%);
-                    --background-activated: linear-gradient(0deg, #ffbd06 0%, #fff45e 100%);
-                    --box-shadow: inset 0px 2px 0px 0px rgba(255, 255, 255, 0.32);
-                    --border-style: solid;
-                    --border-width: 2px;
-                    --border-color: rgb(30, 30, 30);
-                    --border-radius: 6px;
-                    border-radius: 6px;
-                    color: rgb(30, 30, 30);
-                    letter-spacing: 1px;
-                    font-weight: 600;
-                    --padding-start: 40px;
-                    --padding-end: 40px;
+                ion-button {
+                    &.button {
+                        text-transform: uppercase;
+                        --background: linear-gradient(0deg, #ffd92a 0%, #fdf9be 100%);
+                        --background-activated: linear-gradient(0deg, #ffbd06 0%, #fff45e 100%);
+                        --box-shadow: inset 0px 2px 0px 0px rgba(255, 255, 255, 0.32);
+                        --border-style: solid;
+                        --border-width: 2px;
+                        --border-color: rgb(30, 30, 30);
+                        --border-radius: 6px;
+                        border-radius: 6px;
+                        color: rgb(30, 30, 30);
+                        letter-spacing: 1px;
+                        font-weight: 600;
+                        --padding-start: 40px;
+                        --padding-end: 40px;
+                    }
                 }
             }
         }
@@ -977,7 +1002,8 @@ app-view-attachment {
             text-align: center;
             width: 100%;
             justify-content: center;
-            ion-button{
+
+            ion-button {
                 margin: 0 10px !important
             }
         }
