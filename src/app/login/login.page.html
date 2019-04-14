@@ -8,28 +8,31 @@
 
 			<ion-item>
 				<ion-label position="stacked">Email Address *</ion-label>
-				<ion-input type="email"></ion-input>
+				<ion-input type="email" name="email" [(ngModel)]="email"></ion-input>
 			</ion-item>
 
 			<ion-item>
 				<ion-label position="stacked">Password *</ion-label>
-				<ion-input type="password"></ion-input>
+				<ion-input type="password" name="password" [(ngModel)]="password"></ion-input>
 			</ion-item>
 
 		</ion-list>
-		<ion-button button-light button-custom expand="block" size="large" mode="ios" routerLink="/select-an-account">
-			<img img-left src="assets/imgs/plus.svg" alt=""> Add Your Skyclerk Account</ion-button>
+
+		<ion-button button-light button-custom expand="block" size="large" mode="ios" (click)="doLogin()">
+			<img img-left src="assets/imgs/plus.svg" alt="">
+			Add Your Skyclerk Account
+		</ion-button>
 
 		<div class="create-account" text-center>
 			<div class="text">
 				<p>Don’t have an account?</p>
-				<ion-button expand="block" fill="clear" size="small" mode="ios" color="link" routerLink="/create-account">Register for a SkyLedger account now!</ion-button>
-
+				<ion-button expand="block" fill="clear" size="small" mode="ios" color="link" routerLink="/create-account">Register for a Skyclerk account now!</ion-button>
 			</div>
 		</div>
 	</div>
 
 </ion-content>
+
 <ion-footer no-border mode="md">
 	<ion-toolbar color="dark" mode="md">
 		<ion-buttons slot="start">

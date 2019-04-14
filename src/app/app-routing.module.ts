@@ -2,9 +2,9 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-	{ path: '', redirectTo: 'overview', pathMatch: 'full' },
+	{ path: '', redirectTo: 'intro', pathMatch: 'full' },
 	{ path: 'home', loadChildren: './home/home.module#HomePageModule' },
-	{ path: 'overview', loadChildren: './overview/overview.module#OverviewPageModule' },
+	{ path: 'ledgers', loadChildren: './ledgers/ledgers.module#LedgersPageModule' },
 	{ path: 'add-income', loadChildren: './add-income/add-income.module#AddIncomePageModule' },
 	{ path: 'add-expense', loadChildren: './add-expense/add-expense.module#AddExpensePageModule' },
 	{ path: 'edit-ledger', loadChildren: './edit-ledger/edit-ledger.module#EditLedgerPageModule' },
