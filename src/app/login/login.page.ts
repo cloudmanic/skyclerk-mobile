@@ -38,7 +38,7 @@ export class LoginPage {
 		this.authService.login(this.email, this.password).subscribe(
 			// Success - Redirect to dashboard.
 			() => {
-				this.router.navigate(['ledgers']);
+				this.router.navigate(['home']);
 			},
 
 			// Error

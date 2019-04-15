@@ -20,7 +20,7 @@ export class IntroPage {
 	constructor(private router: Router) {
 		// If we have an access token / user_id redirect to the ledgers screen.
 		if (localStorage.getItem('access_token') && localStorage.getItem('user_id')) {
-			this.router.navigate(['ledgers']);
+			this.router.navigate(['home']);
 		}
 	}
 }

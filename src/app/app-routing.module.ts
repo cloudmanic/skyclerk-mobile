@@ -4,8 +4,7 @@ import { SessionGuard } from './services/auth.guard';
 
 const routes: Routes = [
 	{ path: '', redirectTo: 'intro', pathMatch: 'full' },
-	{ path: 'home', loadChildren: './home/home.module#HomePageModule' },
-	{ path: 'ledgers', loadChildren: './ledgers/ledgers.module#LedgersPageModule', canActivate: [SessionGuard] },
+	{ path: 'home', loadChildren: './home/home.module#HomePageModule', canActivate: [SessionGuard] },
 	{ path: 'add-income', loadChildren: './add-income/add-income.module#AddIncomePageModule', canActivate: [SessionGuard] },
 	{ path: 'add-expense', loadChildren: './add-expense/add-expense.module#AddExpensePageModule', canActivate: [SessionGuard] },
 	{ path: 'edit-ledger', loadChildren: './edit-ledger/edit-ledger.module#EditLedgerPageModule', canActivate: [SessionGuard] },
