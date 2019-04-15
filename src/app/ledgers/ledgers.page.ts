@@ -18,7 +18,20 @@ import { Router } from '@angular/router';
 
 export class LedgersPage implements OnInit {
 	me: Me;
-	tabs: string = "ledgers";
+	tabs: string = "ledger";
+	dblTapDoAccountCount: number = 0;
+
+	receipts = [
+		{ img: "thumb-01.png", dm: "May 13", year: "2018", title: "Chevron", cate: "Gas" },
+		{ img: "thumb-02.png", dm: "May 06", year: "2018", title: "Rivers Run", cate: "Gas" },
+		{ img: "thumb-03.png", dm: "May 04", year: "2018", title: "Flying J", cate: "Gas" },
+		{ img: "thumb-04.png", dm: "Apr 21", year: "2018", title: "Fred Meyer Fue", cate: "Gas" },
+		{ img: "thumb-05.png", dm: "Apr 21", year: "2018", title: "Chevron", cate: "Gas" },
+		{ img: "thumb-06.png", dm: "May 13", year: "2018", title: "Chevron", cate: "Gas" },
+		{ img: "thumb-01.png", dm: "May 13", year: "2018", title: "Chevron", cate: "Gas" },
+		{ img: "thumb-02.png", dm: "May 13", year: "2018", title: "Chevron", cate: "Gas" },
+		{ img: "thumb-03.png", dm: "May 13", year: "2018", title: "Chevron", cate: "Gas" },
+	]
 
 	//
 	// Constructor.
@@ -61,6 +74,7 @@ export class LedgersPage implements OnInit {
 	// Do Logout
 	//
 	doLogout() {
+		setTimeout(() => { this.tabs = "ledger"; }, 250);
 		this.meService.logout();
 		this.router.navigate(['intro']);
 	}
@@ -74,6 +88,22 @@ export class LedgersPage implements OnInit {
 
 		// Load page data.
 		this.loadPageData();
+	}
+
+	//
+	// Double tap to trigger do accounts.
+	//
+	dblTapDoAccount() {
+		this.dblTapDoAccountCount++;
+
+		setTimeout(() => {
+			if (this.dblTapDoAccountCount == 1) {
+				this.dblTapDoAccountCount = 0;
+			} if (this.dblTapDoAccountCount > 1) {
+				this.dblTapDoAccountCount = 0;
+				this.doAccounts();
+			}
+		}, 250);
 	}
 
 	//

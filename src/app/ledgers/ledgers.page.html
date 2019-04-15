@@ -1,6 +1,6 @@
 <ion-header mode="ios" no-border>
 	<div [ngSwitch]="tabs">
-		<ion-toolbar mode="ios" class="header-pettern-bg" *ngSwitchCase="'ledgers'">
+		<ion-toolbar mode="ios" class="header-pettern-bg" *ngSwitchCase="'ledger'">
 			<ion-row>
 				<ion-col size="6">
 					<ion-button button-success button-custom expand="block" no-outer-shadow text-uppercase routerLink="/add-income">
@@ -13,15 +13,11 @@
 			</ion-row>
 		</ion-toolbar>
 
-		<ion-toolbar mode="ios" class="header-pettern-bg" *ngSwitchCase="'attatchments'">
+		<ion-toolbar mode="ios" class="header-pettern-bg" *ngSwitchCase="'snapclerk'">
 			<ion-row>
-				<ion-col size="6">
-					<ion-button button-success button-custom expand="block" no-outer-shadow text-uppercase routerLink="/add-income">
-						<img src="assets/imgs/add-income-icon.svg" slot="start" alt=""> Add Income</ion-button>
-				</ion-col>
-				<ion-col size="6">
-					<ion-button button-danger button-custom expand="block" no-outer-shadow text-uppercase routerLink="/add-expense">
-						<img src="assets/imgs/add-expense-icon.svg" slot="start" alt=""> Add Expense</ion-button>
+				<ion-col size="12">
+					<ion-button button-success button-custom expand="block" no-outer-shadow text-uppercase routerLink="/upload-receipt">
+						<img src="assets/imgs/upload.svg" alt=""> Upload New Receipt</ion-button>
 				</ion-col>
 			</ion-row>
 		</ion-toolbar>
@@ -38,25 +34,21 @@
 	</div>
 
 	<ion-toolbar segment-toolbar color="dark" mode="ios">
-		<ion-segment scrollable color="medium" mode="ios">
-			<ion-segment-button mode="ios">
-				Ledgers
+		<ion-segment scrollable color="medium" mode="ios" [(ngModel)]="tabs">
+			<ion-segment-button mode="ios" value="ledger">
+				Ledger
 			</ion-segment-button>
 
-			<ion-segment-button mode="ios">
+			<ion-segment-button mode="ios" value="snapclerk">
 				Snap!Clerk
 			</ion-segment-button>
 
-			<ion-segment-button mode="ios">
+			<ion-segment-button mode="ios" value="search">
 				Search
 			</ion-segment-button>
 
-			<ion-segment-button mode="ios" (click)="doAccounts()">
-				Accounts
-			</ion-segment-button>
-
 			<ion-segment-button mode="ios" (click)="doLogout()">
-				Logout
+				Settings
 			</ion-segment-button>
 		</ion-segment>
 	</ion-toolbar>
@@ -68,7 +60,7 @@
 
 
 	<div [ngSwitch]="tabs">
-		<div *ngSwitchCase="'ledgers'" class="ledgers">
+		<div *ngSwitchCase="'ledger'" class="ledgers">
 			<ion-grid tableViewGrid>
 				<ion-row class="table-header">
 					<ion-col size="3">
@@ -281,16 +273,32 @@
 			</ion-grid>
 		</div>
 
-		<div *ngSwitchCase="'attatchments'">
-			<div class="attachment-content">
-				<div class="content" text-center>
-					<p>Uploaded attachments will be added to your mass uploads which can be accessed on your web account.</p>
-					<ion-button button-custom button-primary text-uppercase mode="ios" routerLink="/view-attachment">
-						<img img-left src="assets/imgs/plus-primary.svg" alt=""> Add New Attachment</ion-button>
-				</div>
-			</div>
+		<!-- snapclerk -->
+		<div *ngSwitchCase="'snapclerk'">
+			<ion-list lines="full" mode="ios">
+				<ion-item-divider text-center mode="ios">
+					<ion-label text-center>
+						Basic Item Divider
+					</ion-label>
+				</ion-item-divider>
+				<ion-item *ngFor="let r of receipts" mode="ios">
+					<ion-thumbnail slot="start">
+						<img src="assets/imgs/{{r.img}}">
+					</ion-thumbnail>
+					<ion-label slot="start" class="date">
+						<strong>{{r.dm}}</strong> <br>
+						{{r.year}}
+					</ion-label>
+					<ion-label>
+						<h2>{{r.title}}</h2>
+						<p>{{r.cate}}</p>
+					</ion-label>
+					<ion-button mode="ios" size="small" color="success" slot="end">Processed</ion-button>
+				</ion-item>
+			</ion-list>
 		</div>
 
+		<!-- search -->
 		<div *ngSwitchCase="'search'">
 			<div class="search-result" text-center>
 				Your Search Results for
@@ -481,10 +489,6 @@
 			</ion-grid>
 		</div>
 
-		<div *ngSwitchCase="'logout'">
-			<h1>Logout</h1>
-		</div>
-
 	</div>
 </ion-content>
 
@@ -495,7 +499,7 @@
 			<ion-button class="success">INCOME</ion-button>
 			<ion-button class="danger">EXPENSES</ion-button>
 		</ion-buttons>
-		<ion-buttons slot="end">
+		<ion-buttons slot="end" (click)="dblTapDoAccount()">
 			<div class="bar-logo">
 				<img src="assets/imgs/logo-small.svg" alt="">
 			</div>
