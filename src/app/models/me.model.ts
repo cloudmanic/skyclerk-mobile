@@ -6,12 +6,14 @@
 //
 
 import { Serializable } from './serializable.model';
+import { Account } from './account.model';
 
 export class Me implements Serializable {
 	Id: number;
 	Email: string;
 	FirstName: string;
 	LastName: string;
+	Accounts: Account[];
 
 	//
 	// Json to Object.
@@ -21,6 +23,13 @@ export class Me implements Serializable {
 		this.Email = json["email"];
 		this.FirstName = json["first_name"];
 		this.LastName = json["last_name"];
+		this.Accounts = [];
+
+		// Add in the accounts.
+		for (let i = 0; i < json["accounts"].length; i++) {
+			this.Accounts.push(new Account().deserialize(json["accounts"][i]));
+		}
+
 		return this;
 	}
 
@@ -32,8 +41,15 @@ export class Me implements Serializable {
 			id: obj.Id,
 			email: obj.Email,
 			first_name: obj.FirstName,
-			last_name: obj.LastName
+			last_name: obj.LastName,
+			accounts: []
 		}
+
+		// Add in the accounts.
+		for (let i = 0; i < obj.Accounts.length; i++) {
+			rt.accounts.push(new Account().serialize(obj.Accounts[i]));
+		}
+
 		return rt;
 	}
 }
