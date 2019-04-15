@@ -7,6 +7,8 @@
 
 import { Component, OnInit } from '@angular/core';
 import { AlertController } from '@ionic/angular';
+import { MeService } from '../services/me.service';
+import { Me } from '../models/me.model';
 
 @Component({
 	selector: 'app-ledgers',
@@ -14,14 +16,29 @@ import { AlertController } from '@ionic/angular';
 })
 
 export class LedgersPage implements OnInit {
+	me: Me;
 	tabs: string = "ledgers";
 
 	//
 	// Constructor.
 	//
-	constructor(private alertController: AlertController) { }
+	constructor(private alertController: AlertController, private meService: MeService) { }
 
+	//
+	// NgInit
+	//
 	ngOnInit() {
+		this.loadMe();
+	}
+
+	//
+	// Load the data for logged in user.
+	//
+	loadMe() {
+		this.meService.get().subscribe(res => {
+			this.me = res;
+			console.log(res);
+		});
 	}
 
 	//
