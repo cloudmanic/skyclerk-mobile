@@ -23,6 +23,15 @@ export class MeService {
 	constructor(private http: HttpClient) { }
 
 	//
+	// Log user out.
+	//
+	logout() {
+		localStorage.removeItem('user_id');
+		localStorage.removeItem('account_id');
+		localStorage.removeItem('access_token');
+	}
+
+	//
 	// Get me
 	//
 	get(): Observable<Me> {

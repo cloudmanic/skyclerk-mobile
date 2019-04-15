@@ -9,6 +9,7 @@ import { Component, OnInit } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { MeService } from '../services/me.service';
 import { Me } from '../models/me.model';
+import { Router } from '@angular/router';
 
 @Component({
 	selector: 'app-ledgers',
@@ -22,7 +23,7 @@ export class LedgersPage implements OnInit {
 	//
 	// Constructor.
 	//
-	constructor(private alertController: AlertController, private meService: MeService) { }
+	constructor(private router: Router, private alertController: AlertController, private meService: MeService) { }
 
 	//
 	// NgInit
@@ -54,6 +55,14 @@ export class LedgersPage implements OnInit {
 	//
 	loadPageData() {
 		console.log("loading page data..." + localStorage.getItem('account_id'));
+	}
+
+	//
+	// Do Logout
+	//
+	doLogout() {
+		this.meService.logout();
+		this.router.navigate(['intro']);
 	}
 
 	//

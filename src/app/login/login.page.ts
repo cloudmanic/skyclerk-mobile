@@ -10,6 +10,7 @@ import { AuthService } from '../services/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+import { MeService } from '../services/me.service';
 
 @Component({
 	selector: 'app-login',
@@ -24,11 +25,9 @@ export class LoginPage {
 	//
 	// Construct.
 	//
-	constructor(private router: Router, private authService: AuthService, public alertController: AlertController) {
+	constructor(private meService: MeService, private router: Router, private authService: AuthService, public alertController: AlertController) {
 		// Clear all local storage
-		localStorage.removeItem('user_id');
-		localStorage.removeItem('account_id');
-		localStorage.removeItem('access_token');
+		this.meService.logout();
 	}
 
 	//
