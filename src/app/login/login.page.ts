@@ -27,6 +27,7 @@ export class LoginPage {
 	constructor(private router: Router, private authService: AuthService, public alertController: AlertController) {
 		// Clear all local storage
 		localStorage.removeItem('user_id');
+		localStorage.removeItem('account_id');
 		localStorage.removeItem('access_token');
 	}
 

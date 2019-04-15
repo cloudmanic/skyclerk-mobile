@@ -36,68 +36,67 @@ export class LedgersPage implements OnInit {
 	//
 	loadMe() {
 		this.meService.get().subscribe(res => {
+			// Set me data.
 			this.me = res;
-			console.log(res);
+
+			// If account_is is not set we need to set it.
+			if (!localStorage.getItem('account_id')) {
+				this.doAccountSwitch(this.me.Accounts[0].Id);
+			} else {
+				// Load page data.
+				this.loadPageData();
+			}
 		});
+	}
+
+	//
+	// Load data for page.
+	//
+	loadPageData() {
+		console.log("loading page data..." + localStorage.getItem('account_id'));
+	}
+
+	//
+	// Switch account.
+	//
+	doAccountSwitch(accountId: number) {
+		// Set the new account id in the localStorage
+		localStorage.setItem('account_id', accountId.toString());
+
+		// Load page data.
+		this.loadPageData();
 	}
 
 	//
 	// doAccounts - Show the accounts selector.
 	//
 	async doAccounts() {
+		// Build inputs
+		let inputs = []
+
+		for (let i = 0; i < this.me.Accounts.length; i++) {
+			let row = this.me.Accounts[i];
+
+			inputs.push({
+				name: 'radio' + i,
+				type: 'radio',
+				label: row.Name,
+				value: row.Id,
+				checked: false
+			});
+
+			inputs[0].checked = true;
+		}
+
+		// Show the alert.
 		const alert = await this.alertController.create({
-			header: 'Radio',
-			inputs: [
-				{
-					name: 'radio1',
-					type: 'radio',
-					label: 'Radio 1',
-					value: 'value1',
-					checked: true
-				},
-				{
-					name: 'radio2',
-					type: 'radio',
-					label: 'Radio 2',
-					value: 'value2'
-				},
-				{
-					name: 'radio3',
-					type: 'radio',
-					label: 'Radio 3',
-					value: 'value3'
-				},
-				{
-					name: 'radio4',
-					type: 'radio',
-					label: 'Radio 4',
-					value: 'value4'
-				},
-				{
-					name: 'radio5',
-					type: 'radio',
-					label: 'Radio 5',
-					value: 'value5'
-				},
-				{
-					name: 'radio6',
-					type: 'radio',
-					label: 'Radio 6 Radio 6 Radio 6 Radio 6 Radio 6 Radio 6 Radio 6 Radio 6 Radio 6 Radio 6 ',
-					value: 'value6'
-				}
-			],
+			header: 'Your Accounts',
+			inputs: inputs,
 			buttons: [
 				{
-					text: 'Cancel',
-					role: 'cancel',
-					cssClass: 'secondary',
-					handler: () => {
-						console.log('Confirm Cancel');
-					}
-				}, {
-					text: 'Ok',
-					handler: () => {
-						console.log('Confirm Ok');
+					text: 'Switch Account',
+					handler: (accountId) => {
+						this.doAccountSwitch(accountId);
 					}
 				}
 			]
