@@ -1,8 +1,8 @@
 {
-  "name": "SkyClerk",
+  "name": "Skyclerk",
   "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "https://ionicframework.com/",
+  "author": "Cloudmanic Labs, LLC",
+  "homepage": "https://skyclerk.com",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
