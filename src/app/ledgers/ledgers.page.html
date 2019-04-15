@@ -52,7 +52,6 @@
 			</ion-segment-button>
 		</ion-segment>
 	</ion-toolbar>
-
 </ion-header>
 
 
@@ -60,9 +59,15 @@
 
 
 	<div [ngSwitch]="tabs">
-		<div *ngSwitchCase="'ledger'" class="ledgers">
+		<div *ngSwitchCase="'ledger'" class="ledgers" [ngClass]="{ 'small-padding': (activeTableHeader == 'account') }">
 			<ion-grid tableViewGrid>
-				<ion-row class="table-header">
+				<ion-row class="table-header small-height" *ngIf="activeTableHeader == 'account'" (click)="dblTapLedgerHeader()">
+					<ion-item-divider mode="ios" *ngIf="(me.Accounts.length > 1)">
+						<ion-label style="margin: 0 auto; font-size: 13px;">{{ account.Name }}</ion-label>
+					</ion-item-divider>
+				</ion-row>
+
+				<ion-row class="table-header" *ngIf="activeTableHeader == 'cols'" (click)="activeTableHeader = 'account'">
 					<ion-col size="3">
 						Date
 					</ion-col>
@@ -74,7 +79,7 @@
 					</ion-col>
 				</ion-row>
 
-				<div class="scroll-tabel-content">
+				<div class="scroll-tabel-content" [ngClass]="{ 'small-padding': (activeTableHeader == 'account') }">
 					<ion-row class="warning">
 						<ion-col size="3">
 							<p class="date">

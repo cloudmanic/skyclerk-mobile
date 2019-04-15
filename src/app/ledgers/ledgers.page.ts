@@ -10,6 +10,7 @@ import { AlertController } from '@ionic/angular';
 import { MeService } from '../services/me.service';
 import { Me } from '../models/me.model';
 import { Router } from '@angular/router';
+import { Account } from '../models/account.model';
 
 @Component({
 	selector: 'app-ledgers',
@@ -19,7 +20,10 @@ import { Router } from '@angular/router';
 export class LedgersPage implements OnInit {
 	me: Me;
 	tabs: string = "ledger";
+	account: Account = new Account();
+	activeTableHeader: string = "";
 	dblTapDoAccountCount: number = 0;
+	dblTapLedgerHeaderCount: number = 0;
 
 	receipts = [
 		{ img: "thumb-01.png", dm: "May 13", year: "2018", title: "Chevron", cate: "Gas" },
@@ -53,10 +57,23 @@ export class LedgersPage implements OnInit {
 			// Set me data.
 			this.me = res;
 
+			// Set if we have more than one account or not
+			if (this.me.Accounts.length > 1) {
+				this.activeTableHeader = "account";
+			} else {
+				this.activeTableHeader = "cols";
+			}
+
+			// Set get the active account from local storeage
+			let accountId = localStorage.getItem('account_id');
+
 			// If account_is is not set we need to set it.
-			if (!localStorage.getItem('account_id')) {
+			if (!accountId) {
 				this.doAccountSwitch(this.me.Accounts[0].Id);
 			} else {
+				// Set the active account.
+				this.setActiveAccount(Number(accountId));
+
 				// Load page data.
 				this.loadPageData();
 			}
@@ -86,8 +103,32 @@ export class LedgersPage implements OnInit {
 		// Set the new account id in the localStorage
 		localStorage.setItem('account_id', accountId.toString());
 
+		// Set the active account.
+		this.setActiveAccount(accountId);
+
 		// Load page data.
 		this.loadPageData();
+	}
+
+	//
+	// Double tap ledger header
+	//
+	dblTapLedgerHeader() {
+		this.dblTapLedgerHeaderCount++;
+
+		setTimeout(() => {
+			if (this.dblTapLedgerHeaderCount == 1) {
+				this.dblTapLedgerHeaderCount = 0;
+
+				// Switch to the table columns.
+				this.activeTableHeader = "cols";
+			} if (this.dblTapLedgerHeaderCount > 1) {
+				this.dblTapLedgerHeaderCount = 0;
+
+				// Show the accounts selectors
+				this.doAccounts();
+			}
+		}, 250);
 	}
 
 	//
@@ -104,6 +145,18 @@ export class LedgersPage implements OnInit {
 				this.doAccounts();
 			}
 		}, 250);
+	}
+
+	//
+	// Set active account
+	//
+	setActiveAccount(accountId: number) {
+		// Set the account
+		for (let i = 0; i < this.me.Accounts.length; i++) {
+			if (this.me.Accounts[i].Id == accountId) {
+				this.account = this.me.Accounts[i];
+			}
+		}
 	}
 
 	//

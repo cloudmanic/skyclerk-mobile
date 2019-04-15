@@ -271,6 +271,10 @@ ion-item {
     width: 100%;
     padding: 44px 0;
 
+    &.small-padding {
+      padding: 30px 0;
+    }
+
     .table-header {
         height: 44px;
         position: absolute;
@@ -284,6 +288,9 @@ ion-item {
         height: calc(100% - 88px);
         width: 100%;
         overflow: auto;
+        &.small-padding {
+          height: calc(100% - 75px);
+        }
     }
 
     .footer {
@@ -294,6 +301,10 @@ ion-item {
         width: 100%;
         margin: 0;
         border: none;
+    }
+
+    .small-height {
+      height: 30px;
     }
 }
 
