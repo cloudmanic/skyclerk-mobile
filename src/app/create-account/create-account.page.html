@@ -1,45 +1,47 @@
 <ion-content padding income>
 
-  <div class="form-content">
-    <h3 text-center>
-      Create your
-      <span>FREE</span>
-      <br> SkyClerk Account</h3>
-    <ion-list lines="none" login-form-list mode="ios">
+	<div class="form-content">
+		<h3 text-center>
+			Create your
+			<span>FREE</span>
+			<br> SkyClerk Account</h3>
+		<ion-list lines="none" login-form-list mode="ios">
 
-      <ion-item>
-        <ion-label position="stacked">Name *</ion-label>
-        <ion-input type="text"></ion-input>
-      </ion-item>
+			<ion-item>
+				<ion-label position="stacked">Name *</ion-label>
+				<ion-input type="text"></ion-input>
+			</ion-item>
 
-      <ion-item>
-        <ion-label position="stacked">Email Address *</ion-label>
-        <ion-input type="email"></ion-input>
-      </ion-item>
+			<ion-item>
+				<ion-label position="stacked">Email Address *</ion-label>
+				<ion-input type="email"></ion-input>
+			</ion-item>
 
-      <ion-item>
-        <ion-label position="stacked">Password *</ion-label>
-        <ion-input type="password"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="stacked">Confirm Password *</ion-label>
-        <ion-input type="password"></ion-input>
-      </ion-item>
+			<ion-item>
+				<ion-label position="stacked">Password *</ion-label>
+				<ion-input type="password"></ion-input>
+			</ion-item>
+			<ion-item>
+				<ion-label position="stacked">Confirm Password *</ion-label>
+				<ion-input type="password"></ion-input>
+			</ion-item>
 
-    </ion-list>
-    <ion-button button-success size="large" button-custom expand="block" mode="ios" (click)="openSelectAnAccountPage()" text-large>Create Account <img src="assets/imgs/d-arrow.svg" img-right alt=""></ion-button>
-  </div>
+		</ion-list>
+		<ion-button button-success size="large" button-custom expand="block" mode="ios" (click)="openSelectAnAccountPage()" text-large>Create Account <img src="assets/imgs/d-arrow.svg" img-right alt=""></ion-button>
+	</div>
 
 </ion-content>
 <ion-footer no-border mode="md">
-  <ion-toolbar color="dark" mode="md">
-    <ion-buttons slot="start">
-      <ion-button fill="clear" mode="ios" text-uppercase color="light" routerLink="/intro">« Cancel and go Back</ion-button>
-    </ion-buttons>
-    <ion-buttons slot="end">
-      <div class="bar-logo">
-        <img src="assets/imgs/logo-small.svg" alt="">
-      </div>
-    </ion-buttons>
-  </ion-toolbar>
+	<ion-toolbar color="dark" mode="md">
+		<ion-buttons slot="start">
+			<ion-button fill="clear" mode="ios" text-uppercase color="light" routerLink="/intro" routerDirection="back">
+				« Cancel and go Back
+			</ion-button>
+		</ion-buttons>
+		<ion-buttons slot="end">
+			<div class="bar-logo">
+				<img src="assets/imgs/logo-small.svg" alt="">
+			</div>
+		</ion-buttons>
+	</ion-toolbar>
 </ion-footer>
