@@ -1,6 +1,5 @@
 export const environment = {
 	production: true,
-	client_id: "XL8TeRGBdsUvvM3",
-	//app_server: "https://app.skyclerk.com",
-	app_server: "http://192.168.1.100:9090",
+	client_id: "tggbdwRHPNPg&H/6QZ9eQtAxo",
+	app_server: "https://app.skyclerk.com"
 };
