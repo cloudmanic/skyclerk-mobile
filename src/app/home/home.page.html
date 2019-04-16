@@ -83,17 +83,17 @@
 				<div class="scroll-tabel-content" [ngClass]="{ 'small-padding': (activeTableHeader == 'account') }">
 
 					<ion-row *ngFor="let row of ledgers" [ngClass]="{ 'danger': (row.Amount < 0) }">
-						<ion-col size="3">
+						<ion-col size="2">
 							<p class="date">
 								<small>{{ row.Date | date:'MMM dd' }}</small>
 								<br>{{ row.Date | date:'yyyy' }}</p>
 						</ion-col>
-						<ion-col size="4">
+						<ion-col size="6" class="size-sm">
 							<p class="vendor">
 								{{ row.Contact.Name }}
 								<br>
 								<a>
-									<small>View & Edit</small>
+									<small>{{ row.Category.Name }}</small>
 								</a>
 							</p>
 						</ion-col>
@@ -113,7 +113,6 @@
 						<p class="total-amount">+ $25,191.07</p>
 					</ion-col>
 				</ion-row>
-
 
 			</ion-grid>
 		</div>

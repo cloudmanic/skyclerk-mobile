@@ -96,7 +96,6 @@ export class HomePage implements OnInit {
 	loadLedgerData() {
 		this.ledgerService.get().subscribe(res => {
 			this.ledgers = res;
-			console.log(this.ledgers);
 		});
 	}
 

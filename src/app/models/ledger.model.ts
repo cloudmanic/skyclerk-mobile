@@ -8,6 +8,7 @@
 import * as moment from 'moment';
 import { Serializable } from './serializable.model';
 import { Contact } from './contact.model';
+import { Category } from './category.model';
 
 export class Ledger implements Serializable {
 	Id: number;
@@ -16,6 +17,7 @@ export class Ledger implements Serializable {
 	Amount: number;
 	Note: string;
 	Contact: Contact;
+	Category: Category;
 
 	//
 	// Json to Object.
@@ -27,6 +29,7 @@ export class Ledger implements Serializable {
 		this.Amount = json["amount"];
 		this.Note = json["note"];
 		this.Contact = new Contact().deserialize(json["contact"]);
+		this.Category = new Category().deserialize(json["category"]);
 		return this;
 	}
 
@@ -40,7 +43,8 @@ export class Ledger implements Serializable {
 			date: obj.Date,
 			amount: obj.Amount,
 			note: obj.Note,
-			contact: new Contact().serialize(obj.Contact)
+			contact: new Contact().serialize(obj.Contact),
+			category: new Category().serialize(obj.Category)
 		}
 		return rt;
 	}
