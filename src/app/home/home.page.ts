@@ -12,6 +12,7 @@ import { Me } from '../models/me.model';
 import { Router } from '@angular/router';
 import { Account } from '../models/account.model';
 import { LedgerService } from '../services/ledger.service';
+import { Ledger } from '../models/ledger.model';
 
 @Component({
 	selector: 'app-home',
@@ -21,6 +22,7 @@ import { LedgerService } from '../services/ledger.service';
 export class HomePage implements OnInit {
 	me: Me;
 	tabs: string = "ledger";
+	ledgers: Ledger[] = [];
 	account: Account = new Account();
 	activeTableHeader: string = "";
 	dblTapDoAccountCount: number = 0;
@@ -93,7 +95,8 @@ export class HomePage implements OnInit {
 	//
 	loadLedgerData() {
 		this.ledgerService.get().subscribe(res => {
-			console.log(res);
+			this.ledgers = res;
+			console.log(this.ledgers);
 		});
 	}
 

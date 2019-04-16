@@ -411,16 +411,16 @@ ion-grid {
                     }
                 }
 
-                &:nth-child(odd) {
+                &:nth-child(even) {
                     background: $t_odd;
 
                     &.warning {
                         background: #f5f1d9;
                     }
 
-                    &.danger {
-                        background: #fff1f1;
-                    }
+                    // &.danger {
+                    //     background: #fff1f1;
+                    // }
                 }
 
                 &.table-header {

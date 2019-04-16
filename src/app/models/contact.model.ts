@@ -5,17 +5,15 @@
 // Copyright: 2019 Cloudmanic Labs, LLC. All rights reserved.
 //
 
-import * as moment from 'moment';
 import { Serializable } from './serializable.model';
-import { Contact } from './contact.model';
 
-export class Ledger implements Serializable {
+export class Contact implements Serializable {
 	Id: number;
 	AccountId: number;
-	Date: Date;
-	Amount: number;
-	Note: string;
-	Contact: Contact;
+	Name: string;
+	FirstName: string;
+	LastName: string;
+	Email: string;
 
 	//
 	// Json to Object.
@@ -23,24 +21,24 @@ export class Ledger implements Serializable {
 	deserialize(json: Object): this {
 		this.Id = json["id"];
 		this.AccountId = json["account_id"];
-		this.Date = moment(json["date"]).toDate();
-		this.Amount = json["amount"];
-		this.Note = json["note"];
-		this.Contact = new Contact().deserialize(json["contact"]);
+		this.Name = json["name"];
+		this.FirstName = json["first_name"];
+		this.LastName = json["last_name"];
+		this.Email = json["email"];
 		return this;
 	}
 
 	//
 	// Model to JS Object.
 	//
-	serialize(obj: Ledger): Object {
+	serialize(obj: Contact): Object {
 		let rt = {
 			id: obj.Id,
 			account_id: obj.AccountId,
-			date: obj.Date,
-			amount: obj.Amount,
-			note: obj.Note,
-			contact: new Contact().serialize(obj.Contact)
+			name: obj.Name,
+			first_name: obj.FirstName,
+			last_name: obj.LastName,
+			email: obj.Email
 		}
 		return rt;
 	}
