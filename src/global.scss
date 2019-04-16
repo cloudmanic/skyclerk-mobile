@@ -10,8 +10,6 @@
 @import '~@ionic/angular/css/text-transformation.css';
 @import '~@ionic/angular/css/flex-utils.css';
 
-
-
 // Colors
 $primary:#065182;
 $lblue:#1181c3;
@@ -36,8 +34,6 @@ $t_head:#cdcdcd;
 $t_odd:#f7f7f7;
 
 
-
-
 // Shadows
 $t_shadow:0px 1px 0px rgba(0, 0, 0, 0.45);
 $t_shadow_white: 0px 1px 0px rgba(255, 255, 255, 0.4);
@@ -50,7 +46,6 @@ $boxshadow: 0px 2px 0px 0px rgba(146, 41, 38, 0.004);
 
 // Pettern
 $bg_pattern:url(assets/imgs/bg-pettern.jpg);
-
 
 ion-row{
     &[lrm]{
@@ -1019,4 +1014,43 @@ app-view-attachment {
             }
         }
     }
+}
+
+app-settings {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  padding: 30px 0;
+  background: var(--ion-color-step-50,#f2f2f2);
+  overflow: scroll;
+
+  ion-label {
+    margin-left: 20px;
+  }
+
+  ion-button {
+      color: $white !important;
+      font-size: 14px;
+      text-shadow: $t_shadow;
+      --padding-start: 14px;
+      --padding-end: 14px;
+      border-radius: 4px;
+      --border-radius: 4px;
+
+      &.gray {
+          --background: linear-gradient(0deg, #4b4b4b 0%, #606468 100%);
+          --background-activated: linear-gradient(0deg, #353535 0%, #717477 100%);
+      }
+
+      &.danger {
+          --background: linear-gradient(0deg, #a73632 0%, #bd4743 100%);
+          --background-activated: linear-gradient(0deg, #80211e 0%, #a0322f 100%);
+      }
+
+      &.success {
+          --background: linear-gradient(0deg, #678250 0%, #77965c 100%);
+          --background-activated: linear-gradient(0deg, #4d6439 0%, #597541 100%);
+      }
+  }
+
 }

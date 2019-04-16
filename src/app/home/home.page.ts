@@ -6,13 +6,15 @@
 //
 
 import { Component, OnInit } from '@angular/core';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 import { MeService } from '../services/me.service';
 import { Me } from '../models/me.model';
 import { Router } from '@angular/router';
 import { Account } from '../models/account.model';
 import { LedgerService } from '../services/ledger.service';
 import { Ledger } from '../models/ledger.model';
+import { SettingsComponent } from '../settings/settings.component';
+import { SelectAnAccountPage } from '../select-an-account/select-an-account.page';
 
 @Component({
 	selector: 'app-home',
@@ -43,7 +45,7 @@ export class HomePage implements OnInit {
 	//
 	// Constructor.
 	//
-	constructor(private router: Router, private alertController: AlertController, private meService: MeService, private ledgerService: LedgerService) { }
+	constructor(private router: Router, private alertController: AlertController, private modalController: ModalController, private meService: MeService, private ledgerService: LedgerService) { }
 
 	//
 	// NgInit
@@ -100,12 +102,19 @@ export class HomePage implements OnInit {
 	}
 
 	//
-	// Do Logout
+	// Do settings
 	//
-	doLogout() {
-		setTimeout(() => { this.tabs = "ledger"; }, 250);
-		this.meService.logout();
-		this.router.navigate(['intro']);
+	async doSettings() {
+		// Create a modal using MyModalComponent with some initial data
+		const modal = await this.modalController.create({
+			component: SelectAnAccountPage,
+			componentProps: {
+				'prop1': "ff",
+				'prop2': "fff333"
+			}
+		});
+
+		return await modal.present();
 	}
 
 	//

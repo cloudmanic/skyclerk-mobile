@@ -8,19 +8,19 @@ import { IonicModule } from '@ionic/angular';
 import { SelectAnAccountPage } from './select-an-account.page';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: SelectAnAccountPage
-  }
+	{
+		path: '',
+		component: SelectAnAccountPage
+	}
 ];
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    RouterModule.forChild(routes)
-  ],
-  declarations: [SelectAnAccountPage]
+	imports: [
+		CommonModule,
+		FormsModule,
+		IonicModule,
+		RouterModule.forChild(routes)
+	],
+	declarations: [SelectAnAccountPage]
 })
-export class SelectAnAccountPageModule {}
+export class SelectAnAccountPageModule { }
