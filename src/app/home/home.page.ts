@@ -11,6 +11,7 @@ import { MeService } from '../services/me.service';
 import { Me } from '../models/me.model';
 import { Router } from '@angular/router';
 import { Account } from '../models/account.model';
+import { LedgerService } from '../services/ledger.service';
 
 @Component({
 	selector: 'app-home',
@@ -40,7 +41,7 @@ export class HomePage implements OnInit {
 	//
 	// Constructor.
 	//
-	constructor(private router: Router, private alertController: AlertController, private meService: MeService) { }
+	constructor(private router: Router, private alertController: AlertController, private meService: MeService, private ledgerService: LedgerService) { }
 
 	//
 	// NgInit
@@ -84,7 +85,16 @@ export class HomePage implements OnInit {
 	// Load data for page.
 	//
 	loadPageData() {
-		console.log("loading page data..." + localStorage.getItem('account_id'));
+		this.loadLedgerData();
+	}
+
+	//
+	// Load Ledger data
+	//
+	loadLedgerData() {
+		this.ledgerService.get().subscribe(res => {
+			console.log(res);
+		});
 	}
 
 	//

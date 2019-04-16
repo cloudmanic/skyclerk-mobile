@@ -14,6 +14,7 @@ import { HttpClientModule } from '@angular/common/http';
 // Services
 import { AuthService } from './services/auth.service';
 import { TokenInterceptor } from './services/token.interceptor';
+import { LedgerService } from './services/ledger.service';
 
 @NgModule({
 	declarations: [AppComponent],
@@ -28,6 +29,7 @@ import { TokenInterceptor } from './services/token.interceptor';
 		StatusBar,
 		SplashScreen,
 		AuthService,
+		LedgerService,
 		{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
 		{ provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
 	],

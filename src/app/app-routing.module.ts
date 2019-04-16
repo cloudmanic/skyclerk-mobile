@@ -1,3 +1,10 @@
+//
+// Date: 2019-04-14
+// Author: Spicer Matthews (spicer@skyclerk.com)
+// Last Modified by: Spicer Matthews
+// Copyright: 2019 Cloudmanic Labs, LLC. All rights reserved.
+//
+
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { SessionGuard } from './services/auth.guard';
@@ -25,3 +32,5 @@ const routes: Routes = [
 	exports: [RouterModule]
 })
 export class AppRoutingModule { }
+
+/* End File */
