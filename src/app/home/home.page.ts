@@ -9,11 +9,9 @@ import { Component, OnInit } from '@angular/core';
 import { AlertController, ModalController } from '@ionic/angular';
 import { MeService } from '../services/me.service';
 import { Me } from '../models/me.model';
-import { Router } from '@angular/router';
 import { Account } from '../models/account.model';
 import { LedgerService } from '../services/ledger.service';
 import { Ledger } from '../models/ledger.model';
-import { SettingsComponent } from '../settings/settings.component';
 import { SelectAnAccountPage } from '../select-an-account/select-an-account.page';
 
 @Component({
@@ -45,7 +43,7 @@ export class HomePage implements OnInit {
 	//
 	// Constructor.
 	//
-	constructor(private router: Router, private alertController: AlertController, private modalController: ModalController, private meService: MeService, private ledgerService: LedgerService) { }
+	constructor(private alertController: AlertController, private modalController: ModalController, private meService: MeService, private ledgerService: LedgerService) { }
 
 	//
 	// NgInit
@@ -216,6 +214,13 @@ export class HomePage implements OnInit {
 		});
 
 		await alert.present();
+	}
+
+	//
+	// When Ledger table header click
+	//
+	doLegerTableHeaderChange(show: string) {
+		this.activeTableHeader = show;
 	}
 }
 

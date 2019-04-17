@@ -75,23 +75,14 @@
 		<!-- ledger -->
 		<div *ngSwitchCase="'ledger'" class="ledgers" [ngClass]="{ 'small-padding': (activeTableHeader == 'account') }">
 			<ion-grid tableViewGrid>
+
 				<ion-row class="table-header small-height" *ngIf="activeTableHeader == 'account'" (click)="dblTapLedgerHeader()">
 					<ion-item-divider mode="ios" *ngIf="(me.Accounts.length > 1)">
 						<ion-label style="margin: 0 auto; font-size: 13px;">{{ account.Name }}</ion-label>
 					</ion-item-divider>
 				</ion-row>
 
-				<ion-row class="table-header" *ngIf="activeTableHeader == 'cols'" (click)="activeTableHeader = 'account'">
-					<ion-col size="3">
-						Date
-					</ion-col>
-					<ion-col size="4">
-						Vendor
-					</ion-col>
-					<ion-col text-right>
-						Amount
-					</ion-col>
-				</ion-row>
+				<app-ledger-list-header *ngIf="activeTableHeader == 'cols'" (toggleHeader)="doLegerTableHeaderChange($event)"></app-ledger-list-header>
 
 				<div class="scroll-tabel-content" [ngClass]="{ 'small-padding': (activeTableHeader == 'account') }">
 					<app-ledger-list [ledgers]="ledgers"></app-ledger-list>
@@ -141,22 +132,19 @@
 				Your Search Results for
 				<p>“Office”</p>
 			</div>
+
 			<ion-grid search tableViewGrid>
-				<ion-row class="table-header">
-					<ion-col size="2">
-						Date
-					</ion-col>
-					<ion-col size="4">
-						Vendor
-					</ion-col>
-					<ion-col text-right>
-						Amount
-					</ion-col>
-					<ion-col size="1"></ion-col>
+				<ion-row class="table-header small-height" *ngIf="activeTableHeader == 'account'" (click)="dblTapLedgerHeader()">
+					<ion-item-divider mode="ios" *ngIf="(me.Accounts.length > 1)">
+						<ion-label style="margin: 0 auto; font-size: 13px;">{{ account.Name }}</ion-label>
+					</ion-item-divider>
 				</ion-row>
+
+				<app-ledger-list-header *ngIf="activeTableHeader == 'cols'" (toggleHeader)="doLegerTableHeaderChange($event)"></app-ledger-list-header>
 
 				<app-ledger-list [ledgers]="ledgers"></app-ledger-list>
 			</ion-grid>
+
 		</div>
 
 		<!-- settings -->
