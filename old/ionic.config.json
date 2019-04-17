@@ -1,7 +1,0 @@
-{
-  "name": "SkyClerkApp",
-  "integrations": {
-    "cordova": {}
-  },
-  "type": "ionic-angular"
-}
