@@ -14,7 +14,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 export class ListHeaderComponent implements OnInit {
 	@Input() activeTableHeader: string = "";
-	@Output() toggleHeader: EventEmitter<any> = new EventEmitter<any>();
+	@Output() toggleHeader: EventEmitter<string> = new EventEmitter<string>();
 
 	//
 	// Constructor

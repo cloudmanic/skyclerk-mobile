@@ -16,6 +16,7 @@ import { HomePage } from './home.page';
 import { SettingsComponent } from '../settings/settings.component';
 import { ListComponent } from '../ledger/list/list.component';
 import { ListHeaderComponent } from '../ledger/list-header/list-header.component';
+import { AccountHeaderComponent } from './account-header/account-header.component';
 
 const routes: Routes = [
 	{
@@ -31,7 +32,7 @@ const routes: Routes = [
 		IonicModule,
 		RouterModule.forChild(routes)
 	],
-	declarations: [HomePage, SettingsComponent, ListComponent, ListHeaderComponent]
+	declarations: [HomePage, SettingsComponent, ListComponent, ListHeaderComponent, AccountHeaderComponent]
 })
 export class HomePageModule { }
 

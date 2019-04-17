@@ -5,14 +5,13 @@
 // Copyright: 2019 Cloudmanic Labs, LLC. All rights reserved.
 //
 
-import { Component, OnInit } from '@angular/core';
-import { AlertController, ModalController } from '@ionic/angular';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MeService } from '../services/me.service';
 import { Me } from '../models/me.model';
 import { Account } from '../models/account.model';
 import { LedgerService } from '../services/ledger.service';
 import { Ledger } from '../models/ledger.model';
-import { SelectAnAccountPage } from '../select-an-account/select-an-account.page';
+import { AccountHeaderComponent } from './account-header/account-header.component';
 
 @Component({
 	selector: 'app-home',
@@ -25,8 +24,9 @@ export class HomePage implements OnInit {
 	ledgers: Ledger[] = [];
 	account: Account = new Account();
 	activeTableHeader: string = "";
-	dblTapDoAccountCount: number = 0;
-	dblTapLedgerHeaderCount: number = 0;
+	dblTapFooterLogoCount: number = 0;
+
+	@ViewChild(AccountHeaderComponent) accountHeaderComponent;
 
 	receipts = [
 		{ img: "thumb-01.png", dm: "May 13", year: "2018", title: "Chevron", cate: "Gas" },
@@ -43,7 +43,7 @@ export class HomePage implements OnInit {
 	//
 	// Constructor.
 	//
-	constructor(private alertController: AlertController, private modalController: ModalController, private meService: MeService, private ledgerService: LedgerService) { }
+	constructor(private meService: MeService, private ledgerService: LedgerService) { }
 
 	//
 	// NgInit
@@ -72,7 +72,7 @@ export class HomePage implements OnInit {
 
 			// If account_is is not set we need to set it.
 			if (!accountId) {
-				this.doAccountSwitch(this.me.Accounts[0].Id);
+				this.doAccountChange(this.me.Accounts[0].Id);
 			} else {
 				// Set the active account.
 				this.setActiveAccount(Number(accountId));
@@ -100,73 +100,6 @@ export class HomePage implements OnInit {
 	}
 
 	//
-	// Do settings
-	//
-	async doSettings() {
-		// Create a modal using MyModalComponent with some initial data
-		const modal = await this.modalController.create({
-			component: SelectAnAccountPage,
-			componentProps: {
-				'prop1': "ff",
-				'prop2': "fff333"
-			}
-		});
-
-		return await modal.present();
-	}
-
-	//
-	// Switch account.
-	//
-	doAccountSwitch(accountId: number) {
-		// Set the new account id in the localStorage
-		localStorage.setItem('account_id', accountId.toString());
-
-		// Set the active account.
-		this.setActiveAccount(accountId);
-
-		// Load page data.
-		this.loadPageData();
-	}
-
-	//
-	// Double tap ledger header
-	//
-	dblTapLedgerHeader() {
-		this.dblTapLedgerHeaderCount++;
-
-		setTimeout(() => {
-			if (this.dblTapLedgerHeaderCount == 1) {
-				this.dblTapLedgerHeaderCount = 0;
-
-				// Switch to the table columns.
-				this.activeTableHeader = "cols";
-			} if (this.dblTapLedgerHeaderCount > 1) {
-				this.dblTapLedgerHeaderCount = 0;
-
-				// Show the accounts selectors
-				this.doAccounts();
-			}
-		}, 250);
-	}
-
-	//
-	// Double tap to trigger do accounts.
-	//
-	dblTapDoAccount() {
-		this.dblTapDoAccountCount++;
-
-		setTimeout(() => {
-			if (this.dblTapDoAccountCount == 1) {
-				this.dblTapDoAccountCount = 0;
-			} if (this.dblTapDoAccountCount > 1) {
-				this.dblTapDoAccountCount = 0;
-				this.doAccounts();
-			}
-		}, 250);
-	}
-
-	//
 	// Set active account
 	//
 	setActiveAccount(accountId: number) {
@@ -179,41 +112,34 @@ export class HomePage implements OnInit {
 	}
 
 	//
-	// doAccounts - Show the accounts selector.
+	// Do footer logo click
 	//
-	async doAccounts() {
-		// Build inputs
-		let inputs = []
+	doFooterLogoClick() {
+		this.dblTapFooterLogoCount++;
 
-		for (let i = 0; i < this.me.Accounts.length; i++) {
-			let row = this.me.Accounts[i];
+		setTimeout(() => {
+			if (this.dblTapFooterLogoCount == 1) {
+				this.dblTapFooterLogoCount = 0;
+			} if (this.dblTapFooterLogoCount > 1) {
+				this.dblTapFooterLogoCount = 0;
 
-			inputs.push({
-				name: 'radio' + i,
-				type: 'radio',
-				label: row.Name,
-				value: row.Id,
-				checked: false
-			});
-
-			inputs[0].checked = true;
-		}
-
-		// Show the alert.
-		const alert = await this.alertController.create({
-			header: 'Your Accounts',
-			inputs: inputs,
-			buttons: [
-				{
-					text: 'Switch Account',
-					handler: (accountId) => {
-						this.doAccountSwitch(accountId);
-					}
+				// No need to do this if we only have one account.
+				if (this.me.Accounts.length > 1) {
+					this.accountHeaderComponent.doAccounts();
 				}
-			]
-		});
+			}
+		}, 250);
+	}
 
-		await alert.present();
+	//
+	// Do account change.
+	//
+	doAccountChange(accountId: number) {
+		// Set the active account.
+		this.setActiveAccount(accountId);
+
+		// Load page data.
+		this.loadPageData();
 	}
 
 	//
@@ -223,5 +149,6 @@ export class HomePage implements OnInit {
 		this.activeTableHeader = show;
 	}
 }
+
 
 /* End File */
