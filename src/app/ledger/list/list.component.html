@@ -1,0 +1,19 @@
+<ion-row *ngFor="let row of ledgers" [ngClass]="{ 'danger': (row.Amount < 0) }">
+	<ion-col size="2">
+		<p class="date">
+			<small>{{ row.Date | date:'MMM dd' }}</small>
+			<br>{{ row.Date | date:'yyyy' }}</p>
+	</ion-col>
+	<ion-col size="6" class="size-sm">
+		<p class="vendor">
+			{{ row.Contact.Name }}
+			<br>
+			<a>
+				<small>{{ row.Category.Name }}</small>
+			</a>
+		</p>
+	</ion-col>
+	<ion-col text-right>
+		<div class="amount">{{ row.Amount | currency }}</div>
+	</ion-col>
+</ion-row>
