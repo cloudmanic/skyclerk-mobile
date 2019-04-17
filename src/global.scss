@@ -531,7 +531,6 @@ ion-footer {
 
 [income] {
 
-
     .button-container {
         // height: 14vh;
         display: -webkit-box;
@@ -546,6 +545,8 @@ ion-footer {
     }
 
     .form-content {
+        margin-top: var(--ion-safe-area-top,0);
+        // margin-top: 30px;
         background: $dark;
         padding: 16px;
         -webkit-box-shadow: $form_shadow;

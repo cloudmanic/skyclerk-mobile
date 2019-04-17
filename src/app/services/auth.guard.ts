@@ -29,7 +29,7 @@ export class SessionGuard implements CanActivate {
 		}
 
 		// Not logged in so redirect to login page with the return url
-		this.router.navigate(['login'], { queryParams: { redirect_to: state.url } });
+		this.router.navigate(['intro'], { queryParams: { redirect_to: state.url } });
 		return false;
 	}
 }
