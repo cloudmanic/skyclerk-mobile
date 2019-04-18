@@ -9,9 +9,9 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MeService } from '../services/me.service';
 import { Me } from '../models/me.model';
 import { Account } from '../models/account.model';
-import { LedgerService } from '../services/ledger.service';
-import { Ledger } from '../models/ledger.model';
+import { LedgerService, LedgerResponse } from '../services/ledger.service';
 import { AccountHeaderComponent } from './account-header/account-header.component';
+import { Ledger } from '../models/ledger.model';
 
 @Component({
 	selector: 'app-home',
@@ -21,6 +21,8 @@ import { AccountHeaderComponent } from './account-header/account-header.componen
 export class HomePage implements OnInit {
 	me: Me;
 	tabs: string = "ledger";
+	ledgerLastPage: boolean = false;
+	ledgersPage: number = 1;
 	ledgers: Ledger[] = [];
 	account: Account = new Account();
 	activeTableHeader: string = "";
@@ -94,9 +96,27 @@ export class HomePage implements OnInit {
 	// Load Ledger data
 	//
 	loadLedgerData() {
-		this.ledgerService.get().subscribe(res => {
-			this.ledgers = res;
+		this.ledgerService.get(this.ledgersPage).subscribe(res => {
+			// This is a hack because we typically append instead of showing a new page.
+			if (this.ledgersPage <= 1) {
+				this.ledgers = res.Data;
+			} else {
+				for (let i = 0; i < res.Data.length; i++) {
+					this.ledgers.push(res.Data[i]);
+				}
+			}
+
+			// Update last page flag.
+			this.ledgerLastPage = res.LastPage;
 		});
+	}
+
+	//
+	// Load more ledger items
+	//
+	loadMoreLedgers() {
+		this.ledgersPage++;
+		this.loadLedgerData();
 	}
 
 	//
@@ -137,6 +157,9 @@ export class HomePage implements OnInit {
 	doAccountChange(accountId: number) {
 		// Set the active account.
 		this.setActiveAccount(accountId);
+
+		// Reset ledger page count.
+		this.ledgersPage = 1;
 
 		// Load page data.
 		this.loadPageData();

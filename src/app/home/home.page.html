@@ -81,7 +81,7 @@
 				<app-ledger-list-header *ngIf="activeTableHeader == 'cols'" (toggleHeader)="doLegerTableHeaderChange($event)"></app-ledger-list-header>
 
 				<div class="scroll-tabel-content" [ngClass]="{ 'small-padding': (activeTableHeader == 'account') }">
-					<app-ledger-list [ledgers]="ledgers"></app-ledger-list>
+					<app-ledger-list [ledgers]="ledgers" [lastPage]="ledgerLastPage" (loadMore)="loadMoreLedgers($event)"></app-ledger-list>
 				</div>
 
 				<ion-row class="footer">
@@ -133,7 +133,7 @@
 
 				<app-ledger-list-header *ngIf="activeTableHeader == 'cols'" (toggleHeader)="doLegerTableHeaderChange($event)"></app-ledger-list-header>
 
-				<app-ledger-list [ledgers]="ledgers"></app-ledger-list>
+				<app-ledger-list [ledgers]="ledgers" [lastPage]="ledgerLastPage" (loadMore)="loadMoreLedgers($event)"></app-ledger-list>
 			</ion-grid>
 
 		</div>

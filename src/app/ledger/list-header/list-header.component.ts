@@ -32,7 +32,6 @@ export class ListHeaderComponent implements OnInit {
 	doTableHeaderClick() {
 		this.toggleHeader.emit('account');
 	}
-
 }
 
 /* End File */
