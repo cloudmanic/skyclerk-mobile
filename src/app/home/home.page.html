@@ -100,24 +100,13 @@
 		<!-- snapclerk -->
 		<div *ngSwitchCase="'snapclerk'">
 			<ion-list lines="full" mode="ios">
-				<ion-grid search tableViewGrid>
+
+				<ion-grid tableViewGrid>
 					<app-home-account-header (accountChange)="doAccountChange($event)" [me]="me" [account]="account"></app-home-account-header>
+
+					<app-snapclerk-list [snapclerks]="snapclerks"></app-snapclerk-list>
 				</ion-grid>
 
-				<ion-item *ngFor="let r of receipts" mode="ios">
-					<ion-thumbnail slot="start">
-						<img src="assets/imgs/{{r.img}}">
-					</ion-thumbnail>
-					<ion-label slot="start" class="date">
-						<strong>{{r.dm}}</strong> <br>
-						{{r.year}}
-					</ion-label>
-					<ion-label>
-						<h2>{{r.title}}</h2>
-						<p>{{r.cate}}</p>
-					</ion-label>
-					<ion-button mode="ios" size="small" color="success" slot="end">Processed</ion-button>
-				</ion-item>
 			</ion-list>
 		</div>
 

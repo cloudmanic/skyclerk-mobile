@@ -6,7 +6,6 @@
 //
 
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { LedgerResponse } from 'src/app/services/ledger.service';
 import { Ledger } from 'src/app/models/ledger.model';
 
 @Component({

@@ -1,0 +1,27 @@
+<ion-row *ngFor="let row of snapclerks" justify-content-between>
+	<ion-col size="2">
+		<ion-thumbnail>
+			<img src="{{ row.File.Thumb600By600Url }}" />
+		</ion-thumbnail>
+	</ion-col>
+
+	<ion-col size="2">
+		<p class="date">
+			<small>{{ row.CreatedAt | date:'MMM dd' }}</small>
+			<br>{{ row.CreatedAt | date:'yyyy' }}</p>
+	</ion-col>
+
+	<ion-col class="size-sm">
+		<p class="vendor">
+			{{ row.Contact }}
+			<br>
+			<a>
+				<small>{{ row.Category }}</small>
+			</a>
+		</p>
+	</ion-col>
+
+	<ion-col size="3">
+		<ion-button mode="ios" size="small" color="{{ getColor(row.Status) }}">{{ row.Status }}</ion-button>
+	</ion-col>
+</ion-row>

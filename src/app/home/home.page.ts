@@ -9,9 +9,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MeService } from '../services/me.service';
 import { Me } from '../models/me.model';
 import { Account } from '../models/account.model';
-import { LedgerService, LedgerResponse } from '../services/ledger.service';
+import { LedgerService } from '../services/ledger.service';
 import { AccountHeaderComponent } from './account-header/account-header.component';
 import { Ledger } from '../models/ledger.model';
+import { SnapClerkService } from '../services/snapckerk.service';
+import { SnapClerk } from '../models/snapclerk.model';
 
 @Component({
 	selector: 'app-home',
@@ -23,7 +25,10 @@ export class HomePage implements OnInit {
 	tabs: string = "ledger";
 	ledgerLastPage: boolean = false;
 	ledgersPage: number = 1;
+	snapClerkPage: number = 1;
+	snapClerkLastPage: boolean = false;
 	ledgers: Ledger[] = [];
+	snapclerks: SnapClerk[] = [];
 	account: Account = new Account();
 	activeTableHeader: string = "";
 	dblTapFooterLogoCount: number = 0;
@@ -45,7 +50,7 @@ export class HomePage implements OnInit {
 	//
 	// Constructor.
 	//
-	constructor(private meService: MeService, private ledgerService: LedgerService) { }
+	constructor(private meService: MeService, private ledgerService: LedgerService, private snapClerkService: SnapClerkService) { }
 
 	//
 	// NgInit
@@ -90,6 +95,28 @@ export class HomePage implements OnInit {
 	//
 	loadPageData() {
 		this.loadLedgerData();
+		this.loadSnapClerkData();
+	}
+
+	//
+	// Load SnapClerk data
+	//
+	loadSnapClerkData() {
+		this.snapClerkService.get(this.snapClerkPage, "SnapClerkId", "desc").subscribe(res => {
+			// This is a hack because we typically append instead of showing a new page.
+			if (this.snapClerkPage <= 1) {
+				this.snapclerks = res.Data;
+			} else {
+				for (let i = 0; i < res.Data.length; i++) {
+					this.snapclerks.push(res.Data[i]);
+				}
+			}
+
+			// Update last page flag.
+			this.snapClerkLastPage = res.LastPage;
+
+			console.log(this.snapclerks);
+		});
 	}
 
 	//
