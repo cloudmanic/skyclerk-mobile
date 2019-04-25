@@ -60,7 +60,7 @@ export class UploadReceiptPage implements OnInit {
 			this.startUpload(imagePath);
 		}, (err) => {
 			console.log(err);
-			alert('Error while selecting photo.');
+			//alert('Error while selecting photo.');
 		});
 	}
 
