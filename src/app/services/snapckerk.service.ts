@@ -11,6 +11,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { SnapClerk } from '../models/snapclerk.model';
+import { File } from '@ionic-native/File/ngx';
 
 @Injectable({
 	providedIn: 'root'
@@ -20,7 +21,7 @@ export class SnapClerkService {
 	//
 	// Constructor
 	//
-	constructor(private http: HttpClient) { }
+	constructor(private http: HttpClient, public file: File) { }
 
 	//
 	// Get me
@@ -47,6 +48,16 @@ export class SnapClerkService {
 			// Return happy.
 			return new SnapClerkResponse(lastPage, Number(res.headers.get('X-Offset')), Number(res.headers.get('X-Limit')), Number(res.headers.get('X-No-Limit-Count')), data);
 		}));
+	}
+
+	//
+	// Create new snapclerk
+	//
+	create(formData: FormData): Observable<SnapClerk> {
+		let accountId = localStorage.getItem('account_id');
+
+		return this.http.post<SnapClerk>(`${environment.app_server}/api/v3/${accountId}/snapclerk`, formData)
+			.pipe(map(res => new SnapClerk().deserialize(res)));
 	}
 }
 

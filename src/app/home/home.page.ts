@@ -114,8 +114,6 @@ export class HomePage implements OnInit {
 
 			// Update last page flag.
 			this.snapClerkLastPage = res.LastPage;
-
-			console.log(this.snapclerks);
 		});
 	}
 
