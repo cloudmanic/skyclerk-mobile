@@ -9,9 +9,9 @@ import { Component, OnInit } from '@angular/core';
 import { LoadingController, AlertController } from '@ionic/angular';
 import { SnapClerkService } from '../services/snapckerk.service';
 import { File as FileModel } from '../models/file.model';
-import { Plugins, CameraResultType, CameraSource, FilesystemDirectory, FilesystemEncoding } from '@capacitor/core';
+import { Plugins, CameraResultType, CameraSource } from '@capacitor/core';
 
-const { Camera, Filesystem } = Plugins;
+const { Camera, Filesystem, App, BackgroundTask } = Plugins;
 
 @Component({
 	selector: 'app-upload-receipt',
@@ -21,6 +21,7 @@ const { Camera, Filesystem } = Plugins;
 
 export class UploadReceiptPage implements OnInit {
 	photo: string = "";
+	uploading: boolean = false;
 	vendor: string = "Spicer Test Vendor";
 	note: string = "Note....";
 	labels: string = "label #1, label #2, label #3"
@@ -30,11 +31,59 @@ export class UploadReceiptPage implements OnInit {
 	//
 	constructor(public snapClerkService: SnapClerkService, public loadingController: LoadingController, public alertController: AlertController) { }
 
-
 	//
 	// NgOnInit
 	//
-	ngOnInit() { }
+	ngOnInit() {
+
+		console.log("HEREER");
+
+		// We use a background task to make sure our uploads complete.
+		App.addListener('appStateChange', (state) => {
+
+			if (state.isActive) {
+				console.log("App went to active.");
+			}
+
+			if (!state.isActive) {
+
+				console.log("App went to background.");
+
+				// The app has become inactive. We should check if we have some work left to do, and, if so,
+				// execute a background task that will allow us to finish that work before the OS
+				// suspends or terminates our app:
+
+				let taskId = BackgroundTask.beforeExit(async () => {
+
+
+					// In this function We might finish an upload, let a network request
+					// finish, persist some data, or perform some other task
+
+					//clearInterval(r)
+					//this.i = 0;
+
+					// Super long loop looking for upload to be complete.
+					for (var i = 0; i < 1e18; i++) {
+
+						// Check until the upload is done.
+						if (!this.uploading) {
+							console.log("Upload done.");
+							break;
+						}
+
+					}
+
+					// Must call in order to end our task otherwise
+					// we risk our app being terminated, and possibly
+					// being labeled as impacting battery life
+					BackgroundTask.finish({
+						taskId
+					});
+				});
+			}
+		});
+
+	}
 
 	//
 	// Get photo to attach to this SnapClerk
@@ -49,8 +98,6 @@ export class UploadReceiptPage implements OnInit {
 			resultType: CameraResultType.Uri,
 			source: CameraSource.Prompt
 		});
-
-		console.log('Got image back', image.path, image.webPath, image.format, image.exif);
 
 		// Show image on upload screen.
 		this.photo = image.webPath;
@@ -77,19 +124,31 @@ export class UploadReceiptPage implements OnInit {
 		const loading = await this.loadingController.create({ message: 'Uploading your receipt for processing.' });
 		await loading.present();
 
+		// Set our uploading flag
+		this.uploading = true;
+
 		// Post file to server
 		this.snapClerkService.create(formData).subscribe(
 			res => {
 				// TODO(spicer): pass this to the parent view.
 				console.log(res);
 
+				// Kill uploading flag.
+				this.uploading = false;;
+
 				loading.dismiss();
 			},
 
 			error => {
+				// Hide loading.
 				loading.dismiss();
+
+				// Show error in an alert
 				console.log(error);
 				this.presentErrorAlert(error.message);
+
+				// Kill uploading flag.
+				this.uploading = false;;
 			}
 		);
 	}
