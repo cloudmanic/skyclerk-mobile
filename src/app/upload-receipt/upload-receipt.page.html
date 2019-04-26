@@ -19,7 +19,7 @@
 			</ion-col>
 
 			<ion-col size="7" align-self-center>
-				<p class="note" (click)="doGetPhoto(this.camera.PictureSourceType.CAMERA)">Spicer Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's. </p>
+				<p class="note" (click)="doGetPhoto()">Spicer Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's. </p>
 			</ion-col>
 
 			<ion-col size="12">
@@ -57,7 +57,7 @@
 	</ion-list>
 
 	<div class="button-container">
-		<ion-button button-success button-custom expand="block" no-outer-shadow text-uppercase (click)="doGetPhoto(this.camera.PictureSourceType.PHOTOLIBRARY)">
+		<ion-button button-success button-custom expand="block" no-outer-shadow text-uppercase (click)="doGetPhoto()">
 			<img src="assets/imgs/upload.svg" alt="">
 			Submit Receipt
 		</ion-button>

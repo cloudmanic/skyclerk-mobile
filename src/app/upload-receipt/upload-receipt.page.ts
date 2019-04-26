@@ -5,12 +5,13 @@
 // Copyright: 2019 Cloudmanic Labs, LLC. All rights reserved.
 //
 
-import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { Component, OnInit } from '@angular/core';
-import { File, FileEntry } from '@ionic-native/File/ngx';
-import { Camera, CameraOptions, PictureSourceType } from '@ionic-native/camera/ngx';
-import { LoadingController } from '@ionic/angular';
+import { LoadingController, AlertController } from '@ionic/angular';
 import { SnapClerkService } from '../services/snapckerk.service';
+import { File as FileModel } from '../models/file.model';
+import { Plugins, CameraResultType, CameraSource, FilesystemDirectory, FilesystemEncoding } from '@capacitor/core';
+
+const { Camera, Filesystem } = Plugins;
 
 @Component({
 	selector: 'app-upload-receipt',
@@ -27,12 +28,7 @@ export class UploadReceiptPage implements OnInit {
 	//
 	// Constructor
 	//
-	constructor(
-		private snapClerkService: SnapClerkService,
-		public camera: Camera,
-		public webview: WebView,
-		public file: File,
-		public loadingController: LoadingController) { }
+	constructor(public snapClerkService: SnapClerkService, public loadingController: LoadingController, public alertController: AlertController) { }
 
 
 	//
@@ -43,64 +39,35 @@ export class UploadReceiptPage implements OnInit {
 	//
 	// Get photo to attach to this SnapClerk
 	//
-	doGetPhoto(sourceType: PictureSourceType) {
-		let options: CameraOptions = {
-			quality: 100,
-			destinationType: this.camera.DestinationType.FILE_URI,
-			encodingType: this.camera.EncodingType.JPEG,
-			mediaType: this.camera.MediaType.PICTURE,
-			sourceType: sourceType
-			// saveToPhotoAlbum: true,
-			// correctOrientation: true
-		}
-
-		// Prompt user for an image.
-		this.camera.getPicture(options).then(imagePath => {
-			this.photo = this.webview.convertFileSrc(imagePath);
-			this.startUpload(imagePath);
-		}, (err) => {
-			console.log(err);
-			//alert('Error while selecting photo.');
+	async doGetPhoto() {
+		// Get image.
+		const image = await Camera.getPhoto({
+			quality: 90,
+			allowEditing: false,
+			saveToGallery: true,
+			correctOrientation: true,
+			resultType: CameraResultType.Uri,
+			source: CameraSource.Prompt
 		});
-	}
 
-	//
-	// Start the upload process.
-	//
-	// Helpful: https://devdactic.com/ionic-4-image-upload-storage/
-	// TODO(spicer): the link above will help if we ever want to store the image
-	// so we can upload the image at a later date.
-	//
-	startUpload(imgEntry) {
-		this.file.resolveLocalFilesystemUrl(imgEntry)
-			.then(entry => {
-				(<FileEntry>entry).file(file => this.readFile(file))
-			})
-			.catch(err => {
-				console.log(err);
-				alert('Error while uploading photo.');
-			});
-	}
+		console.log('Got image back', image.path, image.webPath, image.format, image.exif);
 
-	//
-	// Read file and add in any variables for snapclerk.
-	//
-	readFile(file: any) {
-		const reader = new FileReader();
-		reader.onloadend = () => {
-			const formData = new FormData();
-			const imgBlob = new Blob([reader.result], { type: file.type });
+		// Show image on upload screen.
+		this.photo = image.webPath;
 
-			// Build form data.
-			formData.append('file', imgBlob, this.createFileName(file.type));
-			formData.append('note', this.note);
-			formData.append('labels', this.labels);
-			formData.append('contact', this.vendor);
+		// Startup load to server
+		let img = await Filesystem.readFile({ path: image.path });
+		const imgBlob = FileModel.b64toBlob(img.data, "image/" + image.format);
 
-			// Start the image upload
-			this.uploadImageData(formData);
-		};
-		reader.readAsArrayBuffer(file);
+		// Build form data.
+		const formData = new FormData();
+		formData.append('file', imgBlob, this.createFileName(image.format));
+		formData.append('note', this.note);
+		formData.append('labels', this.labels);
+		formData.append('contact', this.vendor);
+
+		// Start the image upload
+		this.uploadImageData(formData);
 	}
 
 	//
@@ -111,10 +78,33 @@ export class UploadReceiptPage implements OnInit {
 		await loading.present();
 
 		// Post file to server
-		this.snapClerkService.create(formData).subscribe(res => {
-			console.log(res.File.Url);
-			loading.dismiss();
+		this.snapClerkService.create(formData).subscribe(
+			res => {
+				// TODO(spicer): pass this to the parent view.
+				console.log(res);
+
+				loading.dismiss();
+			},
+
+			error => {
+				loading.dismiss();
+				console.log(error);
+				this.presentErrorAlert(error.message);
+			}
+		);
+	}
+
+	//
+	// Show error alert.
+	//
+	async  presentErrorAlert(msg: string) {
+		const alert = await this.alertController.create({
+			header: 'Oops! Upload Error',
+			subHeader: '',
+			message: msg,
+			buttons: ['OK']
 		});
+		return await alert.present();
 	}
 
 	//
@@ -123,7 +113,7 @@ export class UploadReceiptPage implements OnInit {
 	createFileName(type: string) {
 		let d = new Date();
 		let n = d.getTime();
-		return "sc-mobile-" + n + "." + type.split("/")[1];
+		return "sc-mobile-" + n + "." + type;
 	}
 }
 

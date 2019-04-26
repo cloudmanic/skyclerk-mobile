@@ -11,7 +11,6 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { SnapClerk } from '../models/snapclerk.model';
-import { File } from '@ionic-native/File/ngx';
 
 @Injectable({
 	providedIn: 'root'
@@ -21,7 +20,7 @@ export class SnapClerkService {
 	//
 	// Constructor
 	//
-	constructor(private http: HttpClient, public file: File) { }
+	constructor(private http: HttpClient) { }
 
 	//
 	// Get me

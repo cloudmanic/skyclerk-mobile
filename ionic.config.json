@@ -1,7 +1,8 @@
 {
   "name": "Skyclerk",
   "integrations": {
-    "cordova": {}
+    "cordova": {},
+    "capacitor": {}
   },
   "type": "angular"
 }

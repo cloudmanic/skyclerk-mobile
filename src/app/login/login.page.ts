@@ -53,7 +53,7 @@ export class LoginPage {
 	//
 	async doErrorAlert(msg: string) {
 		const alert = await this.alertController.create({
-			header: 'Opps! Login Error',
+			header: 'Oops! Login Error',
 			subHeader: '',
 			message: msg,
 			buttons: ['OK']
