@@ -1,32 +1,38 @@
-<ion-content bggraypettern padding income>
-	<h3 text-center>
+<ion-content bggraypettern padding income snapclerk-upload>
+	<h3 text-center header>
 		<img src="assets/imgs/receipt-gray.png" alt="" />
 		Upload Receipt
-	</h3>
-
-	<h3 text-center>
-		<ion-thumbnail slot="start">
-			<ion-img [src]="photo"></ion-img>
-		</ion-thumbnail>
 	</h3>
 
 	<ion-list lines="none" login-form-list mode="ios">
 
 		<ion-row llrm>
 			<ion-col size="5">
-				<ion-button lightgray mode="ios" expand="block" add-receipt text-wrap button-custom no-outer-shadow>
-					<span class="content"><img src="assets/imgs/camera-graphic.svg" alt=""><br> Add Receipt</span></ion-button>
+				<ion-card (click)="doGetPhoto()">
+					<ion-img [src]="photo" *ngIf="photo" preview></ion-img>
+				</ion-card>
+
+				<ion-button lightgray mode="ios" expand="block" add-receipt text-wrap button-custom no-outer-shadow (click)="doGetPhoto()" *ngIf="! photo">
+					<span class="content">
+						<img src="assets/imgs/camera-graphic.svg" alt="" />
+						<br>
+						Add receipt
+					</span>
+				</ion-button>
 			</ion-col>
 
-			<ion-col size="7" align-self-center>
-				<p class="note" (click)="doGetPhoto()">Spicer Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's. </p>
+			<ion-col size="7">
+				<p class="note">
+					Just snap a photo of your receipt and we'll pull out the details.<br /> <br />
+					<span>The receipt will be added to your ledger.</span>
+				</p>
 			</ion-col>
 
 			<ion-col size="12">
 				<div class="dropdown">
 					<ion-item>
-						<ion-label position="stacked">Vendor Name</ion-label>
-						<ion-input type="text" [(ngModel)]="vendor"></ion-input>
+						<ion-label position="stacked">Category (optional)</ion-label>
+						<ion-input type="text" [(ngModel)]="category"></ion-input>
 					</ion-item>
 					<ion-button drop-down graygradiantbtn mode="ios">
 						<img src="assets/imgs/down-arrow-gray.svg" alt="">
@@ -36,7 +42,7 @@
 
 			<ion-col size="12">
 				<ion-item>
-					<ion-label position="stacked">Note</ion-label>
+					<ion-label position="stacked">Note (optional)</ion-label>
 					<ion-textarea [(ngModel)]="note"></ion-textarea>
 				</ion-item>
 			</ion-col>
@@ -45,7 +51,7 @@
 				<ion-button button-dark expand="block" button-custom no-outer-shadow text-uppercase>
 					<img src="assets/imgs/tags.svg" alt="">
 				</ion-button>
-				<p class="add-labels">Add Labels</p>
+				<p class="add-labels">Add Labels (optional)</p>
 			</ion-col>
 
 			<ion-col size="9">
@@ -57,7 +63,7 @@
 	</ion-list>
 
 	<div class="button-container">
-		<ion-button button-success button-custom expand="block" no-outer-shadow text-uppercase (click)="doGetPhoto()">
+		<ion-button button-success button-custom expand="block" no-outer-shadow text-uppercase (click)="doSumbit()" routerLink="/" routerDirection="back">
 			<img src="assets/imgs/upload.svg" alt="">
 			Submit Receipt
 		</ion-button>

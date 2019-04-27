@@ -5,11 +5,11 @@
 // Copyright: 2019 Cloudmanic Labs, LLC. All rights reserved.
 //
 
-import { map } from "rxjs/operators";
-import { Injectable } from '@angular/core';
+import { map, retryWhen, retry, timeout } from "rxjs/operators";
+import { Injectable, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { Observable } from 'rxjs';
+import { Observable, interval } from 'rxjs';
 import { SnapClerk } from '../models/snapclerk.model';
 
 @Injectable({
@@ -17,6 +17,9 @@ import { SnapClerk } from '../models/snapclerk.model';
 })
 
 export class SnapClerkService {
+	// Used to start the upload of a receipt
+	upload = new EventEmitter<SnapClerkUploadRequest>();
+
 	//
 	// Constructor
 	//
@@ -54,10 +57,24 @@ export class SnapClerkService {
 	//
 	create(formData: FormData): Observable<SnapClerk> {
 		let accountId = localStorage.getItem('account_id');
-
 		return this.http.post<SnapClerk>(`${environment.app_server}/api/v3/${accountId}/snapclerk`, formData)
+			.pipe(retry(10))
 			.pipe(map(res => new SnapClerk().deserialize(res)));
 	}
+}
+
+//
+// SnapClerk upload request
+//
+export interface SnapClerkUploadRequest {
+	photo: string,
+	photoWeb: string,
+	type: string,
+	category: string,
+	labels: string,
+	note: string,
+	lat: string,
+	log: string
 }
 
 //

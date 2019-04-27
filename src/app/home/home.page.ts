@@ -12,8 +12,9 @@ import { Account } from '../models/account.model';
 import { LedgerService } from '../services/ledger.service';
 import { AccountHeaderComponent } from './account-header/account-header.component';
 import { Ledger } from '../models/ledger.model';
-import { SnapClerkService } from '../services/snapckerk.service';
+import { SnapClerkService, SnapClerkUploadRequest } from '../services/snapckerk.service';
 import { SnapClerk } from '../models/snapclerk.model';
+import { File as FileModel } from '../models/file.model';
 
 @Component({
 	selector: 'app-home',
@@ -22,6 +23,7 @@ import { SnapClerk } from '../models/snapclerk.model';
 
 export class HomePage implements OnInit {
 	me: Me;
+	taskId: any;
 	tabs: string = "ledger";
 	ledgerLastPage: boolean = false;
 	ledgersPage: number = 1;
@@ -35,18 +37,6 @@ export class HomePage implements OnInit {
 
 	@ViewChild(AccountHeaderComponent) accountHeaderComponent;
 
-	receipts = [
-		{ img: "thumb-01.png", dm: "May 13", year: "2018", title: "Chevron", cate: "Gas" },
-		{ img: "thumb-02.png", dm: "May 06", year: "2018", title: "Rivers Run", cate: "Gas" },
-		{ img: "thumb-03.png", dm: "May 04", year: "2018", title: "Flying J", cate: "Gas" },
-		{ img: "thumb-04.png", dm: "Apr 21", year: "2018", title: "Fred Meyer Fue", cate: "Gas" },
-		{ img: "thumb-05.png", dm: "Apr 21", year: "2018", title: "Chevron", cate: "Gas" },
-		{ img: "thumb-06.png", dm: "May 13", year: "2018", title: "Chevron", cate: "Gas" },
-		{ img: "thumb-01.png", dm: "May 13", year: "2018", title: "Chevron", cate: "Gas" },
-		{ img: "thumb-02.png", dm: "May 13", year: "2018", title: "Chevron", cate: "Gas" },
-		{ img: "thumb-03.png", dm: "May 13", year: "2018", title: "Chevron", cate: "Gas" },
-	]
-
 	//
 	// Constructor.
 	//
@@ -57,6 +47,11 @@ export class HomePage implements OnInit {
 	//
 	ngOnInit() {
 		this.loadMe();
+
+		// Listen for receipt uploads from snapclerk
+		this.snapClerkService.upload.subscribe(data => {
+			this.uploadSnapClerkData(data);
+		});
 	}
 
 	//
@@ -195,6 +190,64 @@ export class HomePage implements OnInit {
 	//
 	doLegerTableHeaderChange(show: string) {
 		this.activeTableHeader = show;
+	}
+
+	// -------------- SnapClerk Upload Stuff ----------- //
+
+	//
+	// uploadSnapClerkData - Upload image to server.
+	//
+	async uploadSnapClerkData(data: SnapClerkUploadRequest) {
+		// Reset page.
+		this.snapClerkPage = 0;
+
+		// Push this photo on the front of the array to view.
+		let sc = new SnapClerk();
+		sc.Contact = "Uploading...";
+		sc.Status = "Pending";
+		sc.Category = data.category;
+		sc.CreatedAt = new Date();
+		sc.File = new FileModel;
+		sc.File.Thumb600By600Url = data.photoWeb;
+		this.snapclerks.unshift(sc)
+
+		// Startup load to server
+		const imgBlob = FileModel.b64toBlob(data.photo, data.type);
+
+		// Build form data.
+		const formData = new FormData();
+		formData.append('file', imgBlob, this.createFileName(data.type));
+		formData.append('note', data.note);
+		formData.append('labels', data.labels);
+		formData.append('category', data.category);
+
+		// Log
+		console.log("Starting upload of snapclerk receipt.");
+
+		// Post file to server
+		this.snapClerkService.create(formData).subscribe(
+			res => {
+				// Reload snapclerk data.
+				this.loadSnapClerkData();
+
+				// Log
+				console.log("Done uploading snapclerk receipt.");
+			},
+
+			error => {
+				// Show error in an alert
+				console.log(error);
+			}
+		);
+	}
+
+	//
+	// Create a file name for this upload.
+	//
+	createFileName(type: string) {
+		let d = new Date();
+		let n = d.getTime();
+		return "sc-mobile-" + n + "." + type.split("/")[1];
 	}
 }
 

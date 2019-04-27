@@ -1071,9 +1071,25 @@ app-snapclerk-list {
     ion-col:nth-child(2) {
       padding-left: 5px !important;
     }
-    
+
     ion-col:last-child {
       padding-right: 12px !important;
     }
+  }
+}
+
+[snapclerk-upload] {
+  [header] {
+    margin-top: 40px;
+  }
+
+  .sc-ion-card-ios-h {
+    margin: unset;
+  }
+
+  [preview] {
+    border-radius: 5px;
+    background-color: rgb(234, 234, 234);
+    box-shadow: 0px 1px 0px 0px rgba(255, 255, 255, 0.004), inset 0px 1px 2px 0px rgba(0, 0, 0, 0.33);
   }
 }

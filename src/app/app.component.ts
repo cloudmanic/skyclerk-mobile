@@ -14,7 +14,10 @@ export class AppComponent {
 
 	initializeApp() {
 		this.platform.ready().then(() => {
-			SplashScreen.hide();
+			// Ingore this stuff if using browser.
+			if (this.platform.is("hybrid")) {
+				SplashScreen.hide();
+			}
 		});
 	}
 }
