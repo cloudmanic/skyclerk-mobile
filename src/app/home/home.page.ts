@@ -15,6 +15,9 @@ import { Ledger } from '../models/ledger.model';
 import { SnapClerkService, SnapClerkUploadRequest } from '../services/snapckerk.service';
 import { SnapClerk } from '../models/snapclerk.model';
 import { File as FileModel } from '../models/file.model';
+import { Plugins } from '@capacitor/core';
+
+const { App, BackgroundTask } = Plugins;
 
 @Component({
 	selector: 'app-home',
@@ -51,6 +54,13 @@ export class HomePage implements OnInit {
 		// Listen for receipt uploads from snapclerk
 		this.snapClerkService.upload.subscribe(data => {
 			this.uploadSnapClerkData(data);
+		});
+
+		// If app sleeps reload data on start.
+		App.addListener('appStateChange', (state) => {
+			if (state.isActive) {
+				this.loadMe();
+			}
 		});
 	}
 
@@ -221,24 +231,51 @@ export class HomePage implements OnInit {
 		formData.append('labels', data.labels);
 		formData.append('category', data.category);
 
-		// Log
-		console.log("Starting upload of snapclerk receipt.");
+		// In this function We might finish the upload
+		let taskId = BackgroundTask.beforeExit(async () => {
+			// Log
+			console.log("Starting upload of snapclerk receipt.");
 
-		// Post file to server
-		this.snapClerkService.create(formData).subscribe(
-			res => {
-				// Reload snapclerk data.
-				this.loadSnapClerkData();
+			// Post file to server
+			this.snapClerkService.create(formData).subscribe(
+				res => {
+					// Reload snapclerk data.
+					this.loadSnapClerkData();
 
-				// Log
-				console.log("Done uploading snapclerk receipt.");
-			},
+					// Log
+					console.log("Done uploading snapclerk receipt.");
 
-			error => {
-				// Show error in an alert
-				console.log(error);
-			}
-		);
+					console.log(res);
+					BackgroundTask.finish({ taskId });
+				},
+
+				error => {
+					// Show error in an alert
+					console.log(error);
+
+					BackgroundTask.finish({ taskId });
+				}
+			);
+		});
+
+		// // Log
+		// console.log("Starting upload of snapclerk receipt.");
+		//
+		// // Post file to server
+		// this.snapClerkService.create(formData).subscribe(
+		// 	res => {
+		// 		// Reload snapclerk data.
+		// 		this.loadSnapClerkData();
+		//
+		// 		// Log
+		// 		console.log("Done uploading snapclerk receipt.");
+		// 	},
+		//
+		// 	error => {
+		// 		// Show error in an alert
+		// 		console.log(error);
+		// 	}
+		// );
 	}
 
 	//

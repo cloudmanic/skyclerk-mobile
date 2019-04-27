@@ -68,7 +68,7 @@ export class UploadReceiptPage implements OnInit {
 		// Get image.
 		const image = await Camera.getPhoto({
 			quality: 90,
-			width: 1000,
+			//width: 1000,
 			allowEditing: false,
 			saveToGallery: true,
 			correctOrientation: true,
