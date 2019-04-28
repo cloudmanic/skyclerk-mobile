@@ -18,7 +18,7 @@ import { File as FileModel } from '../models/file.model';
 import { Plugins } from '@capacitor/core';
 import { ToastController } from '@ionic/angular';
 
-const { App, BackgroundTask, LocalNotifications } = Plugins;
+const { App, LocalNotifications, BackgroundTask } = Plugins;
 
 @Component({
 	selector: 'app-home',
@@ -59,10 +59,19 @@ export class HomePage implements OnInit {
 
 		// If app sleeps reload data on start.
 		App.addListener('appStateChange', (state) => {
+			// Open app
 			if (state.isActive) {
 				this.loadMe();
 			}
 		});
+	}
+
+	//
+	// Load data for page.
+	//
+	loadPageData() {
+		this.loadLedgerData();
+		this.loadSnapClerkData();
 	}
 
 	//
@@ -97,14 +106,6 @@ export class HomePage implements OnInit {
 	}
 
 	//
-	// Load data for page.
-	//
-	loadPageData() {
-		this.loadLedgerData();
-		this.loadSnapClerkData();
-	}
-
-	//
 	// Load SnapClerk data
 	//
 	loadSnapClerkData() {
@@ -121,6 +122,14 @@ export class HomePage implements OnInit {
 			// Update last page flag.
 			this.snapClerkLastPage = res.LastPage;
 		});
+	}
+
+	//
+	// Load more Snap!Clerks
+	//
+	loadMoreSnapClerks() {
+		this.snapClerkPage++;
+		this.loadSnapClerkData();
 	}
 
 	//
@@ -192,6 +201,9 @@ export class HomePage implements OnInit {
 		// Reset ledger page count.
 		this.ledgersPage = 1;
 
+		// Reset snapClerkPage page count.
+		this.snapClerkPage = 1;
+
 		// Load page data.
 		this.loadPageData();
 	}
@@ -226,43 +238,14 @@ export class HomePage implements OnInit {
 		this.presentSnapClerkUploadingToast();
 
 		// Wrap this upload in a background function so it continues after closing the app.
+		// We really do not need this as the upload stuff runs in the background but
+		// if we do not do this for some reason the UI locks up.
 		let taskId = BackgroundTask.beforeExit(async () => {
-
 			try {
 				// Upload via the Snap!Clerk service.
 				await this.snapClerkService.create(data.photo, data.type, data.note, data.labels, data.category);
-
-				// Notify the user the of the success.
-				await LocalNotifications.schedule({
-					notifications: [
-						{
-							title: "Your Upload was a Success!",
-							body: "Your Snap!Clerk receipt was successfully uploaded. Sit back and relax while our we analyze your receipt and enter it into your ledger.",
-							id: new Date().getTime(),
-							schedule: { at: new Date(Date.now() + 2000) }, // 2 second after.
-							sound: null,
-							attachments: null,
-							actionTypeId: "",
-							extra: null
-						}
-					]
-				});
 			} catch (e) {
-				// Notify the user the of the issue.
-				await LocalNotifications.schedule({
-					notifications: [
-						{
-							title: "Error with Receipt Upload",
-							body: "Your Snap!Clerk receipt failed to upload. Often a poor Internet connect is to blame. Please try again. We stored your receipt in your photo gallery.",
-							id: new Date().getTime(),
-							schedule: { at: new Date(Date.now() + 2000) }, // 2 second after.
-							sound: null,
-							attachments: null,
-							actionTypeId: "",
-							extra: null
-						}
-					]
-				});
+				console.log(e);
 			}
 
 			// Reload snapclerk data.
@@ -270,7 +253,6 @@ export class HomePage implements OnInit {
 
 			// Kill background task
 			BackgroundTask.finish({ taskId });
-
 		});
 	}
 

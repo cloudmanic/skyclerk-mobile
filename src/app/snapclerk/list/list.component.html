@@ -38,3 +38,9 @@
 		<ion-button mode="ios" size="small" color="{{ getColor(row.Status) }}">{{ row.Status }}</ion-button>
 	</ion-col>
 </ion-row>
+
+<ion-row *ngIf="(! lastPage) && (snapclerks.length > 0)">
+	<ion-col size="12">
+		<ion-button expand="block" fill="outline" color="medium" size="small" (click)="loadMoreData()">Load More...</ion-button>
+	</ion-col>
+</ion-row>

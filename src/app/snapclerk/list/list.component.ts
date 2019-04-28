@@ -5,7 +5,7 @@
 // Copyright: 2019 Cloudmanic Labs, LLC. All rights reserved.
 //
 
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { SnapClerk } from 'src/app/models/snapclerk.model';
 
 @Component({
@@ -15,6 +15,8 @@ import { SnapClerk } from 'src/app/models/snapclerk.model';
 
 export class ListComponent implements OnInit {
 	@Input() snapclerks: SnapClerk[] = [];
+	@Input() lastPage: boolean = true;
+	@Output() loadMore: EventEmitter<boolean> = new EventEmitter<boolean>();
 
 	//
 	// Constructor
@@ -30,14 +32,13 @@ export class ListComponent implements OnInit {
 	// Append more data on to the list.
 	//
 	loadMoreData() {
-		//this.loadMore.emit(true);
+		this.loadMore.emit(true);
 	}
 
 	//
 	// Get color
 	//
 	getColor(status: string): string {
-
 		switch (status) {
 			case "Pending":
 				return "warning";

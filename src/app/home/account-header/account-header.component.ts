@@ -79,18 +79,25 @@ export class AccountHeaderComponent implements OnInit {
 		// Build inputs
 		let inputs = []
 
+		// Get current account.
+		let current = Number(localStorage.getItem('account_id'));
+
 		for (let i = 0; i < this.me.Accounts.length; i++) {
 			let row = this.me.Accounts[i];
+
+			// Set active account.
+			let checked = false;
+			if (current == row.Id) {
+				checked = true;
+			}
 
 			inputs.push({
 				name: 'radio' + i,
 				type: 'radio',
 				label: row.Name,
 				value: row.Id,
-				checked: false
+				checked: checked
 			});
-
-			inputs[0].checked = true;
 		}
 
 		// Show the alert.

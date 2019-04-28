@@ -104,7 +104,7 @@
 				<ion-grid tableViewGrid>
 					<app-home-account-header (accountChange)="doAccountChange($event)" [me]="me" [account]="account"></app-home-account-header>
 
-					<app-snapclerk-list [snapclerks]="snapclerks"></app-snapclerk-list>
+					<app-snapclerk-list [snapclerks]="snapclerks" [lastPage]="snapClerkLastPage" (loadMore)="loadMoreSnapClerks($event)"></app-snapclerk-list>
 				</ion-grid>
 
 			</ion-list>
