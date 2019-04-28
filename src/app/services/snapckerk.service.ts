@@ -56,7 +56,7 @@ export class SnapClerkService {
 	//
 	// Create new snapclerk
 	//
-	create(photo: string, type: string, note: string, labels: string, category: string): Promise<FileUploadResult> {
+	create(photo: string, type: string, note: string, labels: string, category: string, lat: number, lon: number): Promise<FileUploadResult> {
 		const fileTransfer: FileTransferObject = this.fileTransfer.create();
 
 		// Get accountId
@@ -76,7 +76,9 @@ export class SnapClerkService {
 			params: {
 				note: note,
 				labels: labels,
-				category: category
+				category: category,
+				lat: String(lat),
+				lon: String(lon)
 			}
 		}
 
@@ -104,8 +106,8 @@ export interface SnapClerkUploadRequest {
 	category: string,
 	labels: string,
 	note: string,
-	lat: string,
-	log: string
+	lat: number,
+	lon: number
 }
 
 //

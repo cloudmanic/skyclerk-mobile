@@ -8,14 +8,14 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController, Platform } from '@ionic/angular';
 import { SnapClerkService } from '../../services/snapckerk.service';
-import { Plugins, CameraResultType, CameraSource } from '@capacitor/core';
+import { Plugins, CameraResultType, CameraSource, GeolocationPosition } from '@capacitor/core';
 import { CategoryService } from '../../services/category.service';
 import { Category } from '../../models/category.model';
 import { Label } from 'src/app/models/label.model';
 import { LabelService } from 'src/app/services/label.service';
 
 
-const { Camera } = Plugins;
+const { Camera, Geolocation } = Plugins;
 
 @Component({
 	selector: 'app-upload-receipt',
@@ -28,6 +28,8 @@ export class UploadReceiptPage implements OnInit {
 	category: string = "";
 	note: string = "";
 	labels: string = "";
+	lat: number = 0;
+	lon: number = 0;
 	uploadPhoto: string = "";
 	uploadFileType: string = "";
 	labelsList: Label[] = [];
@@ -49,6 +51,7 @@ export class UploadReceiptPage implements OnInit {
 	ngOnInit() {
 		this.loadLabels();
 		this.loadCategories();
+		this.setCurrentPosition();
 	}
 
 	//
@@ -80,12 +83,22 @@ export class UploadReceiptPage implements OnInit {
 			category: this.category,
 			labels: this.labels,
 			note: this.note,
-			lat: "",
-			log: ""
+			lat: this.lat,
+			lon: this.lon
 		}
 
 		// Send data back to the home screen to process.
 		this.snapClerkService.upload.emit(rt);
+	}
+
+	//
+	// Set the current position of the user.
+	//
+	setCurrentPosition() {
+		Geolocation.getCurrentPosition().then(cords => {
+			this.lat = cords.coords.latitude;
+			this.lon = cords.coords.longitude;
+		})
 	}
 
 	//

@@ -243,7 +243,7 @@ export class HomePage implements OnInit {
 		let taskId = BackgroundTask.beforeExit(async () => {
 			try {
 				// Upload via the Snap!Clerk service.
-				await this.snapClerkService.create(data.photo, data.type, data.note, data.labels, data.category);
+				await this.snapClerkService.create(data.photo, data.type, data.note, data.labels, data.category, data.lat, data.lon);
 			} catch (e) {
 				console.log(e);
 			}
