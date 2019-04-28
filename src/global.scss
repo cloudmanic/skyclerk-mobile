@@ -923,58 +923,57 @@ app-login {
     }
 }
 
-ion-content {
-    &[snapclerk] {
-        --background: url(assets/imgs/snapclerk-bg.jpg) repeat left top;
-        .snapcheck-content {
+[snapclerk] {
+  --background: url(assets/imgs/snapclerk-bg.jpg) repeat left top;
+  .snapcheck-content {
 
-            .image-onboard {
-                padding: 40px 20px;
-                height: calc(80vh - 118px);
-                display: flex;
-                align-items: center;
-                justify-content: center;
+      .image-onboard {
+          padding: 40px 20px;
+          height: calc(80vh - 240px);
+          display: flex;
+          align-items: center;
+          justify-content: center;
 
-                img {
-                    width: 100%
-                }
-            }
+          img {
+              width: 100%
+          }
+      }
 
-            .booton-container {
-                text-align: center;
-                display: -webkit-box;
-                display: -ms-flexbox;
-                display: flex;
-                -webkit-box-align: center;
-                -ms-flex-align: center;
-                align-items: center;
-                -webkit-box-pack: center;
-                -ms-flex-pack: center;
-                justify-content: center;
-                height: 20vh;
+      .booton-container {
+          text-align: center;
+          display: -webkit-box;
+          display: -ms-flexbox;
+          display: flex;
+          -webkit-box-align: center;
+          -ms-flex-align: center;
+          align-items: center;
+          -webkit-box-pack: center;
+          -ms-flex-pack: center;
+          justify-content: center;
+          height: 20vh;
 
-                ion-button {
-                    &.button {
-                        text-transform: uppercase;
-                        --background: linear-gradient(0deg, #ffd92a 0%, #fdf9be 100%);
-                        --background-activated: linear-gradient(0deg, #ffbd06 0%, #fff45e 100%);
-                        --box-shadow: inset 0px 2px 0px 0px rgba(255, 255, 255, 0.32);
-                        --border-style: solid;
-                        --border-width: 2px;
-                        --border-color: rgb(30, 30, 30);
-                        --border-radius: 6px;
-                        border-radius: 6px;
-                        color: rgb(30, 30, 30);
-                        letter-spacing: 1px;
-                        font-weight: 600;
-                        --padding-start: 40px;
-                        --padding-end: 40px;
-                    }
-                }
-            }
-        }
-    }
+          ion-button {
+              &.button {
+                  text-transform: uppercase;
+                  --background: linear-gradient(0deg, #ffd92a 0%, #fdf9be 100%);
+                  --background-activated: linear-gradient(0deg, #ffbd06 0%, #fff45e 100%);
+                  --box-shadow: inset 0px 2px 0px 0px rgba(255, 255, 255, 0.32);
+                  --border-style: solid;
+                  --border-width: 2px;
+                  --border-color: rgb(30, 30, 30);
+                  --border-radius: 6px;
+                  border-radius: 6px;
+                  color: rgb(30, 30, 30);
+                  letter-spacing: 1px;
+                  font-weight: 600;
+                  --padding-start: 40px;
+                  --padding-end: 40px;
+              }
+          }
+      }
+  }
 }
+
 
 
 app-view-attachment {

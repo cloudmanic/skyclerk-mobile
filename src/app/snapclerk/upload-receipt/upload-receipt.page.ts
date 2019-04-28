@@ -7,10 +7,10 @@
 
 import { Component, OnInit } from '@angular/core';
 import { AlertController, Platform } from '@ionic/angular';
-import { SnapClerkService } from '../services/snapckerk.service';
+import { SnapClerkService } from '../../services/snapckerk.service';
 import { Plugins, CameraResultType, CameraSource } from '@capacitor/core';
-import { CategoryService } from '../services/category.service';
-import { Category } from '../models/category.model';
+import { CategoryService } from '../../services/category.service';
+import { Category } from '../../models/category.model';
 
 
 const { Camera } = Plugins;

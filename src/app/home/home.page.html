@@ -29,7 +29,7 @@
 		<ion-toolbar mode="ios" class="header-pettern-bg" *ngSwitchCase="'snapclerk'">
 			<ion-row>
 				<ion-col size="12">
-					<ion-button button-success button-custom expand="block" no-outer-shadow text-uppercase routerLink="/upload-receipt">
+					<ion-button button-success button-custom expand="block" no-outer-shadow text-uppercase routerLink="/snapclerk/upload-receipt">
 						<img src="assets/imgs/upload.svg" alt=""> Upload New Receipt</ion-button>
 				</ion-col>
 			</ion-row>
@@ -98,7 +98,7 @@
 		</div>
 
 		<!-- snapclerk -->
-		<div *ngSwitchCase="'snapclerk'">
+		<div *ngSwitchCase="'snapclerk'" snapclerk>
 			<ion-list lines="full" mode="ios">
 
 				<ion-grid tableViewGrid>

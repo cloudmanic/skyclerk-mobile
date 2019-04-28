@@ -19,10 +19,8 @@ const routes: Routes = [
 	{ path: 'edit-ledger', loadChildren: './edit-ledger/edit-ledger.module#EditLedgerPageModule', canActivate: [SessionGuard] },
 	{ path: 'create-account', loadChildren: './create-account/create-account.module#CreateAccountPageModule', canActivate: [SessionGuard] },
 	{ path: 'select-an-account', loadChildren: './select-an-account/select-an-account.module#SelectAnAccountPageModule', canActivate: [SessionGuard] },
-	{ path: 'snapclerk', loadChildren: './snapclerk/snapclerk.module#SnapclerkPageModule', canActivate: [SessionGuard] },
 	{ path: 'view-attachment', loadChildren: './view-attachment/view-attachment.module#ViewAttachmentPageModule', canActivate: [SessionGuard] },
-	{ path: 'snapclerk-list', loadChildren: './snapclerk-list/snapclerk-list.module#SnapclerkListPageModule', canActivate: [SessionGuard] },
-	{ path: 'upload-receipt', loadChildren: './upload-receipt/upload-receipt.module#UploadReceiptPageModule', canActivate: [SessionGuard] },
+	{ path: 'snapclerk/upload-receipt', loadChildren: './snapclerk/upload-receipt/upload-receipt.module#UploadReceiptPageModule', canActivate: [SessionGuard] },
 ];
 
 @NgModule({

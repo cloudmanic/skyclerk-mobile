@@ -1,3 +1,16 @@
+<ion-row *ngIf="snapclerks.length == 0">
+	<ion-col>
+		<div class="snapcheck-content">
+			<div class="image-onboard">
+				<img src="assets/imgs/onboarding.png" alt="">
+			</div>
+			<div class="booton-container">
+				<ion-button mode="ios" routerLink="/snapclerk/upload-receipt">GET STARTED now!</ion-button>
+			</div>
+		</div>
+	</ion-col>
+</ion-row>
+
 <ion-row *ngFor="let row of snapclerks" justify-content-between>
 	<ion-col size="2">
 		<ion-thumbnail>
