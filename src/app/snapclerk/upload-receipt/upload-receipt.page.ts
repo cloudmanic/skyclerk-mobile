@@ -11,6 +11,8 @@ import { SnapClerkService } from '../../services/snapckerk.service';
 import { Plugins, CameraResultType, CameraSource } from '@capacitor/core';
 import { CategoryService } from '../../services/category.service';
 import { Category } from '../../models/category.model';
+import { Label } from 'src/app/models/label.model';
+import { LabelService } from 'src/app/services/label.service';
 
 
 const { Camera } = Plugins;
@@ -25,9 +27,10 @@ export class UploadReceiptPage implements OnInit {
 	photo: string = "";
 	category: string = "";
 	note: string = "";
-	labels: string = "label #1, label #2, label #3";
+	labels: string = "";
 	uploadPhoto: string = "";
 	uploadFileType: string = "";
+	labelsList: Label[] = [];
 	categories: Category[] = [];
 
 	//
@@ -35,6 +38,7 @@ export class UploadReceiptPage implements OnInit {
 	//
 	constructor(
 		public platform: Platform,
+		public labelService: LabelService,
 		public categoryService: CategoryService,
 		public snapClerkService: SnapClerkService,
 		public alertController: AlertController) { }
@@ -43,7 +47,17 @@ export class UploadReceiptPage implements OnInit {
 	// NgOnInit
 	//
 	ngOnInit() {
+		this.loadLabels();
 		this.loadCategories();
+	}
+
+	//
+	// Load labels
+	//
+	loadLabels() {
+		this.labelService.get().subscribe(res => {
+			this.labelsList = res;
+		});
 	}
 
 	//
@@ -104,7 +118,7 @@ export class UploadReceiptPage implements OnInit {
 	}
 
 	//
-	// doAccounts - Show the accounts selector.
+	// doAccounts - Show the Category selector.
 	//
 	async doCategorySelect() {
 		// Build inputs
@@ -142,6 +156,48 @@ export class UploadReceiptPage implements OnInit {
 					text: 'Select',
 					handler: (name) => {
 						this.category = name;
+					}
+				}
+			]
+		});
+
+		await alert.present();
+	}
+
+	//
+	// doLabelsSelect - Show the labels selector.
+	//
+	async doLabelsSelect() {
+		// Build inputs
+		let inputs = []
+
+		for (let i = 0; i < this.labelsList.length; i++) {
+			let row = this.labelsList[i];
+
+			// See if it is checked.
+			let checked = false;
+			if (this.labels.indexOf(row.Name) >= 0) {
+				checked = true;
+			}
+
+			inputs.push({
+				name: 'checkbox' + i,
+				type: 'checkbox',
+				label: row.Name,
+				value: row.Name,
+				checked: checked
+			});
+		}
+
+		// Show the alert.
+		const alert = await this.alertController.create({
+			header: 'Labels',
+			inputs: inputs,
+			buttons: [
+				{
+					text: 'Select',
+					handler: (labels) => {
+						this.labels = labels.join(", ");
 					}
 				}
 			]
