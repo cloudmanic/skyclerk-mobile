@@ -6,9 +6,11 @@
 //
 
 import { Component, OnInit } from '@angular/core';
-import { LoadingController, AlertController, Platform } from '@ionic/angular';
+import { AlertController, Platform } from '@ionic/angular';
 import { SnapClerkService } from '../services/snapckerk.service';
 import { Plugins, CameraResultType, CameraSource } from '@capacitor/core';
+import { CategoryService } from '../services/category.service';
+import { Category } from '../models/category.model';
 
 
 const { Camera } = Plugins;
@@ -21,21 +23,37 @@ const { Camera } = Plugins;
 
 export class UploadReceiptPage implements OnInit {
 	photo: string = "";
-	category: string = "Spicer Test Category";
-	note: string = "Note....";
+	category: string = "";
+	note: string = "";
 	labels: string = "label #1, label #2, label #3";
 	uploadPhoto: string = "";
 	uploadFileType: string = "";
+	categories: Category[] = [];
 
 	//
 	// Constructor
 	//
-	constructor(public platform: Platform, public snapClerkService: SnapClerkService, public loadingController: LoadingController, public alertController: AlertController) { }
+	constructor(
+		public platform: Platform,
+		public categoryService: CategoryService,
+		public snapClerkService: SnapClerkService,
+		public alertController: AlertController) { }
 
 	//
 	// NgOnInit
 	//
-	ngOnInit() { }
+	ngOnInit() {
+		this.loadCategories();
+	}
+
+	//
+	// Load categories
+	//
+	loadCategories() {
+		this.categoryService.get().subscribe(res => {
+			this.categories = res;
+		});
+	}
 
 	//
 	// Submit receipt
@@ -83,6 +101,53 @@ export class UploadReceiptPage implements OnInit {
 		// File we upload.
 		this.uploadPhoto = image.path; //img.data;
 		this.uploadFileType = "image/" + image.format;
+	}
+
+	//
+	// doAccounts - Show the accounts selector.
+	//
+	async doCategorySelect() {
+		// Build inputs
+		let inputs = []
+
+		for (let i = 0; i < this.categories.length; i++) {
+			let row = this.categories[i];
+
+			// Only want expense categories
+			if (row.Type != "expense") {
+				continue;
+			}
+
+			// See if it is checked.
+			let checked = false;
+			if (this.category == row.Name) {
+				checked = true;
+			}
+
+			inputs.push({
+				name: 'radio' + i,
+				type: 'radio',
+				label: row.Name,
+				value: row.Name,
+				checked: checked
+			});
+		}
+
+		// Show the alert.
+		const alert = await this.alertController.create({
+			header: 'Categories',
+			inputs: inputs,
+			buttons: [
+				{
+					text: 'Select',
+					handler: (name) => {
+						this.category = name;
+					}
+				}
+			]
+		});
+
+		await alert.present();
 	}
 }
 

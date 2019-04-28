@@ -32,9 +32,9 @@
 				<div class="dropdown">
 					<ion-item>
 						<ion-label position="stacked">Category (optional)</ion-label>
-						<ion-input type="text" [(ngModel)]="category"></ion-input>
+						<ion-input type="text" [(ngModel)]="category" readonly></ion-input>
 					</ion-item>
-					<ion-button drop-down graygradiantbtn mode="ios">
+					<ion-button drop-down graygradiantbtn mode="ios" (click)="doCategorySelect()">
 						<img src="assets/imgs/down-arrow-gray.svg" alt="">
 					</ion-button>
 				</div>
