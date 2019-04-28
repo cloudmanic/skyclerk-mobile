@@ -47,14 +47,14 @@
 				</ion-item>
 			</ion-col>
 
-			<ion-col size="3">
+			<ion-col size="3" *ngIf="labelsList.length">
 				<ion-button button-dark expand="block" button-custom no-outer-shadow text-uppercase (click)="doLabelsSelect()">
 					<img src="assets/imgs/tags.svg" alt="">
 				</ion-button>
 				<p class="add-labels">Add Labels (optional)</p>
 			</ion-col>
 
-			<ion-col size="9">
+			<ion-col size="9" *ngIf="labelsList.length">
 				<ion-item>
 					<ion-textarea placeholder="" [(ngModel)]="labels" readonly></ion-textarea>
 				</ion-item>
