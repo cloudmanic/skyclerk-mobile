@@ -5,11 +5,11 @@
 // Copyright: 2019 Cloudmanic Labs, LLC. All rights reserved.
 //
 
-import { map, retryWhen, retry, timeout } from "rxjs/operators";
+import { map, retry } from "rxjs/operators";
 import { Injectable, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { Observable, interval } from 'rxjs';
+import { Observable } from 'rxjs';
 import { SnapClerk } from '../models/snapclerk.model';
 
 @Injectable({
