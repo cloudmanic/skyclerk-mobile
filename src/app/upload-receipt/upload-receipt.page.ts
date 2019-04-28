@@ -79,6 +79,9 @@ export class UploadReceiptPage implements OnInit {
 		// Show image on upload screen.
 		this.photo = image.webPath;
 
+		// Get blob from web path
+		//let blob = await fetch(cameraResult.webPath).then(r => r.blob());
+
 		// Read file.
 		let img = await Filesystem.readFile({ path: image.path });
 
