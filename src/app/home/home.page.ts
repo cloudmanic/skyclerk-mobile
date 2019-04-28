@@ -16,8 +16,9 @@ import { SnapClerkService, SnapClerkUploadRequest } from '../services/snapckerk.
 import { SnapClerk } from '../models/snapclerk.model';
 import { File as FileModel } from '../models/file.model';
 import { Plugins } from '@capacitor/core';
+import { ToastController } from '@ionic/angular';
 
-const { App, BackgroundTask } = Plugins;
+const { App, BackgroundTask, LocalNotifications } = Plugins;
 
 @Component({
 	selector: 'app-home',
@@ -43,7 +44,7 @@ export class HomePage implements OnInit {
 	//
 	// Constructor.
 	//
-	constructor(private meService: MeService, private ledgerService: LedgerService, private snapClerkService: SnapClerkService) { }
+	constructor(private toastController: ToastController, private meService: MeService, private ledgerService: LedgerService, private snapClerkService: SnapClerkService) { }
 
 	//
 	// NgInit
@@ -219,71 +220,77 @@ export class HomePage implements OnInit {
 		sc.CreatedAt = new Date();
 		sc.File = new FileModel;
 		sc.File.Thumb600By600Url = data.photoWeb;
-		this.snapclerks.unshift(sc)
+		this.snapclerks.unshift(sc);
 
-		// Startup load to server
-		const imgBlob = FileModel.b64toBlob(data.photo, data.type);
+		// Show uploading toast.
+		this.presentSnapClerkUploadingToast();
 
-		// Build form data.
-		const formData = new FormData();
-		formData.append('file', imgBlob, this.createFileName(data.type));
-		formData.append('note', data.note);
-		formData.append('labels', data.labels);
-		formData.append('category', data.category);
+		// Wrap this upload in a background function so it continues after closing the app.
+		let taskId = BackgroundTask.beforeExit(async () => {
 
-		// // In this function We might finish the upload
-		// let taskId = BackgroundTask.beforeExit(async () => {
-		// 	// Log
-		// 	console.log("Starting upload of snapclerk receipt.");
-		//
-		// 	// Post file to server
-		// 	this.snapClerkService.create(formData).subscribe(
-		// 		res => {
-		// 			// Reload snapclerk data.
-		// 			this.loadSnapClerkData();
-		//
-		// 			// Log
-		// 			console.log("Done uploading snapclerk receipt.");
-		//
-		// 			console.log(res);
-		// 			BackgroundTask.finish({ taskId });
-		// 		},
-		//
-		// 		error => {
-		// 			// Show error in an alert
-		// 			console.log(error);
-		//
-		// 			BackgroundTask.finish({ taskId });
-		// 		}
-		// 	);
-		// });
+			// Upload via the Snap!Clerk service.
+			this.snapClerkService.create(data.photo, data.type, data.note, data.labels, data.category)
+				.then(
+					// Success
+					() => {
+						// Reload snapclerk data.
+						this.loadSnapClerkData();
 
-		// Log
-		console.log("Starting upload of snapclerk receipt.");
+						// Notify the user the of the success.
+						LocalNotifications.schedule({
+							notifications: [
+								{
+									title: "Your Upload was a Success!",
+									body: "Your Snap!Clerk receipt was successfully uploaded. Sit back and relax while our system analyzes your receipt and enters it into your ledger.",
+									id: 1,
+									schedule: { at: new Date(Date.now() + 2000) }, // 2 second after.
+									sound: null,
+									attachments: null,
+									actionTypeId: "",
+									extra: null
+								}
+							]
+						});
 
-		// Post file to server
-		this.snapClerkService.create(formData).subscribe(
-			() => {
-				// Reload snapclerk data.
-				this.loadSnapClerkData();
-				// Log
-				console.log("Done uploading snapclerk receipt.");
-			},
+						// Kill background task
+						BackgroundTask.finish({ taskId });
+					},
 
-			error => {
-				// Show error in an alert
-				console.log(error);
-			}
-		);
+					// Failed
+					() => {
+						// Notify the user the of the issue.
+						LocalNotifications.schedule({
+							notifications: [
+								{
+									title: "Error with Receipt Upload",
+									body: "Your Snap!Clerk receipt failed to upload. Often a poor Internet connect is to blame. Please try again. We stored your receipt in your photo gallery.",
+									id: 1,
+									schedule: { at: new Date(Date.now() + 2000) }, // 2 second after.
+									sound: null,
+									attachments: null,
+									actionTypeId: "",
+									extra: null
+								}
+							]
+						});
+						// Kill background task
+						BackgroundTask.finish({ taskId });
+					});
+
+		});
 	}
 
 	//
-	// Create a file name for this upload.
+	// Present Snap!Clerk uploading toast.
 	//
-	createFileName(type: string) {
-		let d = new Date();
-		let n = d.getTime();
-		return "sc-mobile-" + n + "." + type.split("/")[1];
+	async presentSnapClerkUploadingToast() {
+		const toast = await this.toastController.create({
+			position: 'top',
+			message: 'Uploading receipt... (You can close the app)',
+			duration: 3000
+		});
+
+		toast.present();
 	}
 }
 

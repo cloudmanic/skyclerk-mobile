@@ -10,7 +10,8 @@ import { LoadingController, AlertController, Platform } from '@ionic/angular';
 import { SnapClerkService } from '../services/snapckerk.service';
 import { Plugins, CameraResultType, CameraSource } from '@capacitor/core';
 
-const { Camera, Filesystem } = Plugins;
+
+const { Camera } = Plugins;
 
 @Component({
 	selector: 'app-upload-receipt',
@@ -23,7 +24,7 @@ export class UploadReceiptPage implements OnInit {
 	category: string = "Spicer Test Category";
 	note: string = "Note....";
 	labels: string = "label #1, label #2, label #3";
-	uploadBase64: string = "";
+	uploadPhoto: string = "";
 	uploadFileType: string = "";
 
 	//
@@ -41,7 +42,7 @@ export class UploadReceiptPage implements OnInit {
 	//
 	doSumbit() {
 		let rt = {
-			photo: this.uploadBase64,
+			photo: this.uploadPhoto,
 			photoWeb: this.photo,
 			type: this.uploadFileType,
 			category: this.category,
@@ -67,8 +68,8 @@ export class UploadReceiptPage implements OnInit {
 
 		// Get image.
 		const image = await Camera.getPhoto({
-			quality: 50,
-			width: 600,
+			quality: 80,
+			width: 1200,
 			allowEditing: false,
 			saveToGallery: true,
 			correctOrientation: true,
@@ -79,14 +80,8 @@ export class UploadReceiptPage implements OnInit {
 		// Show image on upload screen.
 		this.photo = image.webPath;
 
-		// Get blob from web path
-		//let blob = await fetch(cameraResult.webPath).then(r => r.blob());
-
-		// Read file.
-		let img = await Filesystem.readFile({ path: image.path });
-
 		// File we upload.
-		this.uploadBase64 = img.data;
+		this.uploadPhoto = image.path; //img.data;
 		this.uploadFileType = "image/" + image.format;
 	}
 }

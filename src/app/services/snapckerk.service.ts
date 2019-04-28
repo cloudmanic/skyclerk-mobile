@@ -5,12 +5,13 @@
 // Copyright: 2019 Cloudmanic Labs, LLC. All rights reserved.
 //
 
-import { map, retry } from "rxjs/operators";
+import { map } from "rxjs/operators";
 import { Injectable, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { SnapClerk } from '../models/snapclerk.model';
+import { FileTransfer, FileUploadOptions, FileTransferObject, FileUploadResult } from '@ionic-native/file-transfer/ngx';
 
 @Injectable({
 	providedIn: 'root'
@@ -23,7 +24,7 @@ export class SnapClerkService {
 	//
 	// Constructor
 	//
-	constructor(private http: HttpClient) { }
+	constructor(private http: HttpClient, private fileTransfer: FileTransfer) { }
 
 	//
 	// Get me
@@ -55,11 +56,41 @@ export class SnapClerkService {
 	//
 	// Create new snapclerk
 	//
-	create(formData: FormData): Observable<SnapClerk> {
+	create(photo: string, type: string, note: string, labels: string, category: string): Promise<FileUploadResult> {
+		const fileTransfer: FileTransferObject = this.fileTransfer.create();
+
+		// Get accountId
 		let accountId = localStorage.getItem('account_id');
-		return this.http.post<SnapClerk>(`${environment.app_server}/api/v3/${accountId}/snapclerk`, formData)
-			.pipe(retry(10))
-			.pipe(map(res => new SnapClerk().deserialize(res)));
+
+		// Set the access token
+		let accessToken = localStorage.getItem('access_token');
+
+		// Setup load options.
+		let options: FileUploadOptions = {
+			fileKey: 'file',
+			fileName: this.createFileName(type),
+			mimeType: type,
+			headers: {
+				Authorization: `Bearer ${accessToken}`
+			},
+			params: {
+				note: note,
+				labels: labels,
+				category: category
+			}
+		}
+
+		// Return happy.
+		return fileTransfer.upload(photo, `${environment.app_server}/api/v3/${accountId}/snapclerk`, options);
+	}
+
+	//
+	// Create a file name for this upload.
+	//
+	createFileName(type: string): string {
+		let d = new Date();
+		let n = d.getTime();
+		return "sc-mobile-" + n + "." + type.split("/")[1];
 	}
 }
 
