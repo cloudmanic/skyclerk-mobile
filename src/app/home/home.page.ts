@@ -228,54 +228,48 @@ export class HomePage implements OnInit {
 		// Wrap this upload in a background function so it continues after closing the app.
 		let taskId = BackgroundTask.beforeExit(async () => {
 
-			// Upload via the Snap!Clerk service.
-			this.snapClerkService.create(data.photo, data.type, data.note, data.labels, data.category)
-				.then(
-					// Success
-					() => {
-						// Reload snapclerk data.
-						this.loadSnapClerkData();
+			try {
+				// Upload via the Snap!Clerk service.
+				await this.snapClerkService.create(data.photo, data.type, data.note, data.labels, data.category);
 
-						// Notify the user the of the success.
-						LocalNotifications.schedule({
-							notifications: [
-								{
-									title: "Your Upload was a Success!",
-									body: "Your Snap!Clerk receipt was successfully uploaded. Sit back and relax while our system analyzes your receipt and enters it into your ledger.",
-									id: 1,
-									schedule: { at: new Date(Date.now() + 2000) }, // 2 second after.
-									sound: null,
-									attachments: null,
-									actionTypeId: "",
-									extra: null
-								}
-							]
-						});
+				// Notify the user the of the success.
+				await LocalNotifications.schedule({
+					notifications: [
+						{
+							title: "Your Upload was a Success!",
+							body: "Your Snap!Clerk receipt was successfully uploaded. Sit back and relax while our we analyze your receipt and enter it into your ledger.",
+							id: new Date().getTime(),
+							schedule: { at: new Date(Date.now() + 2000) }, // 2 second after.
+							sound: null,
+							attachments: null,
+							actionTypeId: "",
+							extra: null
+						}
+					]
+				});
+			} catch (e) {
+				// Notify the user the of the issue.
+				await LocalNotifications.schedule({
+					notifications: [
+						{
+							title: "Error with Receipt Upload",
+							body: "Your Snap!Clerk receipt failed to upload. Often a poor Internet connect is to blame. Please try again. We stored your receipt in your photo gallery.",
+							id: new Date().getTime(),
+							schedule: { at: new Date(Date.now() + 2000) }, // 2 second after.
+							sound: null,
+							attachments: null,
+							actionTypeId: "",
+							extra: null
+						}
+					]
+				});
+			}
 
-						// Kill background task
-						BackgroundTask.finish({ taskId });
-					},
+			// Reload snapclerk data.
+			this.loadSnapClerkData();
 
-					// Failed
-					() => {
-						// Notify the user the of the issue.
-						LocalNotifications.schedule({
-							notifications: [
-								{
-									title: "Error with Receipt Upload",
-									body: "Your Snap!Clerk receipt failed to upload. Often a poor Internet connect is to blame. Please try again. We stored your receipt in your photo gallery.",
-									id: 1,
-									schedule: { at: new Date(Date.now() + 2000) }, // 2 second after.
-									sound: null,
-									attachments: null,
-									actionTypeId: "",
-									extra: null
-								}
-							]
-						});
-						// Kill background task
-						BackgroundTask.finish({ taskId });
-					});
+			// Kill background task
+			BackgroundTask.finish({ taskId });
 
 		});
 	}
