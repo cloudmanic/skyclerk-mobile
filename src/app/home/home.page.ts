@@ -32,6 +32,8 @@ export class HomePage implements OnInit {
 	ledgerLastPage: boolean = false;
 	ledgersPage: number = 1;
 	ledgersType: string = "";
+	ledgersSearch: string = "";
+	ledgersSearchTerm: string = ""; // Used before we hit the search button.
 	snapClerkPage: number = 1;
 	snapClerkLastPage: boolean = false;
 	ledgers: Ledger[] = [];
@@ -142,11 +144,11 @@ export class HomePage implements OnInit {
 	// Load Ledger data
 	//
 	loadLedgerData() {
-		this.ledgerService.get(this.ledgersPage, this.ledgersType).subscribe(res => {
+		this.ledgerService.get(this.ledgersPage, this.ledgersType, this.ledgersSearch).subscribe(res => {
 			// This is a hack because we typically append instead of showing a new page.
 			if (this.ledgersPage <= 1) {
 				this.ledgers = res.Data;
-				this.content.scrollToTop(1500); // TODO(spicer): Does not seem to work as we would expect	
+				this.content.scrollToTop(1500); // TODO(spicer): Does not seem to work as we would expect
 			} else {
 				for (let i = 0; i < res.Data.length; i++) {
 					this.ledgers.push(res.Data[i]);
@@ -229,6 +231,39 @@ export class HomePage implements OnInit {
 		this.ledgersPage = 1;
 		this.ledgersType = type;
 		this.loadPageData();
+	}
+
+	//
+	// Run a search query on the ledger
+	//
+	doLedgerSearch() {
+		this.ledgersSearch = this.ledgersSearchTerm;
+		this.ledgersPage = 1;
+		this.ledgersType = "";
+		this.loadPageData();
+	}
+
+	//
+	// Reset the ledger back to orginal state.
+	//
+	doLedgerTabClick() {
+		this.ledgersSearch = "";
+		this.ledgersSearchTerm = ""
+		this.ledgersPage = 1;
+		this.ledgersType = "";
+		this.loadPageData();
+	}
+
+	//
+	// Refresh data
+	//
+	doRefresh(event) {
+		this.loadPageData();
+		this.loadSnapClerkData();
+
+		setTimeout(() => {
+			event.target.complete();
+		}, 2000);
 	}
 
 	// -------------- SnapClerk Upload Stuff ----------- //

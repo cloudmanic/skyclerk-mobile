@@ -37,8 +37,8 @@
 
 		<ion-toolbar mode="ios" class="header-pettern-bg" *ngSwitchCase="'search'">
 			<ion-item custom-input-search lines="none">
-				<ion-input type="text" placeholder="Search SkyClerk"></ion-input>
-				<ion-button slot="end" drop-down graygradiantbtn mode="ios">
+				<ion-input type="text" placeholder="Search..." [(ngModel)]="ledgersSearchTerm"></ion-input>
+				<ion-button slot="end" drop-down graygradiantbtn mode="ios" (click)="doLedgerSearch()">
 					<img src="assets/imgs/search.svg" alt="">
 				</ion-button>
 			</ion-item>
@@ -48,7 +48,7 @@
 
 	<ion-toolbar segment-toolbar color="dark" mode="ios">
 		<ion-segment scrollable color="medium" mode="ios" [(ngModel)]="tabs">
-			<ion-segment-button mode="ios" value="ledger">
+			<ion-segment-button mode="ios" value="ledger" (click)="doLedgerTabClick()">
 				Ledger
 			</ion-segment-button>
 
@@ -70,10 +70,16 @@
 
 <ion-content>
 
+	<ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" *ngIf="(tabs == 'ledger') || (tabs == 'snapclerk')">
+		<ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingText="Refreshing...">
+		</ion-refresher-content>
+	</ion-refresher>
+
 	<div [ngSwitch]="tabs">
 
 		<!-- ledger -->
 		<div *ngSwitchCase="'ledger'" class="ledgers" [ngClass]="{ 'small-padding': (activeTableHeader == 'account') }">
+
 			<ion-grid tableViewGrid>
 
 				<app-home-account-header *ngIf="activeTableHeader == 'account'" (toggleHeader)="doLegerTableHeaderChange($event)" (accountChange)="doAccountChange($event)" [me]="me" [account]="account"></app-home-account-header>
@@ -112,9 +118,9 @@
 
 		<!-- search -->
 		<div *ngSwitchCase="'search'">
-			<div class="search-result" text-center>
+			<div class="search-result" text-center *ngIf="ledgersSearch.length">
 				Your Search Results for
-				<p>“Office”</p>
+				<p>“{{ ledgersSearch }}”</p>
 			</div>
 
 			<ion-grid search tableViewGrid>
