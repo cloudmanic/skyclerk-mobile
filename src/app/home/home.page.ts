@@ -16,9 +16,9 @@ import { SnapClerkService, SnapClerkUploadRequest } from '../services/snapckerk.
 import { SnapClerk } from '../models/snapclerk.model';
 import { File as FileModel } from '../models/file.model';
 import { Plugins } from '@capacitor/core';
-import { ToastController } from '@ionic/angular';
+import { ToastController, IonContent } from '@ionic/angular';
 
-const { App, LocalNotifications, BackgroundTask } = Plugins;
+const { App, BackgroundTask } = Plugins;
 
 @Component({
 	selector: 'app-home',
@@ -31,6 +31,7 @@ export class HomePage implements OnInit {
 	tabs: string = "ledger";
 	ledgerLastPage: boolean = false;
 	ledgersPage: number = 1;
+	ledgersType: string = "";
 	snapClerkPage: number = 1;
 	snapClerkLastPage: boolean = false;
 	ledgers: Ledger[] = [];
@@ -39,12 +40,17 @@ export class HomePage implements OnInit {
 	activeTableHeader: string = "";
 	dblTapFooterLogoCount: number = 0;
 
+	@ViewChild(IonContent) content: IonContent;
 	@ViewChild(AccountHeaderComponent) accountHeaderComponent;
 
 	//
 	// Constructor.
 	//
-	constructor(private toastController: ToastController, private meService: MeService, private ledgerService: LedgerService, private snapClerkService: SnapClerkService) { }
+	constructor(
+		private toastController: ToastController,
+		private meService: MeService,
+		private ledgerService: LedgerService,
+		private snapClerkService: SnapClerkService) { }
 
 	//
 	// NgInit
@@ -136,10 +142,11 @@ export class HomePage implements OnInit {
 	// Load Ledger data
 	//
 	loadLedgerData() {
-		this.ledgerService.get(this.ledgersPage).subscribe(res => {
+		this.ledgerService.get(this.ledgersPage, this.ledgersType).subscribe(res => {
 			// This is a hack because we typically append instead of showing a new page.
 			if (this.ledgersPage <= 1) {
 				this.ledgers = res.Data;
+				this.content.scrollToTop(1500); // TODO(spicer): Does not seem to work as we would expect	
 			} else {
 				for (let i = 0; i < res.Data.length; i++) {
 					this.ledgers.push(res.Data[i]);
@@ -213,6 +220,15 @@ export class HomePage implements OnInit {
 	//
 	doLegerTableHeaderChange(show: string) {
 		this.activeTableHeader = show;
+	}
+
+	//
+	// doLedgerType click
+	//
+	doLedgerType(type: string) {
+		this.ledgersPage = 1;
+		this.ledgersType = type;
+		this.loadPageData();
 	}
 
 	// -------------- SnapClerk Upload Stuff ----------- //

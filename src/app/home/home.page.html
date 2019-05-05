@@ -138,9 +138,9 @@
 <ion-footer no-border mode="md" overview>
 	<ion-toolbar color="dark" mode="md">
 		<ion-buttons slot="start">
-			<ion-button class="gray">ALL</ion-button>
-			<ion-button class="success">INCOME</ion-button>
-			<ion-button class="danger">EXPENSES</ion-button>
+			<ion-button class="gray" (click)="doLedgerType('')">ALL</ion-button>
+			<ion-button class="success" (click)="doLedgerType('income')">INCOME</ion-button>
+			<ion-button class="danger" (click)="doLedgerType('expense')">EXPENSES</ion-button>
 		</ion-buttons>
 		<ion-buttons slot="end" (click)="doFooterLogoClick()">
 			<div class="bar-logo">
