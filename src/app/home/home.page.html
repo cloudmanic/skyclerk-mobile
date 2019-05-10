@@ -90,13 +90,16 @@
 					<app-ledger-list [ledgers]="ledgers" [lastPage]="ledgerLastPage" (loadMore)="loadMoreLedgers($event)"></app-ledger-list>
 				</div>
 
-				<ion-row class="footer">
+				<ion-row class="footer" *ngIf="pnl.Year > 0">
 					<ion-col col-7>
-						<p text-uppercase>2012 Profit & Loss</p>
+						<p text-uppercase>{{ pnl.Year }} Profit & Loss</p>
 					</ion-col>
 
 					<ion-col text-right>
-						<p class="total-amount">+ $25,191.07</p>
+						<p class="total-amount">
+							<span *ngIf="pnl.Value > 0">+</span>
+							{{ pnl.Value | currency:'USD':true:'1.0-0' }}
+						</p>
 					</ion-col>
 				</ion-row>
 

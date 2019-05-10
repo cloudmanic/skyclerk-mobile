@@ -17,6 +17,7 @@ import { SnapClerk } from '../models/snapclerk.model';
 import { File as FileModel } from '../models/file.model';
 import { Plugins } from '@capacitor/core';
 import { ToastController, IonContent } from '@ionic/angular';
+import { ReportService, PnlCurrentYear } from '../services/report.service';
 
 const { App, BackgroundTask } = Plugins;
 
@@ -41,6 +42,7 @@ export class HomePage implements OnInit {
 	account: Account = new Account();
 	activeTableHeader: string = "";
 	dblTapFooterLogoCount: number = 0;
+	pnl: PnlCurrentYear = { Year: 0, Value: 0 };
 
 	@ViewChild(IonContent) content: IonContent;
 	@ViewChild(AccountHeaderComponent) accountHeaderComponent;
@@ -52,7 +54,8 @@ export class HomePage implements OnInit {
 		private toastController: ToastController,
 		private meService: MeService,
 		private ledgerService: LedgerService,
-		private snapClerkService: SnapClerkService) { }
+		private snapClerkService: SnapClerkService,
+		private reportService: ReportService) { }
 
 	//
 	// NgInit
@@ -78,6 +81,7 @@ export class HomePage implements OnInit {
 	// Load data for page.
 	//
 	loadPageData() {
+		this.getPnL();
 		this.loadLedgerData();
 		this.loadSnapClerkData();
 	}
@@ -264,6 +268,15 @@ export class HomePage implements OnInit {
 		setTimeout(() => {
 			event.target.complete();
 		}, 2000);
+	}
+
+	//
+	// Get the Year PNL
+	//
+	getPnL() {
+		this.reportService.getPnlCurrentYear().subscribe(res => {
+			this.pnl = res;
+		});
 	}
 
 	// -------------- SnapClerk Upload Stuff ----------- //
