@@ -188,20 +188,25 @@ export class HomePage implements OnInit {
 	// Do footer logo click
 	//
 	doFooterLogoClick() {
-		this.dblTapFooterLogoCount++;
+		// No need to do this if we only have one account.
+		if (this.me.Accounts.length > 1) {
+			this.accountHeaderComponent.doAccounts();
+		}
 
-		setTimeout(() => {
-			if (this.dblTapFooterLogoCount == 1) {
-				this.dblTapFooterLogoCount = 0;
-			} if (this.dblTapFooterLogoCount > 1) {
-				this.dblTapFooterLogoCount = 0;
-
-				// No need to do this if we only have one account.
-				if (this.me.Accounts.length > 1) {
-					this.accountHeaderComponent.doAccounts();
-				}
-			}
-		}, 250);
+		// this.dblTapFooterLogoCount++;
+		//
+		// setTimeout(() => {
+		// 	if (this.dblTapFooterLogoCount == 1) {
+		// 		this.dblTapFooterLogoCount = 0;
+		// 	} if (this.dblTapFooterLogoCount > 1) {
+		// 		this.dblTapFooterLogoCount = 0;
+		//
+		// 		// No need to do this if we only have one account.
+		// 		if (this.me.Accounts.length > 1) {
+		// 			this.accountHeaderComponent.doAccounts();
+		// 		}
+		// 	}
+		// }, 250);
 	}
 
 	//

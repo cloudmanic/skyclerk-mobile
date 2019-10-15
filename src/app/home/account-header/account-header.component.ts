@@ -37,21 +37,23 @@ export class AccountHeaderComponent implements OnInit {
 	// Double tap to trigger do accounts.
 	//
 	dblTapHeader() {
-		this.dblTapDoAccountCount++;
+		this.doTableHeaderClick();
 
-		setTimeout(() => {
-			if (this.dblTapDoAccountCount == 1) {
-				this.dblTapDoAccountCount = 0;
-				this.doTableHeaderClick();
-			} if (this.dblTapDoAccountCount > 1) {
-				this.dblTapDoAccountCount = 0;
-
-				// No need to do this if we only have one account.
-				if (this.me.Accounts.length > 1) {
-					this.doAccounts();
-				}
-			}
-		}, 250);
+		// this.dblTapDoAccountCount++;
+		//
+		// setTimeout(() => {
+		// 	if (this.dblTapDoAccountCount == 1) {
+		// 		this.dblTapDoAccountCount = 0;
+		// 		this.doTableHeaderClick();
+		// 	} if (this.dblTapDoAccountCount > 1) {
+		// 		this.dblTapDoAccountCount = 0;
+		//
+		// 		// No need to do this if we only have one account.
+		// 		if (this.me.Accounts.length > 1) {
+		// 			this.doAccounts();
+		// 		}
+		// 	}
+		// }, 250);
 	}
 
 	//

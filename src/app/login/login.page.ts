@@ -38,7 +38,11 @@ export class LoginPage {
 		this.authService.login(this.email, this.password).subscribe(
 			// Success - Redirect to dashboard.
 			() => {
-				this.router.navigate(['home']);
+				// Get the user so we can set the default account id
+				this.meService.get().subscribe(res => {
+					localStorage.setItem('account_id', res.Accounts[0].Id.toString());
+					this.router.navigate(['home']);
+				});
 			},
 
 			// Error
