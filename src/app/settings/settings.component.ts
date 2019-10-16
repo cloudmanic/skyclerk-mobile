@@ -11,6 +11,8 @@ import { MeService } from '../services/me.service';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { AlertController } from '@ionic/angular';
+import { AccountService } from '../services/account.service';
+import { Account } from '../models/account.model';
 
 @Component({
 	selector: 'app-settings',
@@ -18,18 +20,31 @@ import { AlertController } from '@ionic/angular';
 })
 
 export class SettingsComponent implements OnInit {
+	account: Account = new Account();
 	version: string = environment.version;
 
 	//
 	// Construct.
 	//
-	constructor(private router: Router, private meService: MeService, private alertController: AlertController) { }
+	constructor(private router: Router, private meService: MeService, private alertController: AlertController, private accountService: AccountService) { }
 
 	//
 	// NgInit
 	//
-	ngOnInit() { }
+	ngOnInit() {
+		// Load page data.
+		this.refreshAccount();
+	}
 
+	//
+	// Refresh the account object.
+	//
+	refreshAccount() {
+		this.accountService.getAccount().subscribe(res => {
+			this.account = res;
+			console.log(this.account);
+		})
+	}
 
 	//
 	// Change user profile.
@@ -77,7 +92,6 @@ export class SettingsComponent implements OnInit {
 		await alert.present();
 	}
 
-
 	//
 	// Change account name
 	//
@@ -89,7 +103,7 @@ export class SettingsComponent implements OnInit {
 					name: 'AccountName',
 					type: 'text',
 					placeholder: 'Account Name',
-					value: ''
+					value: this.account.Name
 				}
 			],
 			buttons: [
@@ -98,12 +112,32 @@ export class SettingsComponent implements OnInit {
 					role: 'cancel',
 					cssClass: 'secondary',
 					handler: () => {
-						console.log('Confirm Cancel');
+						//console.log('Confirm Cancel');
 					}
 				}, {
 					text: 'Update',
-					handler: () => {
-						console.log('Confirm Ok');
+					handler: (field) => {
+						// Validate
+						if (!field.AccountName.length) {
+							this.doAlert("Oops!", "Please fill out all fields.");
+							return
+						}
+
+						// Add new name to object.
+						this.account.Name = field.AccountName;
+
+						// Update account information in the backend
+						this.accountService.update(this.account).subscribe(
+							// Success
+							() => {
+								this.doAlert("Success!", "Your account name has been updated.");
+							},
+
+							// Error
+							err => {
+								this.doAlert("Oops!", err.error.error);
+							}
+						);
 					}
 				}
 			]
@@ -144,7 +178,7 @@ export class SettingsComponent implements OnInit {
 					role: 'cancel',
 					cssClass: 'secondary',
 					handler: () => {
-						console.log('Confirm Cancel');
+						//console.log('Confirm Cancel');
 					}
 				}, {
 					text: 'Update',
