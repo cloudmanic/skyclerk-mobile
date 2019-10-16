@@ -120,13 +120,19 @@ export class SettingsComponent implements OnInit {
 			header: 'Change Password',
 			inputs: [
 				{
+					name: 'Current',
+					type: 'password',
+					placeholder: 'Current Password',
+					value: ''
+				},
+				{
 					name: 'Password',
 					type: 'password',
 					placeholder: 'Password',
 					value: ''
 				},
 				{
-					name: 'Password',
+					name: 'PasswordConfirm',
 					type: 'password',
 					placeholder: 'Password Confirm',
 					value: ''
@@ -142,8 +148,31 @@ export class SettingsComponent implements OnInit {
 					}
 				}, {
 					text: 'Update',
-					handler: () => {
-						console.log('Confirm Ok');
+					handler: (fields) => {
+						// Validate password
+						if ((!fields.Password.length) || (!fields.PasswordConfirm.length) || (!fields.Current.length)) {
+							this.doAlert("Oops!", "Please fill out all fields.");
+							return;
+						}
+
+						// Validate password
+						if (fields.Password != fields.PasswordConfirm) {
+							this.doAlert("Oops!", "Passwords did not match.");
+							return;
+						}
+
+						// Update password with BE
+						this.meService.updatePassword(fields.Current, fields.Password, fields.PasswordConfirm).subscribe(
+							// Success
+							() => {
+								this.doAlert("Success!", "Your password was successfully updated.");
+							},
+
+							// Error
+							(err) => {
+								this.doAlert("Oops!", err.error.error);
+							}
+						);
 					}
 				}
 			]
@@ -152,6 +181,19 @@ export class SettingsComponent implements OnInit {
 		await alert.present();
 	}
 
+	//
+	// Show alert message if actions failed.
+	//
+	async doAlert(header: string, msg: string) {
+		const alert = await this.alertController.create({
+			header: header,
+			subHeader: '',
+			message: msg,
+			buttons: ['OK']
+		});
+
+		await alert.present();
+	}
 
 	//
 	// Do Logout TODO(spicer): Send message back to home to change tab.

@@ -38,6 +38,19 @@ export class MeService {
 		return this.http.get<Me>(environment.app_server + '/oauth/me')
 			.pipe(map(res => new Me().deserialize(res)));
 	}
+
+	//
+	// Update password for a user.
+	//
+	updatePassword(current: string, password: string, confirm: string): Observable<Boolean> {
+		let accountId = localStorage.getItem('account_id');
+		let url = environment.app_server + '/api/v3/' + accountId + '/me/change-password';
+
+		return this.http.post<Boolean>(url, { current: current, password: password, confirm: confirm })
+			.pipe(map(() => {
+				return true;
+			}));
+	}
 }
 
 /* End File */
