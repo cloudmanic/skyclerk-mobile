@@ -47,12 +47,57 @@ export class AuthService {
 				};
 			}));
 	}
+
+	//
+	// Regiser a new account.
+	//
+	register(email: string, pass: string, name: string) {
+		// Figure out name
+		let s = name.split(" ");
+		let first = "";
+		let last = "";
+
+		if (s.length == 2) {
+			first = s[0];
+			last = s[1];
+		} else {
+			first = name;
+			last = "Unknown";
+		}
+
+		// Build POST
+		let post = {
+			email: email,
+			password: pass,
+			first: first,
+			last: last,
+			client_id: environment.client_id,
+			token: ''
+		}
+
+		// Send Request to BE.
+		return this.http.post<RegisterResponse>(environment.app_server + '/register', post)
+			.pipe(map(res => {
+				// Store access token in local storage.
+				localStorage.setItem('account_id', res["account_id"].toString());
+				localStorage.setItem('user_id', res["user_id"].toString());
+				localStorage.setItem('access_token', res["access_token"]);
+				localStorage.setItem('user_email', email);
+
+				return {
+					account_id: res["account_id"],
+					user_id: res["user_id"],
+					access_token: res["access_token"]
+				};
+			}));
+	}
 }
 
 // Response from a register request.
 export interface RegisterResponse {
 	user_id: number,
-	access_token: string
+	access_token: string,
+	account_id: number
 }
 
 // Response from a login request

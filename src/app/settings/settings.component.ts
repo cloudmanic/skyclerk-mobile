@@ -42,7 +42,6 @@ export class SettingsComponent implements OnInit {
 	refreshAccount() {
 		this.accountService.getAccount().subscribe(res => {
 			this.account = res;
-			console.log(this.account);
 		})
 	}
 
