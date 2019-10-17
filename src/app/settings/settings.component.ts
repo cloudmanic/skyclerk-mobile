@@ -13,6 +13,7 @@ import { environment } from 'src/environments/environment';
 import { AlertController } from '@ionic/angular';
 import { AccountService } from '../services/account.service';
 import { Account } from '../models/account.model';
+import { Me } from '../models/me.model';
 
 @Component({
 	selector: 'app-settings',
@@ -20,6 +21,7 @@ import { Account } from '../models/account.model';
 })
 
 export class SettingsComponent implements OnInit {
+	me: Me = new Me();
 	account: Account = new Account();
 	version: string = environment.version;
 
@@ -33,7 +35,17 @@ export class SettingsComponent implements OnInit {
 	//
 	ngOnInit() {
 		// Load page data.
+		this.refreshMe();
 		this.refreshAccount();
+	}
+
+	//
+	// Refresh the me object.
+	//
+	refreshMe() {
+		this.meService.get().subscribe(res => {
+			this.me = res;
+		})
 	}
 
 	//
@@ -43,6 +55,44 @@ export class SettingsComponent implements OnInit {
 		this.accountService.getAccount().subscribe(res => {
 			this.account = res;
 		})
+	}
+
+	//
+	// Do close down account.
+	//
+	async doCloseAccount() {
+		const alert = await this.alertController.create({
+			header: 'Close Down Account',
+			subHeader: '',
+			message: 'Are you sure you want to close down your account? ALL YOUR DATA WILL BE LOST FOREVER.',
+			buttons: [
+				{
+					text: 'No, just joking.',
+					role: 'cancel',
+					cssClass: 'secondary'
+				},
+				{
+					text: 'Yes, I am sure.',
+					handler: () => {
+						// Delete account at BE.
+						this.accountService.delete().subscribe(
+							// Success
+							() => {
+								this.doAlert("Success!", "Your account was successfully deleted.");
+								this.doLogout();
+							},
+
+							// Error
+							err => {
+								this.doAlert("Oops!", err.error.error);
+							}
+						);
+					}
+				}
+			]
+		});
+
+		await alert.present();
 	}
 
 	//
@@ -56,19 +106,19 @@ export class SettingsComponent implements OnInit {
 					name: 'FirstName',
 					type: 'text',
 					placeholder: 'First Name',
-					value: ''
+					value: this.me.FirstName
 				},
 				{
 					name: 'LastName',
 					type: 'text',
 					placeholder: 'Last Name',
-					value: ''
+					value: this.me.LastName
 				},
 				{
 					name: 'Email',
 					type: 'email',
 					placeholder: 'Email',
-					value: ''
+					value: this.me.Email
 				},
 			],
 			buttons: [
@@ -77,12 +127,48 @@ export class SettingsComponent implements OnInit {
 					role: 'cancel',
 					cssClass: 'secondary',
 					handler: () => {
-						console.log('Confirm Cancel');
+						//console.log('Confirm Cancel');
 					}
 				}, {
 					text: 'Update',
-					handler: () => {
-						console.log('Confirm Ok');
+					handler: (fields) => {
+						// Validate
+						if (!fields.FirstName.length) {
+							this.doAlert("Oops!", "First name field is required.");
+							return
+						}
+
+						if (!fields.LastName.length) {
+							this.doAlert("Oops!", "Last name field is required.");
+							return
+						}
+
+						if (!fields.Email.length) {
+							this.doAlert("Oops!", "Email field is required.");
+							return
+						}
+
+						// New Me.
+						let me = new Me();
+						me.FirstName = fields.FirstName;
+						me.LastName = fields.LastName;
+						me.Email = fields.Email;
+
+						// Send updates to BE server.
+						this.meService.update(me).subscribe(
+							// Success
+							() => {
+								this.me.FirstName = fields.FirstName;
+								this.me.LastName = fields.LastName;
+								this.me.Email = fields.Email;
+								this.doAlert("Success!", "Your profile has been updated.");
+							},
+
+							// Error
+							err => {
+								this.doAlert("Oops!", err.error.error);
+							}
+						);
 					}
 				}
 			]

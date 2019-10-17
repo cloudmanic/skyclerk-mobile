@@ -41,6 +41,19 @@ export class MeService {
 	}
 
 	//
+	// Update user
+	//
+	update(user: Me): Observable<Boolean> {
+		let accountId = localStorage.getItem('account_id');
+		let url = environment.app_server + '/api/v3/' + accountId + '/me';
+
+		return this.http.put<Boolean>(url, { first_name: user.FirstName, last_name: user.LastName, email: user.Email })
+			.pipe(map(() => {
+				return true;
+			}));
+	}
+
+	//
 	// Update password for a user.
 	//
 	updatePassword(current: string, password: string, confirm: string): Observable<Boolean> {
