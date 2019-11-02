@@ -8,10 +8,10 @@
 import { Serializable } from './serializable.model';
 
 export class Category implements Serializable {
-	Id: number;
-	AccountId: number;
-	Name: string;
-	Type: string;
+	Id: number = 0;
+	AccountId: number = 0;
+	Name: string = "";
+	Type: string = "";
 
 	//
 	// Json to Object.

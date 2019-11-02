@@ -15,7 +15,7 @@ export class Ledger implements Serializable {
 	Id: number = 0;
 	AccountId: number = 0;
 	Date: Date = new Date();
-	Amount: number = 0.00;
+	Amount: number;
 	Note: string = "";
 	Contact: Contact = new Contact();
 	Category: Category = new Category();
