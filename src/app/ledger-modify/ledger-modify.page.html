@@ -57,6 +57,8 @@
 				</ion-col>
 
 				<ion-col size="4" text-center>
+					<ion-badge class="ledger-modify-bubble-count" color="primary" *ngIf="ledger.Labels.length > 0">{{ ledger.Labels.length }}</ion-badge>
+
 					<ion-button graybtn mode="ios" routerLink="/labels">
 						<img src="assets/imgs/tags.svg" alt="">
 					</ion-button>

@@ -19,7 +19,7 @@ export class Ledger implements Serializable {
 	Note: string = "";
 	Contact: Contact = new Contact();
 	Category: Category = new Category();
-	Labels: Label[];
+	Labels: Label[] = [];
 
 	//
 	// Json to Object.
