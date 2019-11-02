@@ -8,12 +8,12 @@
 import { Serializable } from './serializable.model';
 
 export class Contact implements Serializable {
-	Id: number;
-	AccountId: number;
-	Name: string;
-	FirstName: string;
-	LastName: string;
-	Email: string;
+	Id: number = 0;
+	AccountId: number = 0;
+	Name: string = "";
+	FirstName: string = "";
+	LastName: string = "";
+	Email: string = "";
 
 	//
 	// Json to Object.

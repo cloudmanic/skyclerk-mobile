@@ -2,17 +2,30 @@
 
 	<div class="form-content">
 		<h3 text-center>
-			<img src="assets/imgs/add-income-icon.svg" alt=""> Add Expense</h3>
+			<img src="assets/imgs/add-income-icon.svg" alt="">Add Income</h3>
 		<ion-list lines="none" login-form-list mode="ios">
 			<ion-row lrm>
+
 				<ion-col size="12">
 					<div class="dropdown">
 						<ion-item>
-							<ion-label position="stacked">Vendor Name</ion-label>
+							<ion-label position="stacked">Contact Name</ion-label>
+							<ion-input type="text" name="contactText" [(ngModel)]="contactText" (change)="onContactChange()"></ion-input>
+						</ion-item>
+						<ion-button drop-down graygradiantbtn mode="ios">
+							<img src="assets/imgs/down-arrow-gray.svg" alt="" (click)="doContacts()" />
+						</ion-button>
+					</div>
+				</ion-col>
+
+				<ion-col size="12">
+					<div class="dropdown">
+						<ion-item>
+							<ion-label position="stacked">Category</ion-label>
 							<ion-input type="text"></ion-input>
 						</ion-item>
 						<ion-button drop-down graygradiantbtn mode="ios">
-							<img src="assets/imgs/down-arrow-gray.svg" alt="">
+							<img src="assets/imgs/down-arrow-gray.svg" alt="" />
 						</ion-button>
 					</div>
 				</ion-col>
