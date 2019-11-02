@@ -10,13 +10,14 @@ import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Contact } from '../models/contact.model';
 import { ContactService } from '../services/contact.service';
-import { AlertController, PickerController } from '@ionic/angular';
+import { AlertController, PickerController, Platform, NavController } from '@ionic/angular';
 import { Ledger } from '../models/ledger.model';
 import { Category } from '../models/category.model';
 import { CategoryService } from '../services/category.service';
 import { LabelService } from '../services/label.service';
 import { LedgerService } from '../services/ledger.service';
 import { ActivatedRoute } from '@angular/router';
+import { CameraSource, CameraResultType, Camera, Geolocation } from '@capacitor/core';
 
 @Component({
 	selector: 'app-ledger-modify',
@@ -25,6 +26,9 @@ import { ActivatedRoute } from '@angular/router';
 
 export class LedgerModfyPage implements OnInit {
 	type: string = "";
+	photo: string = "";
+	uploadPhoto: string = "";
+	uploadFileType: string = "";
 	contacts: Contact[] = [];
 	categories: Category[] = [];
 	contactText: string = "";
@@ -39,6 +43,8 @@ export class LedgerModfyPage implements OnInit {
 	constructor(
 		public route: ActivatedRoute,
 		public location: Location,
+		public platform: Platform,
+		public navCtrl: NavController,
 		public pickerController: PickerController,
 		public contactService: ContactService,
 		public categoryService: CategoryService,
@@ -79,9 +85,39 @@ export class LedgerModfyPage implements OnInit {
 		this.ledger.Date = moment(this.dateStr).toDate();
 
 		// Add amount
-		this.ledger.Amount = this.amount;
+		this.ledger.Amount = Number(this.amount);
 
-		console.log(this.ledger);
+		// Make it an expense entry.
+		if (this.type == "expense") {
+			this.ledger.Amount = this.ledger.Amount * -1;
+		}
+
+		// Send ledger to BE
+		this.ledgerService.create(this.ledger).subscribe(
+			// Success
+			() => {
+				this.ledgerService.refresh.emit(true);
+				this.navCtrl.back();
+			},
+
+			// error
+			(err) => {
+				// System error
+				if (typeof err.error.error == "string") {
+					this.doErrorsPrompt("Ledger Errors", err.error.error);
+					return;
+				}
+
+				// Field errors
+				let e = [];
+				for (let row in err.error.errors) {
+					e.push("* " + err.error.errors[row]);
+				}
+
+				// Show error
+				this.doErrorsPrompt("Ledger Errors", e.join("<br /><br />"));
+			}
+		);
 	}
 
 	//
@@ -138,6 +174,29 @@ export class LedgerModfyPage implements OnInit {
 		} else {
 			this.contactText = this.ledger.Contact.FirstName + ' ' + this.ledger.Contact.LastName;
 		}
+	}
+
+	// //
+	// // Set the current position of the user.
+	// //
+	// setCurrentPosition() {
+	// 	Geolocation.getCurrentPosition().then(cords => {
+	// 		this.ledger.Lat = cords.coords.latitude;
+	// 		this.lon = cords.coords.longitude;
+	// 	})
+	// }
+
+	//
+	// If we have errors show them.
+	//
+	async doErrorsPrompt(header: string, errors: string) {
+		const alert = await this.alertController.create({
+			header: header,
+			message: errors,
+			buttons: ['Ok']
+		});
+
+		await alert.present();
 	}
 
 	//
@@ -279,6 +338,35 @@ export class LedgerModfyPage implements OnInit {
 		});
 
 		await alert.present();
+	}
+
+	//
+	// Get photo to attach
+	//
+	async doGetPhoto() {
+		// If we are in the browser we need to do sepcial things.
+		if (!this.platform.is("hybrid")) {
+			alert("Cam not support on web.");
+			return;
+		}
+
+		// Get image.
+		const image = await Camera.getPhoto({
+			quality: 80,
+			width: 1200,
+			allowEditing: false,
+			saveToGallery: true,
+			correctOrientation: true,
+			resultType: CameraResultType.Uri,
+			source: CameraSource.Prompt
+		});
+
+		// Show image on upload screen.
+		this.photo = image.webPath;
+
+		// File we upload.
+		this.uploadPhoto = image.path; //img.data;
+		this.uploadFileType = "image/" + image.format;
 	}
 }
 

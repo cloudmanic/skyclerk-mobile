@@ -6,7 +6,7 @@
 //
 
 import { map } from "rxjs/operators";
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
@@ -23,13 +23,16 @@ export class LedgerService {
 	// to pass the ledger between screens.
 	activeLedger: Ledger = new Ledger();
 
+	// This is used to tell the system one of our ledgers has changed.
+	refresh = new EventEmitter<boolean>();
+
 	//
 	// Constructor
 	//
 	constructor(private http: HttpClient) { }
 
 	//
-	// Get me
+	// Get ledger
 	//
 	get(page: number, type: string, search: string): Observable<LedgerResponse> {
 		let accountId = localStorage.getItem('account_id');
@@ -53,6 +56,29 @@ export class LedgerService {
 			// Return happy.
 			return new LedgerResponse(lastPage, Number(res.headers.get('X-Offset')), Number(res.headers.get('X-Limit')), Number(res.headers.get('X-No-Limit-Count')), data);
 		}));
+	}
+
+	//
+	// Create a new ledger
+	//
+	create(ledger: Ledger): Observable<Ledger> {
+		let accountId = localStorage.getItem('account_id');
+		ledger.AccountId = Number(accountId);
+
+		return this.http.post<Ledger>(`${environment.app_server}/api/v3/${accountId}/ledger`, new Ledger().serialize(ledger))
+			.pipe(map(res => {
+				let lg = new Ledger().deserialize(res);
+				// let type = "expense";
+				//
+				// if (lg.Amount > 0) {
+				// 	type = "income";
+				// }
+
+				// // Track event.
+				// this.trackService.event('ledger-create', { ledgerEntryType: type, app: "web", "accountId": accountId });
+
+				return lg;
+			}));
 	}
 }
 

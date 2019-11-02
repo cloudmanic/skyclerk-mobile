@@ -63,6 +63,15 @@ export class HomePage implements OnInit {
 	ngOnInit() {
 		this.loadMe();
 
+		// Listen for ledger change requests.
+		this.ledgerService.refresh.subscribe(() => {
+			this.ledgersPage = 1;
+			this.ledgersType = "";
+			this.ledgersSearch = "";
+			this.loadMe();
+			this.presentLedgerToast();
+		});
+
 		// Listen for receipt uploads from snapclerk
 		this.snapClerkService.upload.subscribe(data => {
 			this.uploadSnapClerkData(data);
@@ -333,6 +342,19 @@ export class HomePage implements OnInit {
 			position: 'top',
 			message: 'Uploading receipt... (You can close the app)',
 			duration: 3000
+		});
+
+		toast.present();
+	}
+
+	//
+	// Present ledger complete..
+	//
+	async presentLedgerToast() {
+		const toast = await this.toastController.create({
+			position: 'top',
+			message: 'Your ledger entry has been saved.',
+			duration: 2000
 		});
 
 		toast.present();

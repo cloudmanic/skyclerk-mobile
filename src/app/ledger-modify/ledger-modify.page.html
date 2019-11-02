@@ -93,7 +93,7 @@
 		</div>
 
 		<div class="button-container" *ngIf="(type == 'expense')">
-			<ion-button button-danger button-custom no-outer-shadow text-uppercase>
+			<ion-button button-danger button-custom no-outer-shadow text-uppercase (click)="save()">
 				<img src="assets/imgs/add-expense-icon.svg" alt="">
 				Add Expense
 			</ion-button>
