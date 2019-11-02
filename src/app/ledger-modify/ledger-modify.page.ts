@@ -5,32 +5,42 @@
 // Copyright: 2019 Cloudmanic Labs, LLC. All rights reserved.
 //
 
+import * as moment from 'moment';
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Contact } from '../models/contact.model';
 import { ContactService } from '../services/contact.service';
-import { AlertController } from '@ionic/angular';
+import { AlertController, PickerController } from '@ionic/angular';
 import { Ledger } from '../models/ledger.model';
 import { Category } from '../models/category.model';
 import { CategoryService } from '../services/category.service';
+import { LabelService } from '../services/label.service';
 
 @Component({
-	selector: 'app-add-income',
-	templateUrl: './add-income.page.html'
+	selector: 'app-ledger-modify',
+	templateUrl: './ledger-modify.page.html'
 })
 
-export class AddIncomePage implements OnInit {
+export class LedgerModfyPage implements OnInit {
 	type: string = "income";
 	contacts: Contact[] = [];
 	categories: Category[] = [];
 	contactText: string = "";
 	categoryText: string = "";
-	ammount: number = 0.00;
+	amount: number;
 	ledger: Ledger = new Ledger();
+	dateStr: string = new Date().toISOString();
 
 	//
 	// Constructor
 	//
-	constructor(public contactService: ContactService, public categoryService: CategoryService, public alertController: AlertController) { }
+	constructor(
+		public location: Location,
+		public pickerController: PickerController,
+		public contactService: ContactService,
+		public categoryService: CategoryService,
+		public alertController: AlertController,
+		public labelService: LabelService) { }
 
 	//
 	// ngOnInit
@@ -42,6 +52,24 @@ export class AddIncomePage implements OnInit {
 		// Load page Data
 		this.getContacts();
 		this.getCategories();
+
+		// Labels were selected on another screen.
+		this.labelService.labelsSelected.subscribe(res => {
+			this.ledger.Labels = res;
+		});
+	}
+
+	//
+	// Save ledger entry
+	//
+	save() {
+		// Add in date
+		this.ledger.Date = moment(this.dateStr).toDate();
+
+		// Add amount
+		this.ledger.Amount = this.amount;
+
+		console.log(this.ledger);
 	}
 
 	//

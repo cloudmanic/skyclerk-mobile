@@ -1,0 +1,43 @@
+<ion-content padding havePopup income>
+	<div class="form-content">
+		<h3 text-center>Add Labels</h3>
+
+		<ion-list lines="none" login-form-list mode="ios">
+			<div class="dropdown">
+				<ion-item>
+					<ion-label position="stacked">Add New Label</ion-label>
+					<ion-input type="text" name="newLabel" [(ngModel)]="newLabel"></ion-input>
+				</ion-item>
+
+				<ion-button drop-down graygradiantbtn mode="ios" (click)="addLabel()">
+					<img src="assets/imgs/down-arrow-gray.svg" alt="">
+				</ion-button>
+			</div>
+
+			<ion-item checkbox mode="ios" *ngFor="let row of labels" (click)="onCheck(row)">
+				<ion-label>{{ row.Name }}</ion-label>
+				<ion-checkbox mode="ios" slot="end" checked="{{ isChecked(row) }}"></ion-checkbox>
+			</ion-item>
+		</ion-list>
+
+		<div class="button-container">
+			<ion-button lightgray button-custom no-outer-shadow text-uppercase (click)="save()">
+				<img src="assets/imgs/btn-tags.svg" img-left alt=""> Save Label</ion-button>
+		</div>
+	</div>
+</ion-content>
+
+<ion-footer no-border mode="md">
+	<ion-toolbar color="dark" mode="md">
+		<ion-buttons slot="start">
+			<ion-button fill="clear" mode="ios" text-uppercase color="light" routerLink="/ledger/add" routerDirection="back">« Cancel and go Back
+			</ion-button>
+		</ion-buttons>
+
+		<ion-buttons slot="end">
+			<div class="bar-logo">
+				<img src="assets/imgs/logo-small.svg" alt="">
+			</div>
+		</ion-buttons>
+	</ion-toolbar>
+</ion-footer>

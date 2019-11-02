@@ -659,13 +659,17 @@ ion-footer {
                 --inner-padding-end: 0;
 
                 &.hydrated {
-                    ion-input {
+                    ion-input, ion-datetime {
                         height: 42px;
                         background: #fff;
                         border-radius: 5px;
                         margin-top: 10px;
                         --padding-start: 8px;
                         --padding-end: 8px;
+                    }
+
+                    ion-datetime {
+                      height: 36px;
                     }
 
                 }
@@ -733,7 +737,7 @@ ion-footer {
         position: absolute;
         width: 50px;
         right: 0;
-        bottom: 1px;
+        bottom: -3px;
         margin: 0;
         height: 42px;
     }

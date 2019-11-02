@@ -33,14 +33,17 @@
 				<ion-col size="6">
 					<ion-item>
 						<ion-label position="stacked">Date</ion-label>
-						<ion-datetime displayFormat="MM/DD/YYYY" placeholder="Select Date"></ion-datetime>
+						<ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="dateStr" name="dateStr"></ion-datetime>
+						<!-- <ion-input type="text" ionDatetime>
+							<ion-datetime displayFormat="MM/DD/YYYY"></ion-datetime>
+						</ion-input> -->
 					</ion-item>
 				</ion-col>
 
 				<ion-col size="6">
 					<ion-item class="amount-DONTUSE">
 						<ion-label position="stacked">Amount</ion-label>
-						<ion-input type="text" name="ammount" [(ngModel)]="ammount" placeholder="0.00"></ion-input>
+						<ion-input type="text" name="amount" [(ngModel)]="amount" placeholder="0.00"></ion-input>
 					</ion-item>
 				</ion-col>
 			</ion-row>
@@ -50,26 +53,28 @@
 					<ion-button graybtn mode="ios">
 						<img src="assets/imgs/note.svg" alt="">
 					</ion-button>
-					<p>Add Note</p>
+					<p>Note</p>
 				</ion-col>
+
 				<ion-col size="4" text-center>
-					<ion-button graybtn mode="ios" routerLink="/edit-ledger">
+					<ion-button graybtn mode="ios" routerLink="/labels">
 						<img src="assets/imgs/tags.svg" alt="">
 					</ion-button>
-					<p>Add Tags</p>
+					<p>Labels</p>
 				</ion-col>
+
 				<ion-col size="4" text-right>
 					<ion-button graybtn mode="ios">
 						<img src="assets/imgs/attach.svg" alt="">
 					</ion-button>
-					<p>Attach File</p>
+					<p>Picture</p>
 				</ion-col>
 			</ion-row>
 
 		</ion-list>
 
 		<div class="button-container">
-			<ion-button button-success button-custom no-outer-shadow text-uppercase>
+			<ion-button button-success button-custom no-outer-shadow text-uppercase (click)="save()">
 				<img src="assets/imgs/add-income-icon.svg" alt=""> Add Income</ion-button>
 		</div>
 	</div>
