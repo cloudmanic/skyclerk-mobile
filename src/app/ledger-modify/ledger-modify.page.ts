@@ -246,6 +246,40 @@ export class LedgerModfyPage implements OnInit {
 
 		await alert.present();
 	}
+
+	//
+	// Add a note to the ledger
+	//
+	async doNotePrompt() {
+		const alert = await this.alertController.create({
+			header: 'Ledger Note',
+			inputs: [
+				{
+					name: 'Note',
+					type: 'text',
+					placeholder: 'Enter a ledger note...',
+					value: ""
+				}
+			],
+			buttons: [
+				{
+					text: 'Cancel',
+					role: 'cancel',
+					cssClass: 'secondary',
+					handler: () => {
+						//console.log('Confirm Cancel');
+					}
+				}, {
+					text: 'Add Note',
+					handler: (field) => {
+						this.ledger.Note = field.Note;
+					}
+				}
+			]
+		});
+
+		await alert.present();
+	}
 }
 
 /* End File */

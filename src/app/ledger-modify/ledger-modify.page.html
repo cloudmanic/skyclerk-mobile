@@ -58,7 +58,9 @@
 
 			<ion-row buttons>
 				<ion-col size="4" text-left>
-					<ion-button graybtn mode="ios">
+					<ion-badge class="ledger-modify-bubble-count" color="primary" *ngIf="ledger.Note.length > 0" style="left: 5px;">1</ion-badge>
+
+					<ion-button graybtn mode="ios" (click)="doNotePrompt()">
 						<img src="assets/imgs/note.svg" alt="">
 					</ion-button>
 					<p>Note</p>
