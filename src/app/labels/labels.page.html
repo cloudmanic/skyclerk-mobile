@@ -1,4 +1,4 @@
-<ion-content padding havePopup income>
+<ion-content padding havePopup income [attr.expense]="(type == 'expense') ? 'true' : null">
 	<div class="form-content">
 		<h3 text-center>Add Labels</h3>
 
@@ -30,7 +30,7 @@
 <ion-footer no-border mode="md">
 	<ion-toolbar color="dark" mode="md">
 		<ion-buttons slot="start">
-			<ion-button fill="clear" mode="ios" text-uppercase color="light" routerLink="/ledger/add" routerDirection="back">« Cancel and go Back
+			<ion-button fill="clear" mode="ios" text-uppercase color="light" routerLink="/ledger/add" [queryParams]="{type: type}" routerDirection="back">« Cancel and go Back
 			</ion-button>
 		</ion-buttons>
 

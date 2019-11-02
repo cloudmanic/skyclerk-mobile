@@ -16,6 +16,7 @@ import { Category } from '../models/category.model';
 import { CategoryService } from '../services/category.service';
 import { LabelService } from '../services/label.service';
 import { LedgerService } from '../services/ledger.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
 	selector: 'app-ledger-modify',
@@ -23,7 +24,7 @@ import { LedgerService } from '../services/ledger.service';
 })
 
 export class LedgerModfyPage implements OnInit {
-	type: string = "income";
+	type: string = "";
 	contacts: Contact[] = [];
 	categories: Category[] = [];
 	contactText: string = "";
@@ -33,16 +34,23 @@ export class LedgerModfyPage implements OnInit {
 	dateStr: string = new Date().toISOString();
 
 	//
-	// Constructor
+	// Constructor - Get query params from the url.
 	//
 	constructor(
+		public route: ActivatedRoute,
 		public location: Location,
 		public pickerController: PickerController,
 		public contactService: ContactService,
 		public categoryService: CategoryService,
 		public alertController: AlertController,
 		public ledgerService: LedgerService,
-		public labelService: LabelService) { }
+		public labelService: LabelService) {
+
+		// Get the type of ledger entry.
+		this.route.queryParams.subscribe(params => {
+			this.type = params.type;
+		});
+	}
 
 	//
 	// ngOnInit

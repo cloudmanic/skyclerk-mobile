@@ -10,6 +10,7 @@ import { LabelService } from '../services/label.service';
 import { Label } from '../models/label.model';
 import { NavController } from '@ionic/angular';
 import { LedgerService } from '../services/ledger.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
 	selector: 'app-labels',
@@ -17,6 +18,7 @@ import { LedgerService } from '../services/ledger.service';
 })
 
 export class LabelsPage implements OnInit {
+	type: string = "";
 	labels: Label[] = [];
 	checked: Label[] = [];
 	newLabel: string = "";
@@ -25,9 +27,15 @@ export class LabelsPage implements OnInit {
 	// Constructor
 	//
 	constructor(
+		public route: ActivatedRoute,
 		public ledgerService: LedgerService,
 		public labelService: LabelService,
-		public navCtrl: NavController) { }
+		public navCtrl: NavController) {
+		// Get the type of ledger entry.
+		this.route.queryParams.subscribe(params => {
+			this.type = params.type;
+		});
+	}
 
 	//
 	// ngOnInit
@@ -45,7 +53,7 @@ export class LabelsPage implements OnInit {
 	//
 	save() {
 		this.labelService.labelsSelected.emit(this.checked);
-		this.navCtrl.navigateBack('/ledger/add');
+		this.navCtrl.back();
 	}
 
 	//

@@ -1,8 +1,16 @@
-<ion-content padding havePopup income>
+<ion-content padding havePopup income [attr.expense]="(type == 'expense') ? 'true' : null">
 
 	<div class="form-content">
-		<h3 text-center>
-			<img src="assets/imgs/add-income-icon.svg" alt="">Add Income</h3>
+		<h3 text-center *ngIf="(type == 'income')">
+			<img src="assets/imgs/add-income-icon.svg" alt="">
+			Add Income
+		</h3>
+
+		<h3 text-center *ngIf="(type == 'expense')">
+			<img src="assets/imgs/add-expense-icon.svg" alt="">
+			Add Expense
+		</h3>
+
 		<ion-list lines="none" login-form-list mode="ios">
 			<ion-row lrm>
 
@@ -59,7 +67,7 @@
 				<ion-col size="4" text-center>
 					<ion-badge class="ledger-modify-bubble-count" color="primary" *ngIf="ledger.Labels.length > 0">{{ ledger.Labels.length }}</ion-badge>
 
-					<ion-button graybtn mode="ios" routerLink="/labels">
+					<ion-button graybtn mode="ios" routerLink="/labels" [queryParams]="{type: type}">
 						<img src="assets/imgs/tags.svg" alt="">
 					</ion-button>
 					<p>Labels</p>
@@ -75,12 +83,23 @@
 
 		</ion-list>
 
-		<div class="button-container">
+		<div class="button-container" *ngIf="(type == 'income')">
 			<ion-button button-success button-custom no-outer-shadow text-uppercase (click)="save()">
-				<img src="assets/imgs/add-income-icon.svg" alt=""> Add Income</ion-button>
+				<img src="assets/imgs/add-income-icon.svg" alt="">
+				Add Income
+			</ion-button>
 		</div>
+
+		<div class="button-container" *ngIf="(type == 'expense')">
+			<ion-button button-danger button-custom no-outer-shadow text-uppercase>
+				<img src="assets/imgs/add-expense-icon.svg" alt="">
+				Add Expense
+			</ion-button>
+		</div>
+
 	</div>
 </ion-content>
+
 <ion-footer no-border mode="md">
 	<ion-toolbar color="dark" mode="md">
 		<ion-buttons slot="start">
