@@ -9,6 +9,7 @@ import { Component, OnInit } from '@angular/core';
 import { LabelService } from '../services/label.service';
 import { Label } from '../models/label.model';
 import { NavController } from '@ionic/angular';
+import { LedgerService } from '../services/ledger.service';
 
 @Component({
 	selector: 'app-labels',
@@ -23,7 +24,10 @@ export class LabelsPage implements OnInit {
 	//
 	// Constructor
 	//
-	constructor(public labelService: LabelService, public navCtrl: NavController) { }
+	constructor(
+		public ledgerService: LedgerService,
+		public labelService: LabelService,
+		public navCtrl: NavController) { }
 
 	//
 	// ngOnInit
@@ -31,6 +35,9 @@ export class LabelsPage implements OnInit {
 	ngOnInit() {
 		// Load page data
 		this.getLabels();
+
+		// Do we have a ledger already?
+		this.checked = this.ledgerService.activeLedger.Labels;
 	}
 
 	//

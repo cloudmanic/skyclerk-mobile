@@ -15,6 +15,7 @@ import { Ledger } from '../models/ledger.model';
 import { Category } from '../models/category.model';
 import { CategoryService } from '../services/category.service';
 import { LabelService } from '../services/label.service';
+import { LedgerService } from '../services/ledger.service';
 
 @Component({
 	selector: 'app-ledger-modify',
@@ -40,6 +41,7 @@ export class LedgerModfyPage implements OnInit {
 		public contactService: ContactService,
 		public categoryService: CategoryService,
 		public alertController: AlertController,
+		public ledgerService: LedgerService,
 		public labelService: LabelService) { }
 
 	//
@@ -48,6 +50,7 @@ export class LedgerModfyPage implements OnInit {
 	ngOnInit() {
 		// Set ledger
 		this.ledger.AccountId = Number(localStorage.getItem('account_id'));
+		this.ledgerService.activeLedger = this.ledger;
 
 		// Load page Data
 		this.getContacts();
@@ -56,6 +59,7 @@ export class LedgerModfyPage implements OnInit {
 		// Labels were selected on another screen.
 		this.labelService.labelsSelected.subscribe(res => {
 			this.ledger.Labels = res;
+			this.ledgerService.activeLedger = this.ledger;
 		});
 	}
 

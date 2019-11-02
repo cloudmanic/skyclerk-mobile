@@ -17,6 +17,12 @@ import { Ledger } from '../models/ledger.model';
 })
 
 export class LedgerService {
+	// This is used to detect if we are currently working on a ledger.
+	// For example if we are on the ledger add page and we move to the
+	// add labels page. Or this is used when editing a ledger as a way
+	// to pass the ledger between screens.
+	activeLedger: Ledger = new Ledger();
+
 	//
 	// Constructor
 	//
