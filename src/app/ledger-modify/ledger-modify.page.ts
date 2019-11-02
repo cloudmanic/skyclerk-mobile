@@ -70,6 +70,9 @@ export class LedgerModfyPage implements OnInit {
 		this.getContacts();
 		this.getCategories();
 
+		// Set the position.
+		this.setCurrentPosition();
+
 		// Labels were selected on another screen.
 		this.labelService.labelsSelected.subscribe(res => {
 			this.ledger.Labels = res;
@@ -176,15 +179,15 @@ export class LedgerModfyPage implements OnInit {
 		}
 	}
 
-	// //
-	// // Set the current position of the user.
-	// //
-	// setCurrentPosition() {
-	// 	Geolocation.getCurrentPosition().then(cords => {
-	// 		this.ledger.Lat = cords.coords.latitude;
-	// 		this.lon = cords.coords.longitude;
-	// 	})
-	// }
+	//
+	// Set the current position of the user.
+	//
+	setCurrentPosition() {
+		Geolocation.getCurrentPosition().then(cords => {
+			this.ledger.Lat = cords.coords.latitude;
+			this.ledger.Lon = cords.coords.longitude;
+		})
+	}
 
 	//
 	// If we have errors show them.

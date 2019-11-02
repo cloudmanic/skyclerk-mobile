@@ -17,6 +17,8 @@ export class Ledger implements Serializable {
 	Date: Date = new Date();
 	Amount: number;
 	Note: string = "";
+	Lat: number = 0.00;
+	Lon: number = 0.00;
 	Contact: Contact = new Contact();
 	Category: Category = new Category();
 	Labels: Label[] = [];
@@ -30,6 +32,8 @@ export class Ledger implements Serializable {
 		this.Date = moment(json["date"]).toDate();
 		this.Amount = json["amount"];
 		this.Note = json["note"];
+		this.Lat = json["lat"];
+		this.Lon = json["lon"];
 		this.Contact = new Contact().deserialize(json["contact"]);
 		this.Category = new Category().deserialize(json["category"]);
 		this.Labels = [];
@@ -52,6 +56,8 @@ export class Ledger implements Serializable {
 			date: obj.Date,
 			amount: obj.Amount,
 			note: obj.Note,
+			lat: obj.Lat,
+			lon: obj.Lon,
 			contact: new Contact().serialize(obj.Contact),
 			category: new Category().serialize(obj.Category),
 			labels: []
