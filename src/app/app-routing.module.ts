@@ -17,7 +17,6 @@ const routes: Routes = [
 	{ path: 'home', loadChildren: './home/home.module#HomePageModule', canActivate: [SessionGuard] },
 	{ path: 'ledger/add', loadChildren: './ledger-modify/ledger-modify.module#LedgerModfyPageModule', canActivate: [SessionGuard] },
 	{ path: 'labels', loadChildren: './labels/labels.module#LabelsPageModule', canActivate: [SessionGuard] },
-	{ path: 'select-an-account', loadChildren: './select-an-account/select-an-account.module#SelectAnAccountPageModule', canActivate: [SessionGuard] },
 	{ path: 'view-attachment', loadChildren: './view-attachment/view-attachment.module#ViewAttachmentPageModule', canActivate: [SessionGuard] },
 	{ path: 'snapclerk/upload-receipt', loadChildren: './snapclerk/upload-receipt/upload-receipt.module#UploadReceiptPageModule', canActivate: [SessionGuard] },
 ];
