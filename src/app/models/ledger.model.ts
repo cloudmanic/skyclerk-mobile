@@ -10,6 +10,7 @@ import { Serializable } from './serializable.model';
 import { Contact } from './contact.model';
 import { Category } from './category.model';
 import { Label } from './label.model';
+import { File as FileModel } from './file.model';
 
 export class Ledger implements Serializable {
 	Id: number = 0;
@@ -22,6 +23,7 @@ export class Ledger implements Serializable {
 	Contact: Contact = new Contact();
 	Category: Category = new Category();
 	Labels: Label[] = [];
+	Files: FileModel[] = [];
 
 	//
 	// Json to Object.
@@ -37,10 +39,18 @@ export class Ledger implements Serializable {
 		this.Contact = new Contact().deserialize(json["contact"]);
 		this.Category = new Category().deserialize(json["category"]);
 		this.Labels = [];
+		this.Files = [];
 
 		// Deal with labels.
 		for (let i = 0; i < json["labels"].length; i++) {
 			this.Labels.push(new Label().deserialize(json["labels"][i]));
+		}
+
+		// Deal with files.
+		if (json["files"]) {
+			for (let i = 0; i < json["files"].length; i++) {
+				this.Files.push(new FileModel().deserialize(json["files"][i]));
+			}
 		}
 
 		return this;
@@ -60,12 +70,18 @@ export class Ledger implements Serializable {
 			lon: obj.Lon,
 			contact: new Contact().serialize(obj.Contact),
 			category: new Category().serialize(obj.Category),
-			labels: []
+			labels: [],
+			files: []
 		}
 
 		// Deal with labels.
 		for (let i = 0; i < obj.Labels.length; i++) {
 			rt.labels.push(new Label().serialize(obj.Labels[i]));
+		}
+
+		// Deal with files.
+		for (let i = 0; i < obj.Files.length; i++) {
+			rt.files.push(new FileModel().serialize(obj.Files[i]));
 		}
 
 		return rt;

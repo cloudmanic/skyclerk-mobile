@@ -10,14 +10,18 @@ import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Contact } from '../models/contact.model';
 import { ContactService } from '../services/contact.service';
-import { AlertController, PickerController, Platform, NavController } from '@ionic/angular';
+import { AlertController, PickerController, Platform, NavController, LoadingController } from '@ionic/angular';
 import { Ledger } from '../models/ledger.model';
 import { Category } from '../models/category.model';
+import { File as FileModel } from '../models/file.model';
 import { CategoryService } from '../services/category.service';
 import { LabelService } from '../services/label.service';
 import { LedgerService } from '../services/ledger.service';
+import { FileService } from '../services/file.service';
 import { ActivatedRoute } from '@angular/router';
-import { CameraSource, CameraResultType, Camera, Geolocation } from '@capacitor/core';
+import { Plugins, CameraSource, CameraResultType } from '@capacitor/core';
+
+const { Geolocation, Camera } = Plugins;
 
 @Component({
 	selector: 'app-ledger-modify',
@@ -41,10 +45,12 @@ export class LedgerModfyPage implements OnInit {
 	// Constructor - Get query params from the url.
 	//
 	constructor(
+		public fileService: FileService,
 		public route: ActivatedRoute,
 		public location: Location,
 		public platform: Platform,
 		public navCtrl: NavController,
+		public loadingController: LoadingController,
 		public pickerController: PickerController,
 		public contactService: ContactService,
 		public categoryService: CategoryService,
@@ -364,12 +370,44 @@ export class LedgerModfyPage implements OnInit {
 			source: CameraSource.Prompt
 		});
 
+		// Show loader
+		const loading = await this.loadingController.create({
+			spinner: "bubbles",
+			//duration: 5000,
+			message: 'Uploading Image...',
+		});
+		loading.present();
+
 		// Show image on upload screen.
-		this.photo = image.webPath;
+		//let photo = image.webPath;
 
 		// File we upload.
-		this.uploadPhoto = image.path; //img.data;
-		this.uploadFileType = "image/" + image.format;
+		let uploadPhoto = image.path; //img.data;
+		let uploadFileType = "image/" + image.format;
+
+		// Upload to the BE
+		this.fileService.upload(uploadPhoto, uploadFileType).then(
+			// success
+			(res) => {
+				let j = JSON.parse(res.response);
+				let f = new FileModel().deserialize(j);
+
+				// Add file to files array.
+				this.ledger.Files.push(f);
+
+				// Hide spinner
+				loading.dismiss();
+			},
+
+			// error
+			(err) => {
+				console.log(err);
+
+				alert("There was an error uploading your image. Please try again.");
+
+				// Hide spinner
+				loading.dismiss();
+			});
 	}
 }
 

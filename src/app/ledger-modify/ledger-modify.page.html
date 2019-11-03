@@ -51,14 +51,14 @@
 				<ion-col size="6">
 					<ion-item class="amount-DONTUSE">
 						<ion-label position="stacked">Amount</ion-label>
-						<ion-input type="text" name="amount" [(ngModel)]="amount" placeholder="0.00"></ion-input>
+						<ion-input type="number" inputmode="decimal" name="amount" [(ngModel)]="amount" placeholder="0.00"></ion-input>
 					</ion-item>
 				</ion-col>
 			</ion-row>
 
 			<ion-row buttons>
 				<ion-col size="4" text-left>
-					<ion-badge class="ledger-modify-bubble-count" color="primary" *ngIf="ledger.Note.length > 0" style="left: 5px;">1</ion-badge>
+					<ion-badge class="ledger-modify-bubble-count ledger-modify-bubble-count-note" color="primary" *ngIf="ledger.Note.length > 0">1</ion-badge>
 
 					<ion-button graybtn mode="ios" (click)="doNotePrompt()">
 						<img src="assets/imgs/note.svg" alt="">
@@ -76,7 +76,9 @@
 				</ion-col>
 
 				<ion-col size="4" text-right>
-					<ion-button graybtn mode="ios">
+					<ion-badge class="ledger-modify-bubble-count ledger-modify-bubble-count-upload" color="primary" *ngIf="ledger.Files.length > 0">{{ ledger.Files.length }}</ion-badge>
+
+					<ion-button graybtn mode="ios" (click)="doGetPhoto()">
 						<img src="assets/imgs/attach.svg" alt="">
 					</ion-button>
 					<p>Picture</p>

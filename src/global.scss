@@ -233,7 +233,7 @@ ion-item {
         &.item {
             --background: transparent;
 
-            ion-input {
+            ion-input, ion-datetime {
                 border-radius: 5px;
                 background-color: rgb(234, 234, 234);
                 box-shadow: 0px 1px 0px 0px rgba(255, 255, 255, 0.004), inset 0px 1px 2px 0px rgba(0, 0, 0, 0.33);
@@ -585,7 +585,7 @@ ion-footer {
                     &.item {
                         &.amount {
                             .item-inner {
-                                ion-input {
+                                ion-input, ion-datetime {
                                     padding-left: 30px;
                                 }
                             }
@@ -668,10 +668,6 @@ ion-footer {
                         --padding-end: 8px;
                     }
 
-                    ion-datetime {
-                      height: 36px;
-                    }
-
                 }
 
                 ion-label {
@@ -747,7 +743,7 @@ ion-footer {
         position: absolute;
         width: 50px;
         right: 0;
-        bottom: -3px;
+        bottom: 1px;
         margin: 0;
         height: 42px;
     }
@@ -1108,3 +1104,5 @@ app-snapclerk-list {
 }
 
 .ledger-modify-bubble-count { left: 10px; position: absolute; z-index: 100000; top: 0; }
+.ledger-modify-bubble-count-upload { left: 20px; }
+.ledger-modify-bubble-count-note { left: 5px; }
