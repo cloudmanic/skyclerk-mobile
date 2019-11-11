@@ -10,6 +10,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { Account } from '../models/account.model';
+import { TrackService } from './track.service';
 
 @Injectable({
 	providedIn: 'root'
@@ -19,7 +20,7 @@ export class AccountService {
 	//
 	// Constructor
 	//
-	constructor(private http: HttpClient) { }
+	constructor(private http: HttpClient, private trackService: TrackService) { }
 
 	//
 	// Get by ID
@@ -41,8 +42,8 @@ export class AccountService {
 			.pipe(map(res => {
 				let a = new Account().deserialize(res);
 
-				// // Track event.
-				// this.trackService.event('account-update', { app: "web", "accountId": accountId });
+				// Track event.
+				this.trackService.event('account-update', { app: "mobile", "accountId": accountId });
 
 				return a;
 			}));
@@ -56,8 +57,8 @@ export class AccountService {
 
 		return this.http.post<Boolean>(`${environment.app_server}/api/v3/${accountId}/account/clear`, {})
 			.pipe(map(() => {
-				// // Track event.
-				// this.trackService.event('account-clear', { app: "web", "accountId": accountId });
+				// Track event.
+				this.trackService.event('account-clear', { app: "mobile", "accountId": accountId });
 
 				return true;
 			}));
@@ -71,8 +72,8 @@ export class AccountService {
 
 		return this.http.post<Account[]>(`${environment.app_server}/api/v3/${accountId}/account/delete`, {})
 			.pipe(map((res) => {
-				// // Track event.
-				// this.trackService.event('account-delete', { app: "web", "accountId": accountId });
+				// Track event.
+				this.trackService.event('account-delete', { app: "mobile", "accountId": accountId });
 
 				let a = [];
 
@@ -94,8 +95,8 @@ export class AccountService {
 			.pipe(map(res => {
 				let a = new Account().deserialize(res);
 
-				// // Track event.
-				// this.trackService.event('account-new', { app: "web", "accountId": a.Id });
+				// Track event.
+				this.trackService.event('account-new', { app: "mobile", "accountId": a.Id });
 
 				return a;
 			}));

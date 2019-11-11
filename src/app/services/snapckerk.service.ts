@@ -12,6 +12,7 @@ import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { SnapClerk } from '../models/snapclerk.model';
 import { FileTransfer, FileUploadOptions, FileTransferObject, FileUploadResult } from '@ionic-native/file-transfer/ngx';
+import { TrackService } from './track.service';
 
 @Injectable({
 	providedIn: 'root'
@@ -24,7 +25,7 @@ export class SnapClerkService {
 	//
 	// Constructor
 	//
-	constructor(private http: HttpClient, private fileTransfer: FileTransfer) { }
+	constructor(private http: HttpClient, private fileTransfer: FileTransfer, private trackService: TrackService) { }
 
 	//
 	// Get me
@@ -81,6 +82,9 @@ export class SnapClerkService {
 				lon: String(lon)
 			}
 		}
+
+		// Track event.
+		this.trackService.event('snapclerk-create', { app: "mobile", "accountId": accountId });
 
 		// Return happy.
 		return fileTransfer.upload(photo, `${environment.app_server}/api/v3/${accountId}/snapclerk`, options);

@@ -11,6 +11,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { Ledger } from '../models/ledger.model';
+import { TrackService } from './track.service';
 
 @Injectable({
 	providedIn: 'root'
@@ -29,7 +30,7 @@ export class LedgerService {
 	//
 	// Constructor
 	//
-	constructor(private http: HttpClient) { }
+	constructor(private http: HttpClient, private trackService: TrackService) { }
 
 	//
 	// Get ledger
@@ -68,14 +69,14 @@ export class LedgerService {
 		return this.http.post<Ledger>(`${environment.app_server}/api/v3/${accountId}/ledger`, new Ledger().serialize(ledger))
 			.pipe(map(res => {
 				let lg = new Ledger().deserialize(res);
-				// let type = "expense";
-				//
-				// if (lg.Amount > 0) {
-				// 	type = "income";
-				// }
+				let type = "expense";
 
-				// // Track event.
-				// this.trackService.event('ledger-create', { ledgerEntryType: type, app: "web", "accountId": accountId });
+				if (lg.Amount > 0) {
+					type = "income";
+				}
+
+				// Track event.
+				this.trackService.event('ledger-create', { ledgerEntryType: type, app: "mobile", "accountId": accountId });
 
 				return lg;
 			}));
