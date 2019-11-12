@@ -26,18 +26,18 @@ export class LedgerViewPage implements OnInit {
 		public route: ActivatedRoute,
 		public alertController: AlertController,
 		public ledgerService: LedgerService,
-		public navCtrl: NavController) { }
-
-	//
-	// Refresh the me object.
-	//
-	ngOnInit() {
+		public navCtrl: NavController) {
 		// Is this an edit action?
 		let ledgerId = this.route.snapshot.params['id'];
 
 		// Get the ledger based on the id we passed in.
-		this.loadLedgerEntry(ledgerId);
+		setTimeout(() => { this.loadLedgerEntry(ledgerId); }, 300);
 	}
+
+	//
+	// ngOnInit()
+	//
+	ngOnInit() { }
 
 	//
 	// Load Ledger entry.
