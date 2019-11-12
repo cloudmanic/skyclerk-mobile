@@ -4,6 +4,7 @@ import { RouteReuseStrategy } from '@angular/router';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+import { AgmCoreModule } from '@agm/core';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -32,7 +33,8 @@ import { FileTransfer } from '@ionic-native/file-transfer/ngx';
 		BrowserModule,
 		IonicModule.forRoot(),
 		AppRoutingModule,
-		HttpClientModule
+		HttpClientModule,
+		AgmCoreModule.forRoot({ apiKey: 'AIzaSyCc8fAAyASKh3FzA0IXCjIKFl5oFF5i1zU' })
 	],
 	providers: [
 		AuthService,

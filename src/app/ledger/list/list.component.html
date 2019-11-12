@@ -1,4 +1,4 @@
-<ion-row *ngFor="let row of ledgers" [ngClass]="{ 'danger': (row.Amount < 0) }">
+<ion-row *ngFor="let row of ledgers" [ngClass]="{ 'danger': (row.Amount < 0) }" routerLink="/ledger/view/{{ row.Id }}">
 	<ion-col size="2">
 		<p class="date">
 			<small>{{ row.Date | date:'MMM dd' }}</small>

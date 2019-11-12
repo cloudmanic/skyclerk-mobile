@@ -63,6 +63,15 @@ export class HomePage implements OnInit {
 	ngOnInit() {
 		this.loadMe();
 
+		// Listen for ledger entry delete.
+		this.ledgerService.deleted.subscribe(() => {
+			this.ledgersPage = 1;
+			this.ledgersType = "";
+			this.ledgersSearch = "";
+			this.loadMe();
+			this.presentLedgerToastDeleted();
+		});
+
 		// Listen for ledger change requests.
 		this.ledgerService.refresh.subscribe(() => {
 			this.ledgersPage = 1;
@@ -355,6 +364,19 @@ export class HomePage implements OnInit {
 		const toast = await this.toastController.create({
 			position: 'top',
 			message: 'Your ledger entry has been saved.',
+			duration: 2000
+		});
+
+		toast.present();
+	}
+
+	//
+	// Present ledger delete complete..
+	//
+	async presentLedgerToastDeleted() {
+		const toast = await this.toastController.create({
+			position: 'top',
+			message: 'Your ledger entry has been deleted.',
 			duration: 2000
 		});
 

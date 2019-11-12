@@ -1,0 +1,85 @@
+<ion-content padding>
+
+
+	<ion-card style="background-color: var(--ion-color-step-50,#f2f2f2);">
+
+		<ion-card-header *ngIf="ledger.Contact.Name">
+			<ion-card-subtitle>{{ ledger.Contact.Name }}</ion-card-subtitle>
+			<ion-card-title>{{ ledger.Contact.FirstName }} {{ ledger.Contact.LastName }}</ion-card-title>
+		</ion-card-header>
+
+		<ion-card-header *ngIf="! ledger.Contact.Name">
+			<ion-card-subtitle>{{ ledger.Contact.FirstName }} {{ ledger.Contact.LastName }}</ion-card-subtitle>
+		</ion-card-header>
+
+
+		<ion-list>
+			<ion-item>
+				<ion-label>Date</ion-label>
+				<ion-note slot="end">{{ ledger.Date | date:'shortDate' }}</ion-note>
+			</ion-item>
+
+			<ion-item>
+				<ion-label>Amount</ion-label>
+				<ion-note slot="end">{{ ledger.Amount }}</ion-note>
+			</ion-item>
+
+			<ion-item>
+				<ion-label>Category</ion-label>
+				<ion-note slot="end">{{ ledger.Category.Name }}</ion-note>
+			</ion-item>
+
+			<ion-item>
+				<ion-label>Labels</ion-label>
+				<ion-note slot="end">
+					<span *ngFor="let row of ledger.Labels; let last = last;">{{ row.Name }}<span *ngIf="! last">, </span></span>
+				</ion-note>
+			</ion-item>
+
+			<ion-item>
+				<ion-label>Note</ion-label>
+				<ion-note slot="end">{{ ledger.Note }}</ion-note>
+			</ion-item>
+		</ion-list>
+
+	</ion-card>
+
+	<ion-card style="background-color: var(--ion-color-step-50,#f2f2f2);" *ngIf="ledger.Files.length">
+
+		<div *ngFor="let row of ledger.Files" style="float: left; padding: 5px;">
+			<a href="{{ row.Url }}" target="_blank">
+				<div *ngIf="(ledger.Files.length == 1)" class="image-container" style="width: 100px; height: 100px; background-size: cover;" [style.background-image]="'url(' + row.Thumb600By600Url + ')'"></div>
+				<div *ngIf="(ledger.Files.length == 2)" class="image-container" style="width: 75px; height: 75px; background-size: cover;" [style.background-image]="'url(' + row.Thumb600By600Url + ')'"></div>
+				<div *ngIf="(ledger.Files.length > 3)" class="image-container" style="width: 50px; height: 50px; background-size: cover;" [style.background-image]="'url(' + row.Thumb600By600Url + ')'"></div>
+			</a>
+		</div>
+
+	</ion-card>
+
+
+	<ion-card style="background-color: var(--ion-color-step-50,#f2f2f2);" *ngIf="ledger.Lon">
+		<agm-map [latitude]="ledger.Lat" [longitude]="ledger.Lon" [zoom]="14" style="height: 200px;">
+			<agm-marker [latitude]="ledger.Lat" [longitude]="ledger.Lon"></agm-marker>
+		</agm-map>
+	</ion-card>
+
+
+	<ion-button expand="block" class="danger" padding (click)="deleteLedger()">Delete Entry</ion-button>
+</ion-content>
+
+
+
+<ion-footer no-border mode="md">
+	<ion-toolbar color="dark" mode="md">
+		<ion-buttons slot="start">
+			<ion-button fill="clear" mode="ios" text-uppercase color="light" routerLink="/home" routerDirection="back">« Go Back to Leger
+			</ion-button>
+		</ion-buttons>
+
+		<ion-buttons slot="end">
+			<div class="bar-logo">
+				<img src="assets/imgs/logo-small.svg" alt="">
+			</div>
+		</ion-buttons>
+	</ion-toolbar>
+</ion-footer>

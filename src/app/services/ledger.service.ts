@@ -27,6 +27,9 @@ export class LedgerService {
 	// This is used to tell the system one of our ledgers has changed.
 	refresh = new EventEmitter<boolean>();
 
+	// Call this when a ledger entry has been deleted.
+	deleted = new EventEmitter<boolean>();
+
 	//
 	// Constructor
 	//
@@ -57,6 +60,31 @@ export class LedgerService {
 			// Return happy.
 			return new LedgerResponse(lastPage, Number(res.headers.get('X-Offset')), Number(res.headers.get('X-Limit')), Number(res.headers.get('X-No-Limit-Count')), data);
 		}));
+	}
+
+	//
+	// Get by ID
+	//
+	getById(id: number): Observable<Ledger> {
+		let accountId = localStorage.getItem('account_id');
+		let url = `${environment.app_server}/api/v3/${accountId}/ledger/${id}`;
+		return this.http.get<Ledger>(url).pipe(map(res => new Ledger().deserialize(res)));
+	}
+
+	//
+	// Delete a ledger
+	//
+	delete(ledger: Ledger): Observable<Boolean> {
+		let accountId = localStorage.getItem('account_id');
+		ledger.AccountId = Number(accountId);
+
+		return this.http.delete<Boolean>(`${environment.app_server}/api/v3/${accountId}/ledger/${ledger.Id}`, {})
+			.pipe(map(() => {
+				// Track event.
+				this.trackService.event('ledger-delete', { app: "mobile", "accountId": accountId });
+
+				return true;
+			}));
 	}
 
 	//

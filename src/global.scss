@@ -1026,6 +1026,35 @@ app-view-attachment {
     }
 }
 
+app-ledger-view {
+  
+  ion-button {
+      color: $white !important;
+      font-size: 14px;
+      text-shadow: $t_shadow;
+      --padding-start: 14px;
+      --padding-end: 14px;
+      border-radius: 4px;
+      --border-radius: 4px;
+
+      &.gray {
+          --background: linear-gradient(0deg, #4b4b4b 0%, #606468 100%);
+          --background-activated: linear-gradient(0deg, #353535 0%, #717477 100%);
+      }
+
+      &.danger {
+          --background: linear-gradient(0deg, #a73632 0%, #bd4743 100%);
+          --background-activated: linear-gradient(0deg, #80211e 0%, #a0322f 100%);
+      }
+
+      &.success {
+          --background: linear-gradient(0deg, #678250 0%, #77965c 100%);
+          --background-activated: linear-gradient(0deg, #4d6439 0%, #597541 100%);
+      }
+  }
+
+}
+
 app-settings {
   position: absolute;
   height: 100%;

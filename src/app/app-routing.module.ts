@@ -15,6 +15,7 @@ const routes: Routes = [
 	{ path: 'login', loadChildren: './login/login.module#LoginPageModule' },
 	{ path: 'register', loadChildren: './register/register.module#RegisterPageModule' },
 	{ path: 'home', loadChildren: './home/home.module#HomePageModule', canActivate: [SessionGuard] },
+	{ path: 'ledger/view/:id', loadChildren: './ledger-view/ledger-view.module#LedgeViewPageModule', canActivate: [SessionGuard] },
 	{ path: 'ledger/add', loadChildren: './ledger-modify/ledger-modify.module#LedgerModfyPageModule', canActivate: [SessionGuard] },
 	{ path: 'labels', loadChildren: './labels/labels.module#LabelsPageModule', canActivate: [SessionGuard] },
 	{ path: 'view-attachment', loadChildren: './view-attachment/view-attachment.module#ViewAttachmentPageModule', canActivate: [SessionGuard] },
