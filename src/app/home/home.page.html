@@ -80,13 +80,6 @@
 		<!-- ledger -->
 		<div *ngSwitchCase="'ledger'" class="ledgers" [ngClass]="{ 'small-padding': (activeTableHeader == 'account') }">
 
-			<ion-row>
-				<ion-col>
-
-				</ion-col>
-			</ion-row>
-
-
 			<ion-grid tableViewGrid>
 
 				<app-home-account-header *ngIf="activeTableHeader == 'account'" (toggleHeader)="doLegerTableHeaderChange($event)" (accountChange)="doAccountChange($event)" [me]="me" [account]="account"></app-home-account-header>

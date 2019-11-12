@@ -248,6 +248,7 @@ export class HomePage implements OnInit {
 	doLedgerType(type: string) {
 		this.ledgersPage = 1;
 		this.ledgersType = type;
+		this.tabs = "ledger";
 		this.loadPageData();
 	}
 
