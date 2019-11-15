@@ -1,0 +1,6 @@
+{
+  "appId": "io.ionic.starter",
+  "appName": "Skyclerk",
+  "bundledWebRuntime": false,
+  "webDir": "www"
+}
