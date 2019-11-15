@@ -1,4 +1,4 @@
-package io.ionic.starter;
+package com.cloudmanic.skyclerk;
 
 import android.os.Bundle;
 
