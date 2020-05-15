@@ -16,6 +16,7 @@ import { TokenInterceptor } from './services/token.interceptor';
 import { LedgerService } from './services/ledger.service';
 
 import { FileTransfer } from '@ionic-native/file-transfer/ngx';
+import { InAppPurchase2 } from '@ionic-native/in-app-purchase-2/ngx';
 
 
 // class CameraMock extends Camera {
@@ -40,6 +41,7 @@ import { FileTransfer } from '@ionic-native/file-transfer/ngx';
 		AuthService,
 		LedgerService,
 		FileTransfer,
+		InAppPurchase2,
 		//{ provide: Camera, useClass: CameraMock },
 		{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
 		{ provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },

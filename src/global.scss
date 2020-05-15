@@ -817,6 +817,75 @@ app-intro {
     }
 }
 
+
+app-paywall {
+    .logo-content {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        height: 70vh;
+
+        .content {
+            max-width: 86%;
+
+            .logo {
+                padding: 40px 20px;
+            }
+        }
+    }
+    // 
+    // .create-account {
+    //     height: 30vh;
+    //     background: $darkgray;
+    //     border-top: 1px solid $darkgray_border;
+    //     position: relative;
+    //     display: -webkit-box;
+    //     display: -ms-flexbox;
+    //     display: flex;
+    //     -webkit-box-align: center;
+    //     -ms-flex-align: center;
+    //     align-items: center;
+    //     -webkit-box-pack: center;
+    //     -ms-flex-pack: center;
+    //     justify-content: center;
+    //
+    //     &:before {
+    //         position: absolute;
+    //         height: 30px;
+    //         width: 30px;
+    //         background: $darkgray;
+    //         border: 1px solid transparent;
+    //         border-top-color: $darkgray_border;
+    //         border-left-color: $darkgray_border;
+    //         content: '';
+    //         left: 50%;
+    //         top: -15px;
+    //         margin-left: -15px;
+    //         transform: rotate(45deg);
+    //     }
+    //
+    //     p {
+    //         color: $white;
+    //         text-shadow: $t_shadow;
+    //         font-size: 16px;
+    //         margin: 0;
+    //
+    //     }
+    //
+    //     ion-button {
+    //         font-size: 16px;
+    //         max-height: 20px;
+    //         margin-top: 10px;
+    //     }
+    // }
+}
+
 app-select-an-account {
     .header {
         background: $bg_pattern;
@@ -1027,7 +1096,7 @@ app-view-attachment {
 }
 
 app-ledger-view {
-  
+
   ion-button {
       color: $white !important;
       font-size: 14px;

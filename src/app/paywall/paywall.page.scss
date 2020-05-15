@@ -1,0 +1,56 @@
+/* ------------------------------------------------------------ *\
+	Updates
+\* ------------------------------------------------------------ */
+
+.updates { width: 325px; margin: 20px auto; text-align: left; background-color: #3f3f3f;  }
+
+.updates .updates__head { background-color: #1b2125; padding: 13px 15px; }
+.updates .updates__head h2 { margin-bottom: 0; margin-top: 0; }
+.updates .updates__body ul { list-style-type: none; padding-inline-start: 15px; }
+.updates .updates__body { padding-bottom: 5px; }
+.updates .updates__body ul { list-style-type: none; padding-inline-start: 15px; }
+.updates .updates__body li + li  { margin-top: 28px; border-top: 1px solid #999;  padding-top: 32px;  }
+.updates .updates__body img { vertical-align: middle; margin-top: -5px; }
+.updates .updates__body h5 { display: inline-block; margin-left: 3px; font-size: 22px; vertical-align: middle;  }
+.updates .updates__body strong { position: relative; }
+.updates .updates__body strong:after { content: ''; position: absolute; top: 100%; left: 0; right: 0; height: 5px; background-image: url(/assets/imgs/ico-underline@2x.png); background-size: cover; background-position: center; background-repeat: no-repeat;  }
+
+
+
+/* ------------------------------------------------------------ *\
+	Section-update-plan
+\* ------------------------------------------------------------ */
+
+.section-update-plan { background-color: #313131; min-height: 100vh; position: relative; color: #fff; padding-bottom: 120px; box-sizing: border-box; }
+.section-update-plan * { box-sizing: border-box; }
+.section-update-plan .section__head { padding: 24px 44px; }
+
+.section-update-plan .section__body { text-align: center; }
+
+
+.section-update-plan .section__initial { text-align: center; padding: 85px 0; }
+.section-update-plan .logo-plan { position: relative; display: inline-block; margin-bottom: 86px; }
+.section-update-plan .logo-plan p { position: absolute; right: -1px; bottom: 3px; color: #fff;  }
+.section-update-plan h1 { font-size: 37px; font-weight: 700;  margin-bottom: 20px;  }
+.section-update-plan h2 { font-size: 31px; margin-bottom: 42px; }
+
+.section-update-plan .section__aside { padding-top: 10px; }
+
+.section-update-plan .section__content { text-align: left;  padding: 0 30px;  font-size: 18px; }
+.section-update-plan .section__content h2 { margin-bottom: 24px;  }
+.section-update-plan .section__content h6 { font-size: 18px; font-weight: 700; margin-bottom: 12px;   }
+.section-update-plan .section__content p + h6  { margin-top: 31px;  }
+.section-update-plan .section__content p { line-height: 1.2;  }
+.section-update-plan .section__content a {  color: #29abe2 }
+
+.section-update-plan .section__foot { position: absolute; left: 0; bottom: 0; width: 100%; background-color: #424242; text-align: right; padding: 20px 37px; }
+.section-update-plan .section__foot .btn-red { color: #fff; padding: 0 31px;  display: inline-block;  }
+.section-update-plan .section__foot p { display: inline-block; vertical-align: middle; font-size: 24px;  margin-right: 37px; opacity: 0.6; }
+
+.section-update-plan .cols + .cols { margin: 32px 0; padding: 36px 0; position: relative; }
+.section-update-plan .cols + .cols:after { position: absolute; content: ''; left: 40px; right: 40px; top: 0; height: 1px; background-color: #4e4e4e; }
+
+.section-update-plan--alt .section__head { padding-bottom: 0; }
+
+.upgrade-buttons { width: 325px; margin: 20px auto; text-align: left; }
+.upgrade-buttons .yearly { margin-top: 20px; }

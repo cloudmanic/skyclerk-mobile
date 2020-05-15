@@ -20,6 +20,7 @@ const routes: Routes = [
 	{ path: 'labels', loadChildren: './labels/labels.module#LabelsPageModule', canActivate: [SessionGuard] },
 	{ path: 'view-attachment', loadChildren: './view-attachment/view-attachment.module#ViewAttachmentPageModule', canActivate: [SessionGuard] },
 	{ path: 'snapclerk/upload-receipt', loadChildren: './snapclerk/upload-receipt/upload-receipt.module#UploadReceiptPageModule', canActivate: [SessionGuard] },
+  { path: 'paywall', loadChildren: './paywall/paywall.module#PaywallPageModule' },
 ];
 
 @NgModule({
