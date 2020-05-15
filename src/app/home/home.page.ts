@@ -67,9 +67,6 @@ export class HomePage implements OnInit {
 		// Load me.
 		this.loadMe();
 
-		// Setup inapp pruchases.
-		this.setupInAppPurchase();
-
 		// Listen for ledger entry delete.
 		this.ledgerService.deleted.subscribe(() => {
 			this.ledgersPage = 1;
@@ -388,88 +385,6 @@ export class HomePage implements OnInit {
 		});
 
 		toast.present();
-	}
-
-
-	// ---------------- Purchase Stuff  ----------------- //
-
-	//
-	// Setup in app purchase stuff.
-	//
-	setupInAppPurchase() {
-		// when ready and on a device run this.
-		this.platform.ready().then((r) => {
-			if (this.platform.is("hybrid")) {
-
-
-				// After platform ready
-				//this.store.verbosity = this.store.DEBUG;
-
-				// this.store.register({
-				// 	id: "yearly_60",
-				// 	type: this.store.PAID_SUBSCRIPTION,
-				// });
-				//
-				// this.store.register({
-				// 	id: "monthly_6",
-				// 	type: this.store.PAID_SUBSCRIPTION,
-				// });
-				//
-				// // Updated
-				// this.store.when("yearly_60").updated((product: IAPProduct) => {
-				// 	//console.log('Updated' + JSON.stringify(product));
-				// 	console.log("owned (yearly_60): " + product.owned);
-				// });
-				//
-				// this.store.when("monthly_6").updated((product: IAPProduct) => {
-				// 	//console.log('Updated' + JSON.stringify(product));
-				// 	console.log("owned (monthly_6): " + product.owned);
-				// });
-				//
-				//
-				// // Call this after purchase has been approved.
-				// this.store.when("yearly_60").approved((product: IAPProduct) => {
-				// 	console.log("Tell backend server about this. (yearly_60)");
-				// 	product.finish();
-				// });
-				//
-				// this.store.when("monthly_6").approved((product: IAPProduct) => {
-				// 	console.log("Tell backend server about this. (monthly_6)");
-				// 	product.finish();
-				// });
-				//
-				// // User closed the native purchase dialog
-				// this.store.when("yearly_60").cancelled((product) => {
-				// 	console.error('Purchase was Cancelled (yearly_60)');
-				// });
-				//
-				// this.store.when("monthly_6").cancelled((product) => {
-				// 	console.error('Purchase was Cancelled (monthly_6)');
-				// });
-				//
-				// // Track all store errors
-				// this.store.error((err) => {
-				// 	console.error('Store Error ' + JSON.stringify(err));
-				// });
-				//
-				// // Run some code only when the store is ready to be used
-				// this.store.ready(() => {
-				// 	console.log('Store is ready');
-				// 	//console.log('Products: ' + JSON.stringify(this.store.products));
-				// 	//console.log(JSON.stringify(this.store.get("yearly_60")));
-				// 	//console.log(JSON.stringify(this.store.get("yearly_6")));
-				// });
-				//
-				//
-				// // Refresh the status of in-app products
-				// this.store.refresh();
-				//
-				//
-				// // To make a purchase
-				// this.store.order("monthly_6");
-
-			}
-		});
 	}
 
 }

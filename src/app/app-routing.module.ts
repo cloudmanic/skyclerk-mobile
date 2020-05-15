@@ -10,7 +10,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { SessionGuard } from './services/auth.guard';
 
 const routes: Routes = [
-	{ path: '', redirectTo: 'home', pathMatch: 'full' },
+	{ path: '', redirectTo: 'paywall', pathMatch: 'full' },
 	{ path: 'intro', loadChildren: './intro/intro.module#IntroPageModule' },
 	{ path: 'login', loadChildren: './login/login.module#LoginPageModule' },
 	{ path: 'register', loadChildren: './register/register.module#RegisterPageModule' },
@@ -20,7 +20,7 @@ const routes: Routes = [
 	{ path: 'labels', loadChildren: './labels/labels.module#LabelsPageModule', canActivate: [SessionGuard] },
 	{ path: 'view-attachment', loadChildren: './view-attachment/view-attachment.module#ViewAttachmentPageModule', canActivate: [SessionGuard] },
 	{ path: 'snapclerk/upload-receipt', loadChildren: './snapclerk/upload-receipt/upload-receipt.module#UploadReceiptPageModule', canActivate: [SessionGuard] },
-  { path: 'paywall', loadChildren: './paywall/paywall.module#PaywallPageModule' },
+	{ path: 'paywall', loadChildren: './paywall/paywall.module#PaywallPageModule' },
 ];
 
 @NgModule({
