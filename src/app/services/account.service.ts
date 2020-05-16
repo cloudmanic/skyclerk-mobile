@@ -11,6 +11,7 @@ import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { Account } from '../models/account.model';
 import { TrackService } from './track.service';
+import { Billing } from '../models/billing.model';
 
 @Injectable({
 	providedIn: 'root'
@@ -99,6 +100,35 @@ export class AccountService {
 				this.trackService.event('account-new', { app: "mobile", "accountId": a.Id });
 
 				return a;
+			}));
+	}
+
+	//
+	// Get billing
+	//
+	getBilling(): Observable<Billing> {
+		let accountId = localStorage.getItem('account_id');
+		let url = `${environment.app_server}/api/v3/${accountId}/account/billing`;
+		return this.http.get<Billing>(url).pipe(map(res => new Billing().deserialize(res)));
+	}
+
+	//
+	// Apple In-App subscribe - tell teh BE if apple has subscribed or not
+	//
+	appleInAppSubscribe(active: boolean, plan: string): Observable<Boolean> {
+		let activeString = "yes";
+		let accountId = localStorage.getItem('account_id');
+
+		if (!active) {
+			activeString = "no";
+		}
+
+		return this.http.post<Boolean>(`${environment.app_server}/api/v3/${accountId}/account/apple-in-app`, { active: activeString, plan: plan })
+			.pipe(map(_res => {
+				// Track event.
+				this.trackService.event('account-apple-in-app-token', { app: "mobile", "accountId": accountId });
+
+				return true;
 			}));
 	}
 }

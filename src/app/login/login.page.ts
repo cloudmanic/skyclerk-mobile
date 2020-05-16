@@ -40,6 +40,7 @@ export class LoginPage {
 			() => {
 				// Get the user so we can set the default account id
 				this.meService.get().subscribe(res => {
+					this.password = "";
 					localStorage.setItem('account_id', res.Accounts[0].Id.toString());
 					this.router.navigate(['home']);
 				});

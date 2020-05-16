@@ -10,7 +10,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { SessionGuard } from './services/auth.guard';
 
 const routes: Routes = [
-	{ path: '', redirectTo: 'paywall', pathMatch: 'full' },
+	{ path: '', redirectTo: 'home', pathMatch: 'full' },
 	{ path: 'intro', loadChildren: './intro/intro.module#IntroPageModule' },
 	{ path: 'login', loadChildren: './login/login.module#LoginPageModule' },
 	{ path: 'register', loadChildren: './register/register.module#RegisterPageModule' },

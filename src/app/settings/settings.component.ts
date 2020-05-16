@@ -14,6 +14,7 @@ import { AlertController } from '@ionic/angular';
 import { AccountService } from '../services/account.service';
 import { Account } from '../models/account.model';
 import { Me } from '../models/me.model';
+import { Billing } from '../models/billing.model';
 
 @Component({
 	selector: 'app-settings',
@@ -22,6 +23,7 @@ import { Me } from '../models/me.model';
 
 export class SettingsComponent implements OnInit {
 	me: Me = new Me();
+	billing: Billing = new Billing();
 	account: Account = new Account();
 	version: string = environment.version;
 
@@ -36,6 +38,7 @@ export class SettingsComponent implements OnInit {
 	ngOnInit() {
 		// Load page data.
 		this.refreshMe();
+		this.refreshBilling();
 		this.refreshAccount();
 	}
 
@@ -54,6 +57,16 @@ export class SettingsComponent implements OnInit {
 	refreshAccount() {
 		this.accountService.getAccount().subscribe(res => {
 			this.account = res;
+		})
+	}
+
+	//
+	// Refresh the billing object.
+	//
+	refreshBilling() {
+		this.accountService.getBilling().subscribe(res => {
+			this.billing = res;
+			console.log(this.billing);
 		})
 	}
 

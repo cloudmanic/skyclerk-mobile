@@ -1,6 +1,8 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { InAppPurchase2, IAPProduct } from '@ionic-native/in-app-purchase-2/ngx';
-import { Platform } from '@ionic/angular';
+import { Platform, LoadingController } from '@ionic/angular';
+import { AccountService } from '../services/account.service';
+import { Router } from '@angular/router';
 
 @Component({
 	selector: 'app-paywall',
@@ -8,15 +10,15 @@ import { Platform } from '@ionic/angular';
 	styleUrls: ['./paywall.page.scss'],
 })
 export class PaywallPage implements OnInit {
-	monthyPrice: string = "";
-	yearlyPrice: string = "";
+	monthyPrice: string = "Loading...";
+	yearlyPrice: string = "Loading...";
 	monthlyProduct: any = {};
 	yearlyProduct: any = {};
 
 	//
 	// Constructor.
 	//
-	constructor(private platform: Platform, private store: InAppPurchase2, private cRef: ChangeDetectorRef) {
+	constructor(private accountService: AccountService, private platform: Platform, private store: InAppPurchase2, private cRef: ChangeDetectorRef, private router: Router, private loadingController: LoadingController) {
 		// Load payment stuff.
 		this.setupInAppPurchase();
 	}
@@ -45,8 +47,17 @@ export class PaywallPage implements OnInit {
 	//
 	setupInAppPurchase() {
 		// when ready and on a device run this.
-		this.platform.ready().then(() => {
+		this.platform.ready().then(async () => {
+
 			if (this.platform.is("hybrid")) {
+
+				// Show Loader spinner.
+				const loading = await this.loadingController.create({
+					spinner: "bubbles",
+					message: 'Loading Plans...',
+				});
+				loading.present();
+
 				// More debugging?
 				//this.store.verbosity = this.store.DEBUG;
 
@@ -61,37 +72,28 @@ export class PaywallPage implements OnInit {
 					type: this.store.PAID_SUBSCRIPTION,
 				});
 
-				// // Updated
-				// this.store.when("yearly_60").updated((product: IAPProduct) => {
-				// 	//console.log('Updated' + JSON.stringify(product));
-				// 	console.log("owned (yearly_60): " + product.owned);
-				// });
-				//
-				// this.store.when("monthly_6").updated((product: IAPProduct) => {
-				// 	//console.log('Updated' + JSON.stringify(product));
-				// 	console.log("owned (monthly_6): " + product.owned);
-				// });
+				let email = localStorage.getItem('user_email');
+				let accountId = localStorage.getItem('account_id');
+				this.store.applicationUsername = email; // Can't use account because you can have many billings for one account.
+				this.store.validator = "https://validator.fovea.cc/v1/validate?appName=com.cloudmanic.skyclerk&apiKey=d00707d3-d919-4980-8c1d-fcd8fdffcb3d"
 
+				this.store.when('subscription')
+					.approved(p => p.verify())
+					.verified(p => p.finish())
+					.owned(p => {
+						console.log(`You now own ${p.alias}`);
 
-				// Call this after purchase has been approved.
-				this.store.when("yearly_60").approved((product: IAPProduct) => {
-					console.log("Tell backend server about this. (yearly_60)");
-					product.finish();
-				});
+						// Tell backend server about this.
+						let plan = "Yearly";
 
-				this.store.when("monthly_6").approved((product: IAPProduct) => {
-					console.log("Tell backend server about this. (monthly_6)");
-					product.finish();
-				});
+						if (p.id == "monthly_6") {
+							plan = "Monthly";
+						}
 
-				// // User closed the native purchase dialog
-				// this.store.when("yearly_60").cancelled((product) => {
-				// 	console.error('Purchase was Cancelled (yearly_60)');
-				// });
-				//
-				// this.store.when("monthly_6").cancelled((product) => {
-				// 	console.error('Purchase was Cancelled (monthly_6)');
-				// });
+						this.accountService.appleInAppSubscribe(true, plan).subscribe(() => {
+							this.router.navigate(['/home']);
+						});
+					});
 
 				// Track all store errors
 				this.store.error((err) => {
@@ -109,6 +111,7 @@ export class PaywallPage implements OnInit {
 					this.monthyPrice = this.monthlyProduct.price;
 					this.yearlyPrice = this.yearlyProduct.price;
 					this.cRef.detectChanges();
+					loading.dismiss();
 				});
 
 				// Refresh the status of in-app products
@@ -116,7 +119,6 @@ export class PaywallPage implements OnInit {
 			}
 		});
 	}
-
 }
 
 /* End File */
