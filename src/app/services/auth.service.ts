@@ -10,6 +10,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
+import { TrackService } from './track.service';
+import { Me } from '../models/me.model';
 
 @Injectable({
 	providedIn: 'root'
@@ -19,7 +21,7 @@ export class AuthService {
 	//
 	// Constructor.
 	//
-	constructor(private http: HttpClient) { }
+	constructor(private http: HttpClient, private trackService: TrackService) { }
 
 	//
 	// Log user in.
@@ -83,6 +85,17 @@ export class AuthService {
 				localStorage.setItem('user_id', res["user_id"].toString());
 				localStorage.setItem('access_token', res["access_token"]);
 				localStorage.setItem('user_email', email);
+
+				// Track event.
+				let me = new Me();
+				me.Id = res["user_id"];
+				me.FirstName = first;
+				me.LastName = last;
+				me.Email = email;
+				this.trackService.identifyUser(me);
+				setTimeout(() => {
+					this.trackService.event('register', { app: "mobile", "accountId": res["account_id"].toString() });
+				}, 1000);
 
 				return {
 					account_id: res["account_id"],

@@ -9,6 +9,8 @@ import { Injectable } from '@angular/core';
 import { Me } from '../models/me.model';
 import { environment } from 'src/environments/environment';
 
+declare let FS: any;
+
 @Injectable({
 	providedIn: 'root'
 })

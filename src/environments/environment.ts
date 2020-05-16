@@ -6,9 +6,8 @@ export const environment = {
 	production: false,
 	version: "3.0.2",
 	client_id: "abc123wootsmobile",
-	//app_server: "http://127.0.0.1:9090",
-	app_server: "http://192.168.1.100:9090",
-
+	app_server: "http://127.0.0.1:9090",
+	//app_server: "http://192.168.1.100:9090",
 	mixpanel_key: "",
 	//mixpanel_key: "5974bde1c90a5606add2695a17b2db10",
 };
