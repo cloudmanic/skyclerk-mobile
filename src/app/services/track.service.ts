@@ -42,10 +42,15 @@ export class TrackService {
 	//
 	// Track an event.
 	//
-	event(name: string, params?: Object) {
+	event(name: string, params?: any) {
 		if (environment.mixpanel_key.length == 0) {
 			return;
 		}
+
+		// Add in account id.
+		let accountId = localStorage.getItem('account_id');
+		params.accountId = accountId;
+		params.mobileAppVersion = environment.version;
 
 		mixpanel.track(name, params);
 	}
