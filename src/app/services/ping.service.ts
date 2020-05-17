@@ -50,12 +50,6 @@ export class PingService {
 			data => {
 				// We do not redirect from - /paywall
 				if (window.location.pathname == "/paywall") {
-					// Maybe we are good.
-					if (data["status"] == "ok") {
-						this.router.navigate(['/home']);
-						return;
-					}
-
 					return;
 				}
 

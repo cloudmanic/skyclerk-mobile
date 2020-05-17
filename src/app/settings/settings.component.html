@@ -15,8 +15,16 @@
 			<ion-label>Change Password</ion-label>
 		</ion-item>
 
-		<ion-item href="itms-apps://apps.apple.com/account/subscriptions" target="_blank" detail="true" lines="full" *ngIf="(billing.PaymentProcessor == 'Apple In-App') || (billing.PaymentProcessor == 'None')">
+		<ion-item href="itms-apps://apps.apple.com/account/subscriptions" target="_blank" detail="true" lines="full" *ngIf="(billing.PaymentProcessor == 'Apple In-App')">
 			<ion-label>Manage Subscription</ion-label>
+		</ion-item>
+
+		<ion-item (click)="websiteAccount()" detail="true" lines="full" *ngIf="(billing.PaymentProcessor == 'Stripe')">
+			<ion-label>Manage Subscription</ion-label>
+		</ion-item>
+
+		<ion-item routerLink="/paywall" detail="true" lines="full" *ngIf="(billing.PaymentProcessor == 'None')">
+			<ion-label>Setup Your Subscription</ion-label>
 		</ion-item>
 	</ion-card>
 

@@ -30,17 +30,17 @@ export class SettingsComponent implements OnInit {
 	//
 	// Construct.
 	//
-	constructor(private router: Router, private meService: MeService, private alertController: AlertController, private accountService: AccountService) { }
-
-	//
-	// NgInit
-	//
-	ngOnInit() {
+	constructor(private router: Router, private meService: MeService, private alertController: AlertController, private accountService: AccountService) {
 		// Load page data.
 		this.refreshMe();
 		this.refreshBilling();
 		this.refreshAccount();
 	}
+
+	//
+	// NgInit
+	//
+	ngOnInit() { }
 
 	//
 	// Refresh the me object.
@@ -66,9 +66,35 @@ export class SettingsComponent implements OnInit {
 	refreshBilling() {
 		this.accountService.getBilling().subscribe(res => {
 			this.billing = res;
-			console.log(this.billing);
 		})
 	}
+
+	//
+	// Just tell the user to login to the website
+	//
+	async websiteAccount() {
+		const alert = await this.alertController.create({
+			header: 'Subscription Via Website',
+			subHeader: '',
+			message: 'It seems you have upgraded your account via our website. Please visit https://app.skyclerk.com to manage your subscription.',
+			buttons: [
+				{
+					text: 'Cancel',
+					role: 'cancel',
+					cssClass: 'secondary'
+				},
+				{
+					text: 'Go to app.skyclerk.com',
+					handler: () => {
+						window.open("https://app.skyclerk.com/settings/billing");
+					}
+				}
+			]
+		});
+
+		await alert.present();
+	}
+
 
 	//
 	// Do close down account.

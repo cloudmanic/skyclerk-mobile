@@ -5,7 +5,7 @@
 //
 
 import { map } from "rxjs/operators";
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
@@ -18,6 +18,9 @@ import { Billing } from '../models/billing.model';
 })
 
 export class AccountService {
+	// This is used to tell the system upgrades the account.
+	subscriptionUpgraded = new EventEmitter<boolean>();
+
 	//
 	// Constructor
 	//

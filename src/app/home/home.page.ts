@@ -16,9 +16,10 @@ import { SnapClerkService, SnapClerkUploadRequest } from '../services/snapckerk.
 import { SnapClerk } from '../models/snapclerk.model';
 import { File as FileModel } from '../models/file.model';
 import { Plugins } from '@capacitor/core';
-import { ToastController, IonContent, Platform } from '@ionic/angular';
+import { ToastController, IonContent } from '@ionic/angular';
 import { ReportService, PnlCurrentYear } from '../services/report.service';
-import { InAppPurchase2, IAPProduct } from '@ionic-native/in-app-purchase-2/ngx';
+import { AccountService } from '../services/account.service';
+import { PurchaseService } from '../services/purchase.service';
 
 const { App, BackgroundTask } = Plugins;
 
@@ -52,11 +53,11 @@ export class HomePage implements OnInit {
 	// Constructor.
 	//
 	constructor(
-		private platform: Platform,
-		private store: InAppPurchase2,
 		private toastController: ToastController,
 		private meService: MeService,
+		private purchaseService: PurchaseService, // Called here for the constructor.
 		private ledgerService: LedgerService,
+		private accountService: AccountService,
 		private snapClerkService: SnapClerkService,
 		private reportService: ReportService) { }
 
@@ -64,6 +65,9 @@ export class HomePage implements OnInit {
 	// NgInit
 	//
 	ngOnInit() {
+		// Make it so the IDE stops complaining
+		this.purchaseService.ping();
+
 		// Load me.
 		this.loadMe();
 
@@ -83,6 +87,12 @@ export class HomePage implements OnInit {
 			this.ledgersSearch = "";
 			this.loadMe();
 			this.presentLedgerToast();
+		});
+
+		// Subscription upgrade.
+		this.accountService.subscriptionUpgraded.subscribe(() => {
+			this.tabs = "ledger";
+			this.presentSubscriptionUpdatedToast();
 		});
 
 		// Listen for receipt uploads from snapclerk
@@ -381,6 +391,19 @@ export class HomePage implements OnInit {
 		const toast = await this.toastController.create({
 			position: 'top',
 			message: 'Your ledger entry has been deleted.',
+			duration: 2000
+		});
+
+		toast.present();
+	}
+
+	//
+	// Present subscription updated complete..
+	//
+	async presentSubscriptionUpdatedToast() {
+		const toast = await this.toastController.create({
+			position: 'top',
+			message: 'Your Subscription has been updated. Thanks!',
 			duration: 2000
 		});
 

@@ -61,3 +61,19 @@
 	</div>
 
 </ion-content>
+
+
+<ion-footer no-border mode="md" *ngIf="showBack">
+	<ion-toolbar color="dark" mode="md">
+		<ion-buttons slot="start">
+			<ion-button fill="clear" mode="ios" text-uppercase color="light" routerLink="/" routerDirection="back">
+				« Cancel and go Back
+			</ion-button>
+		</ion-buttons>
+		<ion-buttons slot="end">
+			<div class="bar-logo">
+				<img src="assets/imgs/logo-small.svg" alt="">
+			</div>
+		</ion-buttons>
+	</ion-toolbar>
+</ion-footer>
