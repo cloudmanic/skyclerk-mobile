@@ -56,13 +56,13 @@ export class PaywallPage implements OnInit {
 				this.showBack = false;
 			}
 
-			// // No subscription yet? Continue. This really should not happen.
-			// // But we put it here as a check.
-			// if (this.billing.PaymentProcessor != 'None') {
-			// 	this.router.navigate(['/home']);
-			// } else {
-			// 	this.purchaseService.setNewPurchase();
-			// }
+			// No subscription yet? Continue. This really should not happen.
+			// But we put it here as a check.
+			if (this.billing.PaymentProcessor != 'None') {
+				this.router.navigate(['/home']);
+			} else {
+				this.purchaseService.setNewPurchase();
+			}
 		})
 	}
 
