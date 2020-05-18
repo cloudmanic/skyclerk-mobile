@@ -34,7 +34,7 @@ export class PaywallPage implements OnInit {
 		this.monthyPrice = this.purchaseService.getMonthlyPrice();
 
 		// Refresh billing then setup payment stuff.
-		this.refreshBilling();
+		//this.refreshBilling();
 	}
 
 	//

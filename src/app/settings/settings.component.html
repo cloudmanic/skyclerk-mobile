@@ -31,16 +31,29 @@
 	<ion-label text-uppercase>Support</ion-label>
 
 	<ion-card>
-		<ion-item href="https://skyclerk.com/support" target="_blank" lines="full">
+		<ion-item href="https://skyclerk.com/support" target="_blank" detail="true" lines="full">
 			<ion-label>Help Center</ion-label>
 		</ion-item>
 
-		<ion-item href="https://skyclerk.com/contact-us" target="_blank" lines="full">
+		<ion-item href="https://skyclerk.com/contact-us" target="_blank" detail="true" lines="full">
 			<ion-label>Contact Support</ion-label>
 		</ion-item>
 
-		<ion-item (click)="doCloseAccount()" lines="full">
+		<ion-item (click)="doCloseAccount()" detail="true" lines="full">
 			<ion-label>Close My Account</ion-label>
+		</ion-item>
+
+	</ion-card>
+
+	<ion-label text-uppercase>Documents</ion-label>
+
+	<ion-card>
+		<ion-item href="https://skyclerk.com/privacy-policy" target="_blank" detail="true" lines="full">
+			<ion-label>Privacy Policy</ion-label>
+		</ion-item>
+
+		<ion-item href="https://skyclerk.com/terms-of-service" target="_blank" detail="true" lines="full">
+			<ion-label>Terms of Service</ion-label>
 		</ion-item>
 	</ion-card>
 
