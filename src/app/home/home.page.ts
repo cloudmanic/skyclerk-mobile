@@ -46,8 +46,8 @@ export class HomePage implements OnInit {
 	dblTapFooterLogoCount: number = 0;
 	pnl: PnlCurrentYear = { Year: 0, Value: 0 };
 
-	@ViewChild(IonContent) content: IonContent;
-	@ViewChild(AccountHeaderComponent) accountHeaderComponent;
+	@ViewChild(IonContent, { static: false }) content: IonContent;
+	@ViewChild(AccountHeaderComponent, { static: false }) accountHeaderComponent;
 
 	//
 	// Constructor.
