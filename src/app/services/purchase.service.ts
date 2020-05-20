@@ -70,6 +70,7 @@ export class PurchaseService {
 	// Place the order.
 	//
 	order(product: string) {
+		this.newPurchase = true;
 		this.store.order(product);
 	}
 
@@ -84,14 +85,8 @@ export class PurchaseService {
 
 				// Define our products.
 				var products = [
-					{
-						id: "yearly_60",
-						type: this.store.PAID_SUBSCRIPTION,
-					},
-					{
-						id: "monthly_6",
-						type: this.store.PAID_SUBSCRIPTION,
-					}
+					{ id: "yearly_60", type: this.store.PAID_SUBSCRIPTION },
+					{ id: "monthly_6", type: this.store.PAID_SUBSCRIPTION }
 				];
 
 				// ---------- Store Callbacks --------- //
