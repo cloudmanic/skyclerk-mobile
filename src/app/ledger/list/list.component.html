@@ -1,3 +1,9 @@
+<ion-row *ngIf="! ledgers.length" class="first-run">
+	<ion-text>
+		<h5>Let's get started by adding <br /> your first ledger entry</h5>
+	</ion-text>
+</ion-row>
+
 <ion-row *ngFor="let row of ledgers" [ngClass]="{ 'danger': (row.Amount < 0) }" routerLink="/ledger/view/{{ row.Id }}">
 	<ion-col size="2">
 		<p class="date">

@@ -839,7 +839,7 @@ app-paywall {
             }
         }
     }
-    // 
+    //
     // .create-account {
     //     height: 30vh;
     //     background: $darkgray;
@@ -1204,3 +1204,29 @@ app-snapclerk-list {
 .ledger-modify-bubble-count { left: 10px; position: absolute; z-index: 100000; top: 0; }
 .ledger-modify-bubble-count-upload { left: 20px; }
 .ledger-modify-bubble-count-note { left: 5px; }
+
+
+app-ledger-list {
+  .first-run {
+    height: 100%;
+
+    // svg {
+    //   width: 70%;
+    //   height: 200px;
+    //   margin: auto;
+    // }
+
+    ion-text {
+      color: #808080;
+      margin: 0 auto;
+      margin-top: 60px;
+      height: 80px;
+      text-align: center;
+      padding: 0 60px;
+
+      h5 {
+        margin: unset;
+      }
+    }
+  }
+}
